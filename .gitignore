@@ -1,0 +1,9 @@
+cygwin/home/*
+cygwin/install/
+cygwin/log/
+cygwin/tmp/*
+export_installer/
+log/
+package/symlink_file
+tftpd32/tftproot/
+cygwin/opt/*
