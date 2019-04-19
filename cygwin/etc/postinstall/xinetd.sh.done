@@ -1,0 +1,93 @@
+if [ ! -f /etc/xinetd.d/chargen-dgram ]
+then
+    /usr/bin/mkdir -p /etc/xinetd.d
+    /usr/bin/cp /etc/defaults/etc/xinetd.d/chargen-dgram /etc/xinetd.d/chargen-dgram
+fi
+
+if [ ! -f /etc/xinetd.d/chargen-stream ]
+then
+    /usr/bin/mkdir -p /etc/xinetd.d
+    /usr/bin/cp /etc/defaults/etc/xinetd.d/chargen-stream /etc/xinetd.d/chargen-stream
+fi
+
+if [ ! -f /etc/xinetd.d/daytime-dgram ]
+then
+    /usr/bin/mkdir -p /etc/xinetd.d
+    /usr/bin/cp /etc/defaults/etc/xinetd.d/daytime-dgram /etc/xinetd.d/daytime-dgram
+fi
+
+if [ ! -f /etc/xinetd.d/daytime-stream ]
+then
+    /usr/bin/mkdir -p /etc/xinetd.d
+    /usr/bin/cp /etc/defaults/etc/xinetd.d/daytime-stream /etc/xinetd.d/daytime-stream
+fi
+
+if [ ! -f /etc/xinetd.d/discard-dgram ]
+then
+    /usr/bin/mkdir -p /etc/xinetd.d
+    /usr/bin/cp /etc/defaults/etc/xinetd.d/discard-dgram /etc/xinetd.d/discard-dgram
+fi
+
+if [ ! -f /etc/xinetd.d/discard-stream ]
+then
+    /usr/bin/mkdir -p /etc/xinetd.d
+    /usr/bin/cp /etc/defaults/etc/xinetd.d/discard-stream /etc/xinetd.d/discard-stream
+fi
+
+if [ ! -f /etc/xinetd.d/echo-dgram ]
+then
+    /usr/bin/mkdir -p /etc/xinetd.d
+    /usr/bin/cp /etc/defaults/etc/xinetd.d/echo-dgram /etc/xinetd.d/echo-dgram
+fi
+
+if [ ! -f /etc/xinetd.d/echo-stream ]
+then
+    /usr/bin/mkdir -p /etc/xinetd.d
+    /usr/bin/cp /etc/defaults/etc/xinetd.d/echo-stream /etc/xinetd.d/echo-stream
+fi
+
+if [ ! -f /etc/xinetd.d/ftp-sensor ]
+then
+    /usr/bin/mkdir -p /etc/xinetd.d
+    /usr/bin/cp /etc/defaults/etc/xinetd.d/ftp-sensor /etc/xinetd.d/ftp-sensor
+fi
+
+if [ ! -f /etc/xinetd.d/services ]
+then
+    /usr/bin/mkdir -p /etc/xinetd.d
+    /usr/bin/cp /etc/defaults/etc/xinetd.d/services /etc/xinetd.d/services
+fi
+
+if [ ! -f /etc/xinetd.d/tcpmux-server ]
+then
+    /usr/bin/mkdir -p /etc/xinetd.d
+    /usr/bin/cp /etc/defaults/etc/xinetd.d/tcpmux-server /etc/xinetd.d/tcpmux-server
+fi
+
+if [ ! -f /etc/xinetd.d/time-dgram ]
+then
+    /usr/bin/mkdir -p /etc/xinetd.d
+    /usr/bin/cp /etc/defaults/etc/xinetd.d/time-dgram /etc/xinetd.d/time-dgram
+fi
+
+if [ ! -f /etc/xinetd.d/time-stream ]
+then
+    /usr/bin/mkdir -p /etc/xinetd.d
+    /usr/bin/cp /etc/defaults/etc/xinetd.d/time-stream /etc/xinetd.d/time-stream
+fi
+
+if [ ! -f /etc/xinetd.conf ]
+then
+    /usr/bin/mkdir -p /etc
+    /usr/bin/cp /etc/defaults/etc/xinetd.conf /etc/xinetd.conf
+fi
+
+if [ ! -f /etc/sysconfig/xinetd ]
+then
+    /usr/bin/mkdir -p /etc/sysconfig
+    /usr/bin/cp /etc/defaults/etc/sysconfig/xinetd /etc/sysconfig/xinetd
+fi
+
+export XINETD_CONFIG_AUTO_ANSWER_NO=1
+/usr/bin/xinetd-config
+

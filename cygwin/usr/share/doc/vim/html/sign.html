@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>VIM: sign</title>
+<link rel="stylesheet" href="vim-stylesheet.css" type="text/css">
+</head>
+<body>
+<h2>SIGN</h2>
+<pre>
+<b class="vimtag">*<a name="sign.txt">sign.txt</a>*</b>      For Vim version 8.0.  Last change: 2016 Aug 17
+
+
+		  VIM REFERENCE MANUAL    by Gordon Prieur
+					  and Bram Moolenaar
+
+
+Sign Support Features				<b class="vimtag">*<a name="sign-support">sign-support</a>*</b>
+
+1. Introduction				|<a href="sign.html#sign-intro">sign-intro</a>|
+2. Commands				|<a href="sign.html#sign-commands">sign-commands</a>|
+
+<code class="special">{Vi does not have any of these features}</code>
+{only available when compiled with the |<a href="various.html#+signs">+signs</a>| feature}
+
+</pre><hr><pre>1. Introduction					<b class="vimtag">*<a name="sign-intro">sign-intro</a>*</b> <b class="vimtag">*<a name="signs">signs</a>*</b>
+
+When a debugger or other IDE tool is driving an editor it needs to be able
+to give specific highlights which quickly tell the user useful information
+about the file.  One example of this would be a debugger which had an icon
+in the left-hand column denoting a breakpoint.  Another example might be an
+arrow representing the Program Counter (PC).  The sign features allow both
+placement of a sign, or icon, in the left-hand side of the window and
+definition of a highlight which will be applied to that line.  Displaying the
+sign as an image is most likely only feasible in gvim (although Sun
+Microsystem's dtterm does support this it's the only terminal emulator I know
+of which does).  A text sign and the highlight should be feasible in any color
+terminal emulator.
+
+Signs and highlights are not useful just for debuggers.  Sun's Visual
+WorkShop uses signs and highlights to mark build errors and SourceBrowser
+hits.  Additionally, the debugger supports 8 to 10 different signs and
+highlight colors. |<a href="workshop.html#workshop">workshop</a>|  Same for Netbeans |<a href="netbeans.html#netbeans">netbeans</a>|.
+
+There are two steps in using signs:
+
+1. Define the sign.  This specifies the image, text and highlighting.  For
+   example, you can define a "break" sign with an image of a stop roadsign and
+   text "!!".
+
+2. Place the sign.  This specifies the file and line number where the sign is
+   displayed.  A defined sign can be placed several times in different lines
+   and files.
+
+When signs are defined for a file, Vim will automatically add a column of two
+characters to display them in.  When the last sign is unplaced the column
+disappears again.  This behavior can be changed with the 'signcolumn' option.
+
+The color of the column is set with the SignColumn group |<a href="syntax.html#hl-SignColumn">hl-SignColumn</a>|.
+Example to set the color:
+<code class="example"></code>
+<code class="example">	:highlight SignColumn guibg=darkgrey</code>
+<code class="example"></code>
+</pre><hr><pre>2. Commands					<b class="vimtag">*<a name="sign-commands">sign-commands</a>*</b> <b class="vimtag">*<a name=":sig">:sig</a>*</b> <b class="vimtag">*<a name=":sign">:sign</a>*</b>
+
+Here is an example that places a sign "piet", displayed with the text "&gt;&gt;", in
+line 23 of the current file:
+<code class="example">	:sign define piet text=&gt;&gt; texthl=Search</code>
+<code class="example">	:exe ":sign place 2 line=23 name=piet file=" . expand("%:p")</code>
+<code class="example"></code>
+And here is the command to delete it again:
+<code class="example">	:sign unplace 2</code>
+<code class="example"></code>
+<code class="note">Note</code> that the ":sign" command cannot be followed by another command or a
+comment.  If you do need that, use the |<a href="eval.html#:execute">:execute</a>| command.
+
+
+DEFINING A SIGN.			<b class="vimtag">*<a name=":sign-define">:sign-define</a>*</b> <b class="vimtag">*<a name="E255">E255</a>*</b> <b class="vimtag">*<a name="E160">E160</a>*</b> <b class="vimtag">*<a name="E612">E612</a>*</b>
+
+:sign define <code class="special">{name}</code> <code class="special">{argument}</code>...
+		Define a new sign or set attributes for an existing sign.
+		The <code class="special">{name}</code> can either be a number (all digits) or a name
+		starting with a non-digit.  Leading digits are ignored, thus
+		"0012", "012" and "12" are considered the same name.
+		About 120 different signs can be defined.
+
+		Accepted arguments:
+
+	icon=<code class="special">{bitmap}</code>
+		Define the file name where the bitmap can be found.  Should be
+		a full path.  The bitmap should fit in the place of two
+		characters.  This is not checked.  If the bitmap is too big it
+		will cause redraw problems.  Only GTK 2 can scale the bitmap
+		to fit the space available.
+<code class="section">			toolkit		supports </code>
+			GTK 1		pixmap (.xpm)
+			GTK 2		many
+			Motif		pixmap (.xpm)
+			Win32		.bmp, .ico, .cur
+					pixmap (.xpm) |<a href="various.html#+xpm_w32">+xpm_w32</a>|
+
+	linehl=<code class="special">{group}</code>
+		Highlighting group used for the whole line the sign is placed
+		in.  Most useful is defining a background color.
+
+	text=<code class="special">{text}</code>						<b class="vimtag">*<a name="E239">E239</a>*</b>
+		Define the text that is displayed when there is no icon or the
+		GUI is not being used.  Only printable characters are allowed
+		and they must occupy one or two display cells.
+
+	texthl=<code class="special">{group}</code>
+		Highlighting group used for the text item.
+
+
+DELETING A SIGN						<b class="vimtag">*<a name=":sign-undefine">:sign-undefine</a>*</b> <b class="vimtag">*<a name="E155">E155</a>*</b>
+
+:sign undefine <code class="special">{name}</code>
+		Deletes a previously defined sign.  If signs with this <code class="special">{name}</code>
+		are still placed this will cause trouble.
+
+
+LISTING SIGNS						<b class="vimtag">*<a name=":sign-list">:sign-list</a>*</b> <b class="vimtag">*<a name="E156">E156</a>*</b>
+
+:sign list	Lists all defined signs and their attributes.
+
+:sign list <code class="special">{name}</code>
+		Lists one defined sign and its attributes.
+
+
+PLACING SIGNS						<b class="vimtag">*<a name=":sign-place">:sign-place</a>*</b> <b class="vimtag">*<a name="E158">E158</a>*</b>
+
+:sign place <code class="special">{id}</code> line=<code class="special">{lnum}</code> name=<code class="special">{name}</code> file=<code class="special">{fname}</code>
+		Place sign defined as <code class="special">{name}</code> at line <code class="special">{lnum}</code> in file <code class="special">{fname}</code>.
+							<b class="vimtag">*<a name=":sign-fname">:sign-fname</a>*</b>
+		The file <code class="special">{fname}</code> must already be loaded in a buffer.  The
+		exact file name must be used, wildcards, $ENV and ~ are not
+		expanded, white space must not be escaped.  Trailing white
+		space is ignored.
+
+		The sign is remembered under <code class="special">{id}</code>, this can be used for
+		further manipulation.  <code class="special">{id}</code> must be a number.
+		It's up to the user to make sure the <code class="special">{id}</code> is used only once in
+		each file (if it's used several times unplacing will also have
+		to be done several times and making changes may not work as
+		expected).
+
+:sign place <code class="special">{id}</code> line=<code class="special">{lnum}</code> name=<code class="special">{name}</code> buffer=<code class="special">{nr}</code>
+		Same, but use buffer <code class="special">{nr}</code>.
+
+							<b class="vimtag">*<a name="E885">E885</a>*</b>
+:sign place <code class="special">{id}</code> name=<code class="special">{name}</code> file=<code class="special">{fname}</code>
+		Change the placed sign <code class="special">{id}</code> in file <code class="special">{fname}</code> to use the defined
+		sign <code class="special">{name}</code>.  See remark above about <code class="special">{fname}</code> |<a href="sign.html#:sign-fname">:sign-fname</a>|.
+		This can be used to change the displayed sign without moving
+		it (e.g., when the debugger has stopped at a breakpoint).
+
+:sign place <code class="special">{id}</code> name=<code class="special">{name}</code> buffer=<code class="special">{nr}</code>
+		Same, but use buffer <code class="special">{nr}</code>.
+
+
+REMOVING SIGNS						<b class="vimtag">*<a name=":sign-unplace">:sign-unplace</a>*</b> <b class="vimtag">*<a name="E159">E159</a>*</b>
+
+:sign unplace <code class="special">{id}</code> file=<code class="special">{fname}</code>
+		Remove the previously placed sign <code class="special">{id}</code> from file <code class="special">{fname}</code>.
+		See remark above about <code class="special">{fname}</code> |<a href="sign.html#:sign-fname">:sign-fname</a>|.
+
+:sign unplace * file=<code class="special">{fname}</code>
+		Remove all placed signs in file <code class="special">{fname}</code>.
+
+:sign unplace <code class="special">{id}</code> buffer=<code class="special">{nr}</code>
+		Remove the previously placed sign <code class="special">{id}</code> from buffer <code class="special">{nr}</code>.
+
+:sign unplace * buffer=<code class="special">{nr}</code>
+		Remove all placed signs in buffer <code class="special">{nr}</code>.
+
+:sign unplace <code class="special">{id}</code>
+		Remove the previously placed sign <code class="special">{id}</code> from all files it
+		appears in.
+
+:sign unplace *
+		Remove all placed signs.
+
+:sign unplace
+		Remove the placed sign at the cursor position.
+
+
+LISTING PLACED SIGNS					<b class="vimtag">*<a name=":sign-place-list">:sign-place-list</a>*</b>
+
+:sign place file=<code class="special">{fname}</code>
+		List signs placed in file <code class="special">{fname}</code>.
+		See remark above about <code class="special">{fname}</code> |<a href="sign.html#:sign-fname">:sign-fname</a>|.
+
+:sign place buffer=<code class="special">{nr}</code>
+		List signs placed in buffer <code class="special">{nr}</code>.
+
+:sign place	List placed signs in all files.
+
+
+JUMPING TO A SIGN					<b class="vimtag">*<a name=":sign-jump">:sign-jump</a>*</b> <b class="vimtag">*<a name="E157">E157</a>*</b>
+
+:sign jump <code class="special">{id}</code> file=<code class="special">{fname}</code>
+		Open the file <code class="special">{fname}</code> or jump to the window that contains
+		<code class="special">{fname}</code> and position the cursor at sign <code class="special">{id}</code>.
+		See remark above about <code class="special">{fname}</code> |<a href="sign.html#:sign-fname">:sign-fname</a>|.
+		If the file isn't displayed in window and the current file can
+		not be |<a href="editing.html#abandon">abandon</a>|ed this fails.
+
+:sign jump <code class="special">{id}</code> buffer=<code class="special">{nr}</code>					<b class="vimtag">*<a name="E934">E934</a>*</b>
+		Same, but use buffer <code class="special">{nr}</code>.  This fails if buffer <code class="special">{nr}</code> does not
+		have a name.
+
+
+ vim:tw=78:ts=8:ft=help:norl:
+</pre>
+<p><i>Generated by vim2html on 04 Mar 2018 23:40:43</i></p>
+</body>
+</html>

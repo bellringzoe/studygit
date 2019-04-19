@@ -1,0 +1,394 @@
+xinetd
+========================================================================
+Xinetd is a secure replacement for inetd, the Internet services
+daemon. Xinetd provides access control for all services based on the
+address of the remote host and/or on time of access and can prevent
+denial-of-access attacks. Xinetd provides extensive logging, has no
+limit on the number of server arguments, and lets you bind specific
+services to specific IP addresses on your host machine. Each service
+has its own specific configuration file for Xinetd; the files are
+located in the /etc/xinetd.d directory.
+
+Runtime requirements:
+  cygwin-1.7.2 or newer
+  libgcc1-4.3.4-3
+  csih-0.9.81-1
+
+Build requirements:
+  cygwin-1.7.2-1
+  autoconf2.5
+  autoconf
+  gcc
+  binutils
+  make
+
+Canonical homepage:
+  http://www.xinetd.org
+
+Canonical download:
+  http://www.xinetd.org
+
+License:
+  MIT/X (mostly)
+
+Language:
+  C
+
+========================================================================
+
+Build instructions:
+  unpack xinetd-2.3.14-X-src.tar.bz2
+    if you use setup to install this src package, it will be
+         unpacked under /usr/src automatically
+  cd /usr/src
+  cygport ./xinetd-2.3.14-X.cygport all
+
+This will create:
+  /usr/src/xinetd-2.3.14-X.tar.bz2
+  /usr/src/xinetd-2.3.14-X-src.tar.bz2
+
+Or use 'cygport ./xinetd-2.3.14-X.cygport prep' to get a patched
+source directory.
+
+========================================================================
+
+Files included in the binary distribution:
+  see 'cygcheck -l xinetd' output or browse the listing for the
+  appropriate version at http://cygwin.com/packages/.
+
+========================================================================
+Port Notes:
+
+RPC services are not (yet) supported.
+Suggested package to install: chkconfig
+
+This port supports only cygwin-1.7 or newer, and only Windows NT 4.0
+and above (as that version of cygwin only supports these newer OSs).
+Because of a bug discovered in 1.7.1, UDP services are supported only
+in cygwin-1.7.2 and above.
+
+This port supports IPv6 on those computers that themselves have IPv6
+support. This means that all incoming connections will be seen as IPv6;
+if they are natively IPv4, the client server will see an IPv4-in-IPv6
+address.  That is, the sockaddr will be a sockaddr_in6, and the source
+address will be '::ffff:nnn.nnn.nnn.nnn'.  Not all client servers support
+such things; to restrict a specific server to IPv4 only, use the "flags"
+keyword in the server's xinetd configuration:
+
+   flags      = IPv4
+
+By default, all services are disabled. You must manually edit
+/etc/xinetd.d/* (and restart or kill -HUP xinetd) to activate any
+services.
+
+Installation
+------------------------------------------------------------------------
+There are two ways to install the xinetd super-server: either as a
+service via cygrunsrv, or a client of the init service. Unlike
+inetutils inetd for cygwin, xinetd does not have the ability to
+be installed as a windows service "on its own" without the assistance
+of cygrunsrv.
+
+(1) as a service
+++++++++++++++++
+To install xinetd as a service, use the xinetd-config script: simply
+run it and answer the prompts. To install xinetd manually:
+
+  1) for OS older than Vista or Server 2003:
+
+     cygrunsrv -I xinetd -d "CYGWIN xinetd" -p /usr/sbin/xinetd \
+       -a "-stayalive -dontfork" -y tcpip
+
+  2) for Vista, Server 2003, or newer:
+
+     cygrunsrv -I xinetd -d "CYGWIN xinetd" -p /usr/sbin/xinetd \
+       -a "-stayalive -dontfork" -y tcpip \
+       -u USER -w PASSWORD
+
+     where USER is probably cyg_server, and PASSWORD is...well,
+     whatever it is.
+
+Note that on these newer versions of Windows, the default SYSTEM
+(aka LocalSystem) account does NOT have the necessary permissions
+to switch user context (that is, allow logons as a different user).
+If any slave servers are activated in /etc/xinetd.d/* which require
+this ability -- such as ftpd, telnetd, rshd, etc -- then xinetd must
+be started under an appropriately privileged user account. The
+xinetd-config script will make this easy, so you really should use
+that instead of trying to install the service manually.
+
+Once the service is installed, it can be started and stopped via:
+
+   cygrunsrv -S xinetd      (or: net start xinetd)
+   cygrunsrv -E xinetd      (or: net stop xinetd)
+
+To remove the service:
+
+   cygrunsrv -R xinetd
+
+(2) as an init client
++++++++++++++++++++++
+To install xinetd as a client of the init service, use the cygwin
+setup program to download and install the following packages:
+
+   sysvinit
+   chkconfig
+   initscripts
+   psmisc
+
+Follow the directions in the various README files associated
+which those packages, to get the init daemon installed as
+a service and running properly.  Then:
+
+   /usr/sbin/chkconfig --add xinetd
+
+and restart the init service:
+
+   cygrunsrv -E init
+   cygrunsrv -S init
+
+To disable the service in this mode:
+
+   /usr/sbin/chkconfig xinetd off
+   /etc/rc.d/init.d/xinetd stop
+
+Alternatively:
+
+   /usr/sbin/chkconfig xinetd off
+   /usr/sbin/telinit 1
+   /usr/sbin/telinit 3
+
+Note that xinetd inherits the account privileges of the init service,
+when installed in this manner. Therefore, the same restrictions
+concerning xinetd and Windows 2003 Server and Windows Vista that were
+detailed in (1) above, apply to the *init* service here.
+
+Built-in Servers
+------------------------------------------------------------------------
+xinetd provides the following built-in servers:
+
+   name     protocol port  config file(s)                   hosts.access
+   -------- -------- ----  ------------------------------   ------------
+   echo     tcp/udp     7  echo-stream    / echo-dgram      echo:
+   chargen  tcp/udp    19  chargen-stream / chargen-dgram   chargen:
+   daytime  tcp/udp    13  daytime-stream / daytime-dgram   daytime:
+   discard  tcp/udp     9  discard-stream / discard-dgram   discard:
+   time     tcp/udp    37  time-stream    / time-dgram      time:
+   services tcp      9098  services (*)                     n/a
+
+The *-stream configuration files are for the TCP service; the *-dgram
+files are for the UDP one.  All services are disabled by default. To
+enable them, edit the appropriate configuration file. Usually it will
+be sufficient simply to change the line that reads:
+
+   disabled            = yes
+
+to "no".  Then, force the xinetd service to reread the configuration,
+by sending it a HUP signal:
+
+   kill -HUP <pid of xinetd>
+
+(*) As configured, 'services' will be available only to the localhost,
+on a custom port, and only via TCP. Because of this, there is no need
+to add a special hosts.access rule for the 'services' service.
+
+xinetd provides two tiny applications to be used when testing these
+built-in services: udp_client and tcp_client. These tools are installed
+into /usr/lib/xinetd/. You can also use telnet to test the TCP services.
+
+Unlike inetd, xinetd uses libwrap (hosts.access) access control even
+for the built-in services. Now, by default all access is allowed for
+localhost clients, but if you wish to expose these built-in services
+to other machines, you will need to add a rule to /etc/hosts.access
+to allow that -- and open a hole in your software firewall (usually
+Windows Firewall for XP, Vista, and above).
+
+For instance, to allow the 10.10.5.0 subnet to access your 'echo'
+service, add
+
+   echo: 10.10.5.0/255.255.255.0 : allow
+
+to /etc/hosts.allow.  Use whatever tool is convenient to open a hole
+in the Windows software firewall for the specified port (in this case,
+echo uses port 7). You'll actually need two rules: one for UDP and
+one for TCP.  In Windows Vista, this can be done by launching a cmd
+shell 'as administrator', and issuing the following commands:
+
+   netsh advfirewall firewall add rule name="echo udp" action=allow protocol=UDP dir=in localport=7
+   netsh advfirewall firewall add rule name="echo tcp" action=allow protocol=TCP dir=in localport=7
+
+You should probably leave all five built-in services disabled. The first
+three (echo, chargen, and discard) were never designed to be anything more
+than tools for debugging network connections -- which nowadays is done
+using ping, traceroute, and the ICMP protocol (not TCP or UDP). The other
+two (time and daytime) have a better replacement in the ntp protocol and
+related servers and clients.  While the cygwin distribution does not at
+present provide ntp tools, MS Windows has supported the ntp client protocol
+natively since XP -- although they call it "Internet Time", which actually
+means something entirely different:
+   http://www.ntp.org
+   http://www.timeanddate.com/time/internettime.html
+
+However, in case you wish to enable and test the built-in services, each
+is briefly described below.
+
+echo
+-=-=-=-=-=-=-=-
+A simple service that simply reflects all data back to the sender.
+
+   cmd$ tcp_client localhost echo "blah blah test data"
+   exp: should echo back the same data
+
+   cmd$ ucp_client localhost echo "blah blah test data"
+   exp: should echo back the same data
+
+   cmd$ telnet localhost echo
+      > type data
+   exp: same data echoed back. Use ^] to get back to the
+        telnet prompt, then 'exit' to quit.
+
+chargen
+-=-=-=-=-=-=-=-
+A simple service that sends pattern data back to each client. For
+TCP clients data is transitted as long as the client holds the connection
+open. For UDP clients, each packet sent by the client is acknowleged with
+a returned packet containing 1000 or so bytes of data.
+
+   cmd$ tcp_client localhost chargen "blah blah test data"
+   exp: continuous pattern data. You'll have to ^C the client.
+
+   cmd$ ucp_client localhost chargen "blah blah test data"
+   exp: About 1000 characters of pattern data.
+
+   cmd$ telnet localhost chargen
+   exp: continuous pattern data. Use ^] to get back to the
+        telnet prompt, then 'exit' to quit.
+
+discard
+-=-=-=-=-=-=-=-
+A black hole. Everything sent to it disappears. This is mostly useful
+when testing TCP, as the discard server will accept a connection -- it
+just throws away all the data. For UDP, it's about as useful as the client
+sending the data to 0.0.0.0.
+
+   cmd$ tcp_client localhost discard "blah blah test data"
+   exp: <nothing>. You'll have to ^C the client.
+
+   cmd$ ucp_client localhost discard "blah blah test data"
+   exp: <nothing>
+
+   cmd$ telnet localhost discard
+   exp: <nothing>. Use ^] to get back to the telnet prompt, then
+        'exit' to quit.
+
+daytime
+-=-=-=-=-=-=-=-
+Returns the current time of the server in human readable format. For
+TCP, it sends a single string in response to a connection request, and
+then shuts down the connection. For UDP, it sends a string in response
+to each UDP packet recieved.
+
+   cmd$ tcp_client localhost daytime
+   exp: date in human readable format
+
+   cmd$ ucp_client localhost daytime "blah blah test data"
+   exp: date in human readable format
+
+   cmd$ telnet localhost daytime
+   exp: date in human readable format
+
+time
+-=-=-=-=-=-=-=-
+Provides the server's unix time as a 32 bit integer (binary). As with
+daytime, for TCP a single value is send in response to a connection
+request, and then the connection is shut down. For UDP, a separate value
+is sent in response to each UDP packet received.
+
+   cmd$ tcp_client localhost time
+   Exp: four binary bytes
+
+   cmd$ ucp_client localhost time "blah blah test data"
+   exp: four binary bytes
+
+   cmd$ telnet localhost time
+   exp: four binary bytes
+
+services
+-=-=-=-=-=-=-=-
+Provides a listing of the services managed by xinetd, and currently
+accepting connections.
+
+   cmd$ tcp_client localhost 9098
+   exp: a list such as the following (but without the nice formatting)
+   Received from localhost: 'chargen udp 19.chargen tcp 19.
+                             daytime udp 13.daytime tcp 13.
+			     discard udp 9.discard tcp 9.
+			     echo udp 7.echo tcp 7.
+			     exec tcp 512.
+			     login tcp 513.
+			     shell tcp 514.
+			     services tcp 9098.
+			     telnet tcp 23.
+			     time udp 37.time tcp 37.'.
+
+   cmd$ telnet 127.0.0.1 9098
+   exp: a better formatted list...
+   chargen udp 19
+   chargen tcp 19
+   daytime udp 13
+   daytime tcp 13
+   discard udp 9
+   discard tcp 9
+   echo udp 7
+   echo tcp 7
+   exec tcp 512
+   login tcp 513
+   shell tcp 514
+   services tcp 9098
+   telnet tcp 23
+   time udp 37
+   time tcp 37
+
+Note that 'services' is actually bound to the 127.0.0.1 interface,
+not the generic "localhost" name (which could resolve to ::1 on an
+IPv6-enabled system).  tcp_client (and upd_client) treat the string
+"localhost" as a special case, and use 127.0.0.1 directly; telnet
+does not. This is why the two commands above differ.
+
+
+External servers
+------------------------------------------------------------------------
+In general, external services should provide a configuration script
+for xinetd.  However, if not, then copy empty.conf into /etc/xinetd.d
+from /usr/share/doc/xinetd, and modify to suite.  The sample.conf file
+in that same directory has some suggested settings for various external
+servers (but sample.conf should not be used as-is). 
+
+External servers can be run under unprivileged accounts, by using the
+'user' keyword in the server's configuration file.  In cygwin, the user
+'root' means 'whatever account xinetd is running under'.  However, most
+external servers require all of the same elevated privileges as xinetd,
+in order to change UID for new logins, etc.  As far as I am aware, only
+uucp and tftp don't actually need the elevated privileges of LocalSystem
+(for preVista) or cyg_server (Vista+).  For all other external servers,
+'user' should probably be 'root'.
+
+========================================================================
+Change History
+
+----- xinetd-2.3.14-1 -----
+* update to latest upstream release
+* incorporate numerous patches from Debian and Fedora
+* new maintainer
+* recompiled against cygwin-1.7.1 to support IPv6
+* fixed a few bugs related to IPv6 and libwrap
+* Added tcp_client and udp_client test applications
+  to /usr/lib/xinetd/
+
+----- xinetd-2.3.9-1 -----
+Initial release
+
+
+========================================================================
+Cygwin port maintained by: Charles Wilson <cygwin@cygwin.com>
+
