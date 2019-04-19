@@ -1,0 +1,96 @@
+#!/bin/bash
+
+function env_init {
+#currently named to "network business unit debug envirment"
+	if [ -z $EXPORT_NAME ];then
+		EXPORT_NAME="nbudbg"
+	fi
+#currently place to "c"
+	if [ -z $EXPORT_ROOT ];then
+		EXPORT_ROOT="/cygdrive/c/nbudbg"
+	fi
+#
+	EXPORT_DIR="export"
+
+	WORKDIR=$(dirname $(readlink -f $0))
+	echo "working at $WORKDIR" 
+	echo "exporting $EXPORT_NAME to $EXPORT_ROOT"
+	cd $WORKDIR
+#because of cygwin's directory mapping methord,we can't pack "root" directly
+#the /usr/bin is blank ,but be packed with contents of /bin
+#we have to pack it through /cygdrive/c/
+	cd $EXPORT_ROOT
+	SRC_DIR=$(pwd)
+	echo "packing $SRC_DIR"
+
+}
+#move to packing dir
+#cd $(dirname $(readlink -f $0))
+
+#save link info to /etc/skel/.links ,run it in profile
+function check_cyglinks {
+#	echo "check_cyglinks"	
+	declare -a folders=(\
+"bin" \
+"etc" \
+"lib" \
+"opt" \
+"sbin" \
+"var" \
+"usr" \
+)
+	rm -rf /etc/skel/.links
+	pushd "$SRC_DIR/cygwin"
+	if [ -f "$WORKDIR/symlink_file" ];then
+		rm -rf "$WORKDIR/symlink_file"
+	fi
+	
+	for folder in ${folders[*]};
+	do
+		find $folder -type l >> "$WORKDIR/symlink_file"
+	done
+	cat "$WORKDIR/symlink_file" | xargs tar cf "$SRC_DIR/cygwin/etc/skel/symlink.tar"  -C "$SRC_DIR/cygwin" 
+	popd
+}
+
+function create_temp_7z {
+	TMP="tmp$(date +"%Y-%m-%d_%H_%M_%S")"
+	7z a "$SRC_DIR/export_installer/$TMP.7z" $SRC_DIR '-xr!*http*' '-xr!*log*' '-xr!*export_installer*' '-xr!home'
+#packaged,remove it to prevent some unwanted actions
+	rm -rf /etc/skel/.links
+}
+
+function create_installer {
+# exported file name shall be add a version,later
+	cat "$WORKDIR/pack.sfx" "$WORKDIR/config.txt" "$SRC_DIR/export_installer/$TMP.7z" > "$SRC_DIR/export_installer/$TMP.exe"
+	if [ -f "$SRC_DIR/export_installer/$TMP.exe" ];then
+		rm "$SRC_DIR/export_installer/$TMP.7z"
+	fi
+# tag the export file with time
+	EXPORT="$EXPORT_NAME$(stat -L "$EXPORT_ROOT/export_installer/$TMP.exe" | awk -F "[ |.|:]" {'if ($1 == "Change") {print $3"_"$4"_"$5"_"$6 }'})"
+	echo "creating $EXPORT.exe"
+	mv "$EXPORT_ROOT/export_installer/$TMP.exe" "$EXPORT_ROOT/export_installer/$EXPORT.exe"
+}
+
+#check_old_package_existence
+env_init
+if [ -z "$1" ]; then
+	check_cyglinks
+	create_temp_7z
+	create_installer
+else
+	case $1 in
+	1)	
+	check_cyglinks
+	;;
+	2)
+	create_temp_7z
+	;;
+	3)
+	create_installer
+	;;
+	esac
+fi
+
+
+#md5sum windbg.exe > windbg.md5
