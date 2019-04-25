@@ -217,17 +217,15 @@
 /usr/bin/gzip.exe
 # rebase_pkg information from: /etc/setup/hostname.lst.gz
 /usr/bin/hostname.exe
-# rebase_pkg information from: /etc/setup/inetutils-server.lst.gz
-/usr/sbin/ftpd.exe
-/usr/sbin/inetd.exe
-/usr/sbin/syslogd.exe
-/usr/sbin/talkd.exe
-/usr/sbin/telnetd.exe
-/usr/sbin/uucpd.exe
-# rebase_pkg information from: /etc/setup/inetutils.lst.gz
-/usr/bin/ftp.exe
-/usr/bin/talk.exe
-/usr/bin/telnet.exe
+##/usr/sbin/ftpd.exe
+##/usr/sbin/inetd.exe
+##/usr/sbin/syslogd.exe
+##/usr/sbin/talkd.exe
+##/usr/sbin/telnetd.exe
+##/usr/sbin/uucpd.exe
+##/usr/bin/ftp.exe
+##/usr/bin/talk.exe
+##/usr/bin/telnet.exe
 # rebase_pkg information from: /etc/setup/info.lst.gz
 /usr/bin/info.exe
 /usr/bin/install-info.exe
@@ -369,18 +367,6 @@
 /usr/bin/toe.exe
 /usr/bin/tput.exe
 /usr/bin/tset.exe
-# rebase_pkg information from: /etc/setup/openssh.lst.gz
-/usr/bin/ssh.exe
-/usr/bin/scp.exe
-/usr/bin/ssh-add.exe
-/usr/bin/ssh-agent.exe
-/usr/bin/ssh-keygen.exe
-/usr/bin/ssh-keyscan.exe
-/usr/bin/sftp.exe
-/usr/sbin/sshd.exe
-/usr/sbin/ssh-keysign.exe
-/usr/sbin/ssh-pkcs11-helper.exe
-/usr/sbin/sftp-server.exe
 # rebase_pkg information from: /etc/setup/openssl.lst.gz
 /usr/bin/openssl.exe
 # rebase_pkg information from: /etc/setup/p11-kit-trust.lst.gz
@@ -436,7 +422,7 @@
 # rebase_pkg information from: /etc/setup/rsync.lst.gz
 /usr/bin/rsync.exe
 # rebase_pkg information from: /etc/setup/run.lst.gz
-/usr/bin/run.exe
+#/usr/bin/run.exe
 # rebase_pkg information from: /etc/setup/sed.lst.gz
 /usr/bin/sed.exe
 # rebase_pkg information from: /etc/setup/stow.lst.gz
@@ -492,16 +478,14 @@
 /usr/bin/uuidparse.exe
 /usr/bin/whereis.exe
 # rebase_pkg information from: /etc/setup/vim-minimal.lst.gz
-/usr/bin/vi.exe
 # rebase_pkg information from: /etc/setup/wget.lst.gz
 /usr/bin/wget.exe
 # rebase_pkg information from: /etc/setup/which.lst.gz
 /usr/bin/which.exe
-# rebase_pkg information from: /etc/setup/xinetd.lst.gz
-/usr/sbin/xinetd.exe
-/usr/sbin/itox.exe
-/usr/lib/xinetd/tcp_client.exe
-/usr/lib/xinetd/udp_client.exe
+##/usr/sbin/xinetd.exe
+##/usr/sbin/itox.exe
+##/usr/lib/xinetd/tcp_client.exe
+##/usr/lib/xinetd/udp_client.exe
 # rebase_pkg information from: /etc/setup/xz.lst.gz
 /usr/bin/lzmadec.exe
 /usr/bin/lzmainfo.exe
@@ -940,6 +924,49 @@
 /usr/lib/python2.7/distutils/command/wininst-9.0.exe
 # rebase_pkg information from: /etc/setup/libsodium18.lst.gz
 /usr/bin/cygsodium-18.dll
+##/usr/bin/pure-pw.exe
+##/usr/bin/pure-pwconvert.exe
+##/usr/bin/pure-statsdecode.exe
+##/usr/sbin/pure-authd.exe
+##/usr/sbin/pure-ftpd.exe
+##/usr/sbin/pure-ftpwho.exe
+##/usr/sbin/pure-mrtginfo.exe
+##/usr/sbin/pure-quotacheck.exe
+##/usr/sbin/pure-uploadscript.exe
+# rebase_pkg information from: /etc/setup/libcrypt2.lst.gz
+/usr/bin/cygcrypt-2.dll
+# rebase_pkg information from: /etc/setup/libgc1.lst.gz
+/usr/bin/cyggc-1.dll
+# rebase_pkg information from: /etc/setup/libguile2.0_22.lst.gz
+/usr/bin/cygguile-2.0-22.dll
+/usr/lib/cygguilereadline-v-18-18.dll
+# rebase_pkg information from: /etc/setup/libltdl7.lst.gz
+/usr/bin/cygltdl-7.dll
+# rebase_pkg information from: /etc/setup/make.lst.gz
+/usr/bin/make.exe
+# rebase_pkg information from: /etc/setup/openssh.lst.gz
+/usr/bin/ssh.exe
+/usr/bin/scp.exe
+/usr/bin/ssh-add.exe
+/usr/bin/ssh-agent.exe
+/usr/bin/ssh-keygen.exe
+/usr/bin/ssh-keyscan.exe
+/usr/bin/sftp.exe
+/usr/sbin/sshd.exe
+/usr/sbin/ssh-keysign.exe
+/usr/sbin/ssh-pkcs11-helper.exe
+/usr/sbin/sftp-server.exe
+# rebase_pkg information from: /etc/setup/inetutils-server.lst.gz
+/usr/sbin/ftpd.exe
+/usr/sbin/inetd.exe
+/usr/sbin/syslogd.exe
+/usr/sbin/talkd.exe
+/usr/sbin/telnetd.exe
+/usr/sbin/uucpd.exe
+# rebase_pkg information from: /etc/setup/inetutils.lst.gz
+/usr/bin/ftp.exe
+/usr/bin/talk.exe
+/usr/bin/telnet.exe
 # rebase_pkg information from: /etc/setup/pure-ftpd.lst.gz
 /usr/bin/pure-pw.exe
 /usr/bin/pure-pwconvert.exe
@@ -950,12 +977,17 @@
 /usr/sbin/pure-mrtginfo.exe
 /usr/sbin/pure-quotacheck.exe
 /usr/sbin/pure-uploadscript.exe
-##/usr/sbin/tftpd.exe
-## rebase_pkg information from: /etc/setup/tftp.lst.gz
-#/usr/bin/tftp.exe
-## rebase_pkg information from: /etc/setup/tftp-server.lst.gz
-#/usr/sbin/tftpd.exe
 # rebase_pkg information from: /etc/setup/tftp-server.lst.gz
 /usr/sbin/tftpd.exe
 # rebase_pkg information from: /etc/setup/tftp.lst.gz
 /usr/bin/tftp.exe
+# rebase_pkg information from: /etc/setup/xinetd.lst.gz
+/usr/sbin/xinetd.exe
+/usr/sbin/itox.exe
+/usr/lib/xinetd/tcp_client.exe
+/usr/lib/xinetd/udp_client.exe
+# rebase_pkg information from: /etc/setup/nc.lst.gz
+/usr/bin/nc.exe
+# rebase_pkg information from: /etc/setup/gdb.lst.gz
+/usr/bin/gdb.exe
+/usr/bin/gdbserver.exe

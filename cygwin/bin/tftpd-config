@@ -1,0 +1,388 @@
+#!/bin/bash
+#
+# tftpd-config
+#
+# This file is part of the Cygwin port of tftp
+#
+# Permission to use, copy, modify, and distribute this software for any
+# purpose with or without fee is hereby granted, provided that the above
+# copyright notice and this permission notice appear in all copies.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS  
+# OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF               
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.   
+# IN NO EVENT SHALL THE ABOVE COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,   
+# DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR    
+# OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR    
+# THE USE OR OTHER DEALINGS IN THE SOFTWARE.                               
+
+# ======================================================================
+# Initialization
+# ======================================================================
+PROGNAME=$(basename $0)
+_tdir=$(dirname $0)
+PROGDIR=$(cd $_tdir && pwd)
+
+CSIH_SCRIPT=/usr/share/csih/cygwin-service-installation-helper.sh
+
+# Subdirectory where the new package is being installed
+PREFIX=/usr
+
+# Directory where the config files are stored
+SYSCONFDIR=/etc
+LOCALSTATEDIR=/var
+TFTPBOOT=${LOCALSTATEDIR}/lib/tftpboot
+
+source ${CSIH_SCRIPT}
+
+privsep_configured=no
+privsep_used=yes
+cygwin_value=""
+args_value="-L -c -p -u tftpd -U 022 -s ${TFTPBOOT}"
+user_account=
+password_value=
+opt_force=no
+opt_standalone=no
+
+# ======================================================================
+# Routine: create_unpriv_user
+# ======================================================================
+create_unpriv_user() {
+  csih_inform "Initially, tftpd runs as a privileged user in order to"
+  csih_inform "chroot for security. However, it immediately drops privileges"
+  csih_inform "but needs an ordinary, unprivileged user account to do so."
+  if csih_request "Create an unprivileged user 'tftpd' for this purpose?"
+  then
+    if ! csih_create_unprivileged_user tftpd
+    then
+      csih_warning "Couldn't create user 'tftpd'!"
+    fi
+  fi
+} # --- End of create_unpriv_user --- #
+
+# ======================================================================
+# Routine: update_inetd_conf
+# ======================================================================
+update_inetd_conf() {
+  local _inetcnf="${SYSCONFDIR}/inetd.conf"
+  local _inetcnf_tmp="${SYSCONFDIR}/inetd.conf.$$"
+  local _inetcnf_dir="${SYSCONFDIR}/inetd.d"
+  local _tftpd_inetd_conf="${_inetcnf_dir}/tftp"
+  local _tftpd_inetd_conf_tmp="${_inetcnf_dir}/tftp.$$"
+  local _with_comment=1
+
+  if [ -f "${_inetcnf}" ]
+  then
+    grep -q '^[ \t]*tftp' "${_inetcnf}" && _with_comment=0
+
+    # check for tftpd OR tftp in top-level inetd.conf file, and remove
+    # If we have inetutils-1.5 inetd.d support, then it will be replaced
+    # by a file in inetd.d/ -- otherwise, it will be re-added as necessary.
+    if [ `grep -q '^[# \t]*tftp' "${_inetcnf}"; echo $?` -eq 0 ]
+    then
+	grep -v '^[# \t]*tftp' "${_inetcnf}" >> "${_inetcnf_tmp}"
+	if [ -f "${_inetcnf_tmp}" ]
+	then
+	  if mv "${_inetcnf_tmp}" "${_inetcnf}"
+	  then
+	    csih_inform "Removed tftp[d] from ${_inetcnf}"
+	  else
+	    csih_warning "Removing tftp[d] from ${_inetcnf} failed!"
+	  fi
+	  rm -f "${_inetcnf_tmp}"
+	else
+	  csih_warning "Removing tftp[d] from ${_inetcnf} failed!"
+	fi
+    fi
+  fi
+
+  if [ -d "${_inetcnf_dir}" ]
+  then
+    # we have inetutils-1.5 inetd.d support
+
+    csih_install_config "${_tftpd_inetd_conf}"   "${SYSCONFDIR}/defaults"
+    if cmp "${SYSCONFDIR}/defaults${_tftpd_inetd_conf}" "${_tftpd_inetd_conf}" >/dev/null 2>&1
+    then
+      if [ "${_with_comment}" -eq 0 ]
+      then
+	sed -e 's/^#[ \t]*//' < "${_tftpd_inetd_conf}" > "${_tftpd_inetd_conf_tmp}"
+      else
+	sed -e 's/^#[ \t]*/# /' < "${_tftpd_inetd_conf}" > "${_tftpd_inetd_conf_tmp}"
+      fi
+      mv "${_tftpd_inetd_conf_tmp}" "${_tftpd_inetd_conf}"
+      csih_inform "Updated ${_tftpd_inetd_conf}"
+    fi
+
+  elif [ -f "${_inetcnf}" ]
+  then
+
+    # Add (new) tftp line to inetd.conf
+    if [ `grep -q '^[# \t]*tftp' "${_inetcnf}"; echo $?` -ne 0 ]
+    then
+      if [ "${_with_comment}" -eq 0 ]
+      then
+	echo "tftp  dgram   udp     wait    root  /usr/sbin/tftpd tftpd -c -p -u tftpd -U 022 -s ${TFTPBOOT}" >> "${_inetcnf}"
+      else
+	echo "# tftp  dgram   udp     wait    root  /usr/sbin/tftpd tftpd -c -p -u tftpd -U 022 -s ${TFTPBOOT}" >> "${_inetcnf}"
+      fi
+      csih_inform "Added tftp to ${_inetcnf}"
+    fi
+  fi
+} # --- End of update_inetd_conf --- #
+
+# ======================================================================
+# Routine: install_service
+#   Install inetd as a service
+# ======================================================================
+install_service() {
+  local run_service_as
+  local password
+  local force_arg
+  local user_arg
+
+  if [ "$opt_force" == "yes" ]
+  then
+    force_arg=-f
+  fi
+  if [ -n "$user_account" ]
+  then
+    user_arg=-u
+  fi
+  if ! cygrunsrv -Q tftpd >/dev/null 2>&1
+  then
+    if csih_request "Do you want to install tftpd as a service?"
+    then
+      csih_get_cygenv "${cygwin_value}"
+      if ! csih_is_nt2003
+      then
+        if [ "$csih_FORCE_PRIVILEGED_USER" != "yes" ]
+        then
+          # we won't create a new user, but this will initialize
+          # csih so that IF one already exists, csih_service_should_run_as
+          # will return that user.
+          csih_select_privileged_username $force_arg $user_arg "$user_account"
+        else
+          csih_inform "You have requested that a special privileged user be used"
+	  csih_inform "by the service, and are running on Windows NT, 2k or XP(32bit)"
+          csih_inform "where this is not actually required (the SYSTEM account would"
+	  csih_inform "also work). This script will help you create the necessary"
+          csih_inform "privileged user, or to select one that already exists."
+          echo
+        fi
+      else
+        csih_inform "On Windows XP 64bit, Windows NT Server 2003, Windows Vista,"
+	csih_inform "and above, the SYSTEM account cannot setuid to other users --"
+	csih_inform "a capability tftpd requires.  You need to have or to create a"
+	csih_inform "privileged account.  This script will help you do so."
+        echo
+      fi
+      if ( csih_is_nt2003 || [ "$csih_FORCE_PRIVILEGED_USER" = "yes" ] )
+      then
+        csih_select_privileged_username $force_arg $user_arg "$user_account"
+        if ! csih_create_privileged_user "${password_value}"
+        then
+          csih_error_recoverable "There was a serious problem creating a privileged user."
+          csih_request "Do you want to proceed anyway?" || exit 1
+        fi
+      fi
+
+      # never returns empty if NT or above
+      run_service_as=$(csih_service_should_run_as)
+
+      if [ "${run_service_as}" = "${csih_PRIVILEGED_USERNAME}" ]
+      then
+        password="${csih_PRIVILEGED_PASSWORD}"
+        if [ -z "${password}" ]
+        then
+          csih_get_value "Please enter the password for user '${run_service_as}':" "-s"
+          password="${csih_value}"
+        fi
+      fi
+
+      # at this point, we either have $run_service_as = "system" and
+      # $password is empty, or $run_service_as is some privileged user
+      # and (hopefully) $password contains the correct password.  So,
+      # from here out, we use '-z "${password}"' to discriminate the
+      # two cases.
+
+      csih_check_user "${run_service_as}"
+
+      if [ -z "${password}" ]
+      then
+        if cygrunsrv -I tftpd -d "CYGWIN tftpd" -p /usr/sbin/tftpd -a "$args_value" -y tcpip \
+          -e CYGWIN="${csih_cygenv}"
+        then
+          echo ""
+          csih_inform "The tftpd service has been installed under the LocalSystem"
+          csih_inform "account (also known as SYSTEM). To start the service now, call"
+          csih_inform "\`net start tftpd' or \`cygrunsrv -S tftpd'.  Otherwise, it"
+          csih_inform "will start automatically after the next reboot."
+        fi
+      else
+        if cygrunsrv -I tftpd -d "CYGWIN tftpd" -p /usr/sbin/tftpd -a "$args_value" -y tcpip \
+           -e CYGWIN="${csih_cygenv}" -u "${run_service_as}" -w "${password}"
+        then
+          echo ""
+          csih_inform "The tftpd service has been installed under the '${run_service_as}'"
+          csih_inform "account.  To start the service now, call \`net start tftpd' or"
+          csih_inform "\`cygrunsrv -S tftpd'.  Otherwise, it will start automatically"
+          csih_inform "after the next reboot."
+        fi
+      fi
+    fi # user allowed us to install as service
+  fi # service not yet installed
+} # --- End of install_service --- #
+
+
+# ======================================================================
+# Main Entry Point
+# ======================================================================
+
+# Check how the script has been started.  If
+#   (1) it has been started by giving the full path and
+#       that path is /etc/postinstall, OR
+#   (2) Otherwise, if the environment variable
+#       TFTPD_CONFIG_AUTO_ANSWER_NO is set
+# then set auto_answer to "no".  This allows automatic
+# creation of the config files in /etc w/o overwriting
+# them if they already exist.  In both cases, color
+# escape sequences are suppressed, so as to prevent
+# cluttering setup's logfiles.
+if [ "$PROGDIR" = "/etc/postinstall" ]
+then
+  csih_auto_answer="no"
+  csih_disable_color
+  opt_force=yes
+fi
+if [ -n "${TFTPD_CONFIG_AUTO_ANSWER_NO}" ]
+then
+  csih_auto_answer="no"
+  csih_disable_color
+  opt_force=yes
+fi
+
+# ======================================================================
+# Parse options
+# ======================================================================
+while :
+do
+  case $# in
+  0)
+    break
+    ;;
+  esac
+
+  option=$1
+  shift
+
+  case "${option}" in
+  -d | --debug )
+    set -x
+    csih_trace_on
+    ;;
+
+  -y | --yes )
+    csih_auto_answer=yes
+    opt_force=yes
+    ;;
+
+  -n | --no )
+    csih_auto_answer=no
+    opt_force=yes
+    ;;
+
+  -a | --args )
+    args_value="$1"
+    shift
+    ;;
+
+  -c | --cygwin )
+    cygwin_value="$1"
+    shift
+    ;;
+
+  -p | --port )
+    port_number=$1
+    shift
+    ;;
+
+  -u | --user )
+    user_account="$1"
+    shift
+    ;;
+    
+  -w | --pwd )
+    password_value="$1"
+    shift
+    ;;
+
+  --privileged )
+    csih_FORCE_PRIVILEGED_USER=yes
+    ;;
+
+  --standalone )
+    opt_standalone=yes
+    ;;
+    
+  *)
+    echo "usage: ${progname} [OPTION]..."
+    echo
+    echo "This script creates a tftpd server configuration."
+    echo
+    echo "Options:"
+    echo "  --debug  -d            Enable shell's debug output."
+    echo "  --yes    -y            Answer all questions with \"yes\" automatically."
+    echo "  --no     -n            Answer all questions with \"no\" automatically."
+    echo
+    echo "The following apply only if you wish to install tftpd itself as a standalone"
+    echo "server, rather than using the inetd or xinetd superservers (using the super-"
+    echo "servers is the typical approach)."
+    echo "  --standalone           Install tftpd as a standalone service."
+    echo "  --cygwin -c <options>  Use \"options\" as value for CYGWIN environment var."
+    echo "  --args   -a <args>     Use \"args\" for standalone tftpd service."
+    echo "                         default: \"$args_value\""
+    echo "  --user   -u <account>  privileged user for service."
+    echo "  --pwd    -w <passwd>   Use \"pwd\" as password for privileged user."
+    echo "  --privileged           On Windows NT/2k/XP, require privileged user"
+    echo "                         instead of LocalSystem for sshd service."
+    echo
+    exit 1
+    ;;
+
+  esac
+done
+
+# ======================================================================
+# Action!
+# ======================================================================
+
+# Check for ${SYSCONFDIR} directory
+csih_make_dir "${SYSCONFDIR}" "Cannot create global configuration files."
+chmod 775 "${SYSCONFDIR}"
+setfacl -m u:system:rwx "${SYSCONFDIR}"
+
+csih_make_dir "${TFTPBOOT}" "Cannot create tftpboot directory."
+chmod 775 "${TFTPBOOT}"
+setfacl -m u:system:rwx "${TFTPBOOT}"
+
+# use 'cmp' program to determine if a config file is identical
+# to the default version of that config file
+csih_check_program_or_error cmp diffutils
+
+create_unpriv_user
+chown tftpd ${TFTPBOOT} 2>/dev/null || /bin/true
+
+update_inetd_conf
+
+if [ "$opt_standalone" = "yes" ]
+then
+  install_service
+fi
+
+echo
+csih_inform "tftpd configuration finished. Have fun!"
+csih_inform "If you did NOT install tftpd as a standalone service, then"
+csih_inform "you may need to modify /etc/inetd.d/tftp or /etc/xinetd.d/tftp"
+csih_inform "depending on which superserver you wish to use to control"
+csih_inform "tftpd"
+

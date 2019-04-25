@@ -5,5 +5,10 @@ cygwin/tmp/*
 export_installer/
 log/
 package/symlink_file
-tftpd32/tftproot/
-cygwin/opt/*
+*/tftpd32/tftproot/*
+*/filezilla/ftp_root/*
+cygwin/opt/bin/edb
+cygwin/opt/bin/gdb
+wind/
+cygwin/var/run/*
+cygwin/var/tmp/*

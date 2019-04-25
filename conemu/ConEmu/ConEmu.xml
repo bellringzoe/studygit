@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <key name="Software">
 	<key name="ConEmu">
-		<key name=".Vanilla" modified="2019-04-19 16:59:45" build="190331">
+		<key name=".Vanilla" modified="2019-04-25 10:59:25" build="190331">
 			<value name="StartType" type="hex" data="02"/>
 			<value name="CmdLine" type="string" data=""/>
 			<value name="StartTasksFile" type="string" data=""/>
@@ -295,7 +295,7 @@
 			<value name="Multi.ShowButtons" type="hex" data="01"/>
 			<value name="Multi.ShowSearch" type="hex" data="01"/>
 			<value name="Multi.NumberInCaption" type="hex" data="01"/>
-			<value name="Multi.CloseConfirmFlags" type="hex" data="04"/>
+			<value name="Multi.CloseConfirmFlags" type="hex" data="05"/>
 			<value name="Multi.NewConfirm" type="hex" data="00"/>
 			<value name="Multi.DupConfirm" type="hex" data="01"/>
 			<value name="Multi.DetachConfirm" type="hex" data="01"/>
@@ -339,11 +339,11 @@
 			<value name="Cascaded" type="hex" data="00"/>
 			<value name="IntegralSize" type="hex" data="01"/>
 			<value name="WindowMode" type="dword" data="00000520"/>
-			<value name="ConWnd X" type="long" data="11"/>
+			<value name="ConWnd X" type="long" data="1434"/>
 			<value name="ConWnd Y" type="long" data="0"/>
 			<value name="LastMonitor" type="string" data="0,0,2736,1764"/>
-			<value name="ConWnd Width" type="dword" data="0000004d"/>
-			<value name="ConWnd Height" type="dword" data="00000019"/>
+			<value name="ConWnd Width" type="dword" data="00000058"/>
+			<value name="ConWnd Height" type="dword" data="00000030"/>
 			<value name="16bit Height" type="ulong" data="0"/>
 			<value name="Restore2ActiveMon" type="hex" data="01"/>
 			<value name="RestoreInactive" type="hex" data="00"/>
@@ -597,29 +597,48 @@
 			<value name="Update.DownloadPath" type="string" data="%TEMP%\ConEmu"/>
 			<value name="Update.LeavePackages" type="hex" data="00"/>
 			<value name="Update.PostUpdateCmd" type="string" data="echo Last successful update&gt;ConEmuUpdate.info &amp;&amp; date /t&gt;&gt;ConEmuUpdate.info &amp;&amp; time /t&gt;&gt;ConEmuUpdate.info"/>
-			<key name="Tasks" modified="2019-04-19 16:47:46" build="190331">
-				<value name="Count" type="long" data="5"/>
-				<key name="Task1" modified="2019-04-19 16:48:44" build="190331">
+			<key name="Tasks" modified="2019-04-25 10:59:19" build="190331">
+				<value name="Count" type="long" data="8"/>
+				<key name="Task1" modified="2019-04-25 10:57:01" build="190331">
 					<value name="Name" type="string" data="{默认控制台}"/>
 					<value name="Flags" type="dword" data="00000006"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Active" type="long" data="0"/>
 					<value name="Count" type="long" data="1"/>
-					<value name="Cmd1" type="string" data='set CHERE_INVOKING=1 &amp; set "PATH=%ConEmuBaseDirShort%\..\..\cygwin\bin;%ConEmuBaseDirShort%\..\..\cygwin\opt\bin;%ConEmuBaseDirShort%\..\..\usr\sbin;%PATH%" &amp; %ConEmuBaseDirShort%\..\..\cygwin\bin\bash.exe --login -i -new_console:C:"%ConEmuBaseDirShort%\watching_you.ico" '/>
+					<value name="Cmd1" type="string" data='set CHERE_INVOKING=1 &amp; set "PATH=%ConEmuBaseDirShort%\..\..\cygwin\bin;%ConEmuBaseDirShort%\..\..\cygwin\opt\bin;%ConEmuBaseDirShort%\..\..\usr\sbin;%PATH%" &amp;  %ConEmuBaseDirShort%\conemu-cyg-32.exe -new_console:p %ConEmuDir%\..\cygwin\bin\bash.exe --login -i -new_console:C:"%ConEmuBaseDirShort%\watching_you.ico"'/>
 				</key>
-				<key name="Task2" modified="2019-04-19 16:47:46" build="190331">
+				<key name="Task2" modified="2019-04-24 09:00:45" build="190331">
+					<value name="Name" type="string" data="{管理员控制台}"/>
+					<value name="Flags" type="dword" data="00000004"/>
+					<value name="Hotkey" type="dword" data="00000000"/>
+					<value name="GuiArgs" type="string" data=""/>
+					<value name="Active" type="long" data="0"/>
+					<value name="Count" type="long" data="1"/>
+					<value name="Cmd1" type="string" data='set CHERE_INVOKING=1 &amp; set "PATH=%ConEmuBaseDirShort%\..\..\cygwin\bin;%ConEmuBaseDirShort%\..\..\cygwin\opt\bin;%ConEmuBaseDirShort%\..\..\cygwin\usr\sbin;%PATH%" &amp; %ConEmuBaseDirShort%\..\..\cygwin\bin\bash.exe --login -i -new_console:C:"%ConEmuBaseDirShort%\watching_you.ico"  -new_console:a'/>
+				</key>
+				<key name="Task3" modified="2019-04-24 09:00:20" build="190331">
+					<value name="Name" type="string" data="{服务器::10.90.6.171}"/>
+					<value name="Flags" type="dword" data="00000004"/>
+					<value name="Hotkey" type="dword" data="00000000"/>
+					<value name="GuiArgs" type="string" data=""/>
+					<value name="Active" type="long" data="0"/>
+					<value name="Count" type="long" data="1"/>
+					<value name="Cmd1" type="string" data='set CHERE_INVOKING=1 &amp; set "PATH=%ConEmuBaseDirShort%\..\..\cygwin\bin;%ConEmuBaseDirShort%\..\..\cygwin\opt\bin;%ConEmuBaseDirShort%\..\..\cygwin\usr\sbin;%PATH%" &amp; %ConEmuBaseDirShort%\..\..\cygwin\bin\bash.exe --login -i -new_console:C:"%ConEmuBaseDirShort%\watching_you.ico" -c "ssh qiyin2000@10.90.6.171"'/>
+				</key>
+				<key name="Task4" modified="2019-04-24 09:00:20" build="190331">
 					<value name="Name" type="string" data="{基础软件部::操作系统更新}"/>
 					<value name="Flags" type="dword" data="00000004"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Active" type="long" data="0"/>
-					<value name="Count" type="long" data="2"/>
-					<value name="Cmd1" type="string" data="-new_console:d:%ConEmuBaseDirShort%\..\..\tftpd32\tftproot\ %ConEmuBaseDirShort%\..\..\tftpd32\tftpd32.exe"/>
-					<value name="Cmd2" type="string" data='set CHERE_INVOKING=1 &amp; set "PATH=%ConEmuBaseDirShort%\..\..\cygwin\bin;%ConEmuBaseDirShort%\..\..\cygwin\opt\bin;%ConEmuBaseDirShort%\..\..\usr\sbin;%PATH%" &amp; %ConEmuBaseDirShort%\..\..\cygwin\bin\bash.exe --login -i -new_console:C:"%ConEmuBaseDirShort%\watching_you.ico"  '/>
+					<value name="Count" type="long" data="3"/>
+					<value name="Cmd1" type="string" data="-new_console:d:%ConEmuBaseDirShort%\..\..\cygwin\opt\bin\tftpd32\tftproot\ %ConEmuBaseDirShort%\..\..\cygwin\opt\bin\tftpd32\tftpd32.exe"/>
+					<value name="Cmd2" type="string" data='"%ConEmuBaseDirShort%\..\..\cygwin\opt\bin\filezilla\FileZilla Server Interface.exe" '/>
+					<value name="Cmd3" type="string" data='set CHERE_INVOKING=1 &amp; set "PATH=%ConEmuBaseDirShort%\..\..\cygwin\bin;%ConEmuBaseDirShort%\..\..\cygwin\opt\bin;%ConEmuBaseDirShort%\..\..\usr\sbin;%PATH%" &amp; %ConEmuBaseDirShort%\..\..\cygwin\bin\bash.exe --login -i -new_console:C:"%ConEmuBaseDirShort%\watching_you.ico"  /opt/bin/filezilla/filezilla_start'/>
 				</key>
-				<key name="Task3" modified="2019-04-18 21:44:21" build="190331">
-					<value name="Name" type="string" data="{quick::packhere}"/>
+				<key name="Task5" modified="2019-04-25 11:16:45" build="190331">
+					<value name="Name" type="string" data="{维护工具::工具打包}"/>
 					<value name="Flags" type="dword" data="00000004"/>
 					<value name="Hotkey" type="dword" data="00115b50"/>
 					<value name="GuiArgs" type="string" data=""/>
@@ -627,7 +646,16 @@
 					<value name="Count" type="long" data="1"/>
 					<value name="Cmd1" type="string" data='set CHERE_INVOKING=1 &amp; set "PATH=%ConEmuBaseDirShort%\..\..\..\..\bin;%ConEmuBaseDirShort%\..\..\;%ConEmuBaseDirShort%\..\..\..\..\usr\sbin;%PATH%" &amp; set "EXPORT_ROOT=%ConEmuBaseDirShort%\..\..\" &amp; set "EXPORT_NAME=NBUdbg" &amp; %ConEmuBaseDirShort%\..\..\cygwin\bin\bash.exe --login -i -new_console:C:"%ConEmuBaseDirShort%\watching_you.ico"  %ConEmuBaseDirShort%\..\..\package\packme'/>
 				</key>
-				<key name="Task4" modified="2019-04-19 16:47:46" build="190331">
+				<key name="Task6" modified="2019-04-25 11:16:45" build="190331">
+					<value name="Name" type="string" data="{维护工具::cygwin}"/>
+					<value name="Flags" type="dword" data="00000004"/>
+					<value name="Hotkey" type="dword" data="00000000"/>
+					<value name="GuiArgs" type="string" data=""/>
+					<value name="Active" type="long" data="0"/>
+					<value name="Count" type="long" data="1"/>
+					<value name="Cmd1" type="string" data="-new_console:d:%ConEmuBaseDirShort%\..\..\cygwin\install %ConEmuBaseDirShort%\..\..\cygwin\install\setup-x86.exe"/>
+				</key>
+				<key name="Task7" modified="2019-04-25 11:16:45" build="190331">
 					<value name="Name" type="string" data="{Shells::cmd (Admin)}"/>
 					<value name="Flags" type="dword" data="00000004"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
@@ -636,7 +664,7 @@
 					<value name="Count" type="long" data="1"/>
 					<value name="Cmd1" type="string" data='cmd.exe /k "%ConEmuBaseDir%\CmdInit.cmd" -new_console:a'/>
 				</key>
-				<key name="Task5" modified="2019-04-19 16:47:46" build="190331">
+				<key name="Task8" modified="2019-04-25 11:16:45" build="190331">
 					<value name="Name" type="string" data="{Tools::Chocolatey (Admin)}"/>
 					<value name="Flags" type="dword" data="00000004"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
@@ -653,13 +681,20 @@
 				<value name="Count" type="long" data="0"/>
 			</key>
 			<value name="CmdLineHistory" type="multi">
-				<line data="{基础软件部::操作系统更新}"/>
+				<line data="{setup::cygwin}"/>
 				<line data="{默认控制台}"/>
+				<line data="{管理员控制台}"/>
+				<line data="{服务器::10.90.6.171}"/>
+				<line data="{基础软件部::操作系统更新}"/>
+				<line data="{快捷::打包}"/>
+				<line data="{remote::10.90.6.171}"/>
+				<line data="{remote:10.90.6.171}"/>
+				<line data="{python64}"/>
+				<line data="{Shells::cmd (Admin)}"/>
 				<line data="{windbg}"/>
 				<line data="{explorer}"/>
 				<line data="{bsd::os_update}"/>
 				<line data="{quick::packhere}"/>
-				<line data="{Shells::cmd (Admin)}"/>
 				<line data="{quick::packme}"/>
 				<line data="{packit}"/>
 				<line data="{quick::connect_192.168.0.16}"/>

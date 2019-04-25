@@ -269,3 +269,8 @@
 /usr/lib/python2.7/lib-dynload/_struct.dll
 /usr/lib/python2.7/lib-dynload/_testcapi.dll
 /usr/bin/cygsodium-18.dll
+/usr/bin/cygcrypt-2.dll
+/usr/bin/cyggc-1.dll
+/usr/bin/cygguile-2.0-22.dll
+/usr/lib/cygguilereadline-v-18-18.dll
+/usr/bin/cygltdl-7.dll

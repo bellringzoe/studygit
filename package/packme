@@ -55,7 +55,7 @@ function check_cyglinks {
 
 function create_temp_7z {
 	TMP="tmp$(date +"%Y-%m-%d_%H_%M_%S")"
-	7z a "$SRC_DIR/export_installer/$TMP.7z" $SRC_DIR '-xr!*http*' '-xr!*log*' '-xr!*export_installer*' '-xr!home'
+	7z a "$SRC_DIR/export_installer/$TMP.7z" $SRC_DIR '-xr!*http*' '-xr!*log*' '-xr!*export_installer*' '-xr!home' '-xr!.git'
 #packaged,remove it to prevent some unwanted actions
 	rm -rf /etc/skel/.links
 }

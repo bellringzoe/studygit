@@ -6,6 +6,7 @@
 /usr/bin/cygbz2-1.dll
 /usr/bin/cygcom_err-2.dll
 /usr/bin/cygcrypt-0.dll
+/usr/bin/cygcrypt-2.dll
 /usr/bin/cygcrypto-1.0.0.dll
 /usr/bin/cygcrypto-1.1.dll
 /usr/bin/cygcurl-4.dll
@@ -17,12 +18,14 @@
 /usr/bin/cygfdisk-1.dll
 /usr/bin/cygffi-6.dll
 /usr/bin/cygformw-10.dll
+/usr/bin/cyggc-1.dll
 /usr/bin/cyggcc_s-1.dll
 /usr/bin/cyggdbm-4.dll
 /usr/bin/cyggdbm_compat-4.dll
 /usr/bin/cyggmp-10.dll
 /usr/bin/cyggnutls-30.dll
 /usr/bin/cyggssapi_krb5-2.dll
+/usr/bin/cygguile-2.0-22.dll
 /usr/bin/cyghistory7.dll
 /usr/bin/cyghogweed-4.dll
 /usr/bin/cygiconv-2.dll
@@ -37,6 +40,7 @@
 /usr/bin/cyglber-2-4-2.dll
 /usr/bin/cygldap-2-4-2.dll
 /usr/bin/cygldap_r-2-4-2.dll
+/usr/bin/cygltdl-7.dll
 /usr/bin/cyglz4-1.dll
 /usr/bin/cyglzma-5.dll
 /usr/bin/cygmagic-1.dll
@@ -101,6 +105,7 @@
 /usr/lib/apr-util-1/apr_dbm_db-1.dll
 /usr/lib/apr-util-1/apr_dbm_gdbm-1.dll
 /usr/lib/apr-util-1/apr_ldap-1.dll
+/usr/lib/cygguilereadline-v-18-18.dll
 /usr/lib/engines-1.0/lib4758cca.so
 /usr/lib/engines-1.0/libaep.so
 /usr/lib/engines-1.0/libatalla.so

@@ -207,11 +207,16 @@ Network applications
 * awkinet: (gawkinet).          TCP/IP Internetworking With 'gawk'.
 
 Software development
+* Annotate: (annotate).         The obsolete annotation interface.
 * As: (as).                     The GNU assembler.
 * Bfd: (bfd).                   The Binary File Descriptor library.
 * Binutils: (binutils).         The GNU binary utilities.
 * Gas: (as).                    The GNU assembler.
+* Gdb: (gdb).                   The GNU debugger.
 * Ld: (ld).                     The GNU linker.
+* Make: (make).                 Remake files automatically.
+* Stabs: (stabs).               The "stabs" debugging information format.
+* gdbserver: (gdb) Server.      The GNU debugging server.
 * gprof: (gprof).               Profiling your program's execution
 
 System administration

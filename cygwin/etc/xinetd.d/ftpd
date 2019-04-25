@@ -12,5 +12,5 @@ service ftp
 	log_on_failure		+= USERID
 	nice			= 10
 	user			= cyg_server
-	disable			= yes
+	disable			= no 
 }
