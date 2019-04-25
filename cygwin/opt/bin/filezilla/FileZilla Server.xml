@@ -1,0 +1,105 @@
+<FileZillaServer>
+    <Settings>
+        <Item name="Admin port" type="numeric">14147</Item>
+    </Settings>
+    <Groups>
+        <Group Name="bmu">
+            <Option Name="Bypass server userlimit">0</Option>
+            <Option Name="User Limit">0</Option>
+            <Option Name="IP Limit">0</Option>
+            <Option Name="Enabled">1</Option>
+            <Option Name="Comments"></Option>
+            <Option Name="ForceSsl">0</Option>
+            <IpFilter>
+                <Disallowed />
+                <Allowed />
+            </IpFilter>
+            <Permissions>
+                <Permission Dir = "C:\nbudbg\cygwin\opt\bin\filezilla\ftp_root">
+                    <Option Name="FileRead">1</Option>
+                    <Option Name="FileWrite">0</Option>
+                    <Option Name="FileDelete">0</Option>
+                    <Option Name="FileAppend">0</Option>
+                    <Option Name="DirCreate">0</Option>
+                    <Option Name="DirDelete">0</Option>
+                    <Option Name="DirList">1</Option>
+                    <Option Name="DirSubdirs">1</Option>
+                    <Option Name="IsHome">1</Option>
+                    <Option Name="AutoCreate">0</Option>
+                </Permission>
+            </Permissions>
+            <SpeedLimits DlType="1" DlLimit="10" ServerDlLimitBypass="0" UlType="1" UlLimit="10" ServerUlLimitBypass="0">
+                <Download />
+                <Upload />
+            </SpeedLimits>
+        </Group>
+    </Groups>
+    <Users>
+        <User Name="bmu">
+            <Option Name="Pass">87A88DDA27CBAFC55666660B038A02422BA24C8BCEB59E364DC7B642A50671093F9CB14BDB41D4CEEC81C04FE39DB6B6E7B8A9C0D7497D94384B254E72ED7CF0</Option>
+            <Option Name="Salt">L8j5D(30],cTOuN6n;zwq9FB)B&gt;%KPJuj8rLVe&lt;`M@_8!g1IJfp3]DQHR&quot;xJ}A5Y</Option>
+            <Option Name="Group">bmu</Option>
+            <Option Name="Bypass server userlimit">0</Option>
+            <Option Name="User Limit">0</Option>
+            <Option Name="IP Limit">0</Option>
+            <Option Name="Enabled">1</Option>
+            <Option Name="Comments"></Option>
+            <Option Name="ForceSsl">0</Option>
+            <IpFilter>
+                <Disallowed />
+                <Allowed />
+            </IpFilter>
+            <Permissions>
+                <Permission Dir = "C:\nbudbg\cygwin\opt\bin\filezilla\ftp_root">
+                    <Option Name="FileRead">1</Option>
+                    <Option Name="FileWrite">0</Option>
+                    <Option Name="FileDelete">0</Option>
+                    <Option Name="FileAppend">0</Option>
+                    <Option Name="DirCreate">0</Option>
+                    <Option Name="DirDelete">0</Option>
+                    <Option Name="DirList">1</Option>
+                    <Option Name="DirSubdirs">1</Option>
+                    <Option Name="IsHome">1</Option>
+                    <Option Name="AutoCreate">0</Option>
+                </Permission>
+            </Permissions>
+            <SpeedLimits DlType="0" DlLimit="10" ServerDlLimitBypass="0" UlType="0" UlLimit="10" ServerUlLimitBypass="0">
+                <Download />
+                <Upload />
+            </SpeedLimits>
+        </User>
+        <User Name="bmu852">
+            <Option Name="Pass">29B57D79C007FFBC20116AE0E2F5B46925448515283CD1BB1535B53FDABA2EE4AC84F6AA4FC1193C805CDBEA0AFB37C680E8598887031CC3D9773B83C6BD6BC6</Option>
+            <Option Name="Salt">-&gt;bK(&lt;&quot;[.pqbLIx`ak$YU7lWL%`},ZC_kawfb|ysmJ^Q5[a[Isg9-g^G9Xxkqm_\</Option>
+            <Option Name="Group"></Option>
+            <Option Name="Bypass server userlimit">0</Option>
+            <Option Name="User Limit">0</Option>
+            <Option Name="IP Limit">0</Option>
+            <Option Name="Enabled">1</Option>
+            <Option Name="Comments"></Option>
+            <Option Name="ForceSsl">0</Option>
+            <IpFilter>
+                <Disallowed />
+                <Allowed />
+            </IpFilter>
+            <Permissions>
+                <Permission Dir = "C:\nbudbg\cygwin\opt\bin\filezilla\ftp_root">
+                    <Option Name="FileRead">1</Option>
+                    <Option Name="FileWrite">0</Option>
+                    <Option Name="FileDelete">0</Option>
+                    <Option Name="FileAppend">0</Option>
+                    <Option Name="DirCreate">0</Option>
+                    <Option Name="DirDelete">0</Option>
+                    <Option Name="DirList">1</Option>
+                    <Option Name="DirSubdirs">1</Option>
+                    <Option Name="IsHome">1</Option>
+                    <Option Name="AutoCreate">0</Option>
+                </Permission>
+            </Permissions>
+            <SpeedLimits DlType="0" DlLimit="10" ServerDlLimitBypass="0" UlType="0" UlLimit="10" ServerUlLimitBypass="0">
+                <Download />
+                <Upload />
+            </SpeedLimits>
+        </User>
+    </Users>
+</FileZillaServer>

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+echo "working @ $ConEmuWorkDir"
+
+FTP_ROOT=$(echo "$ConEmuWorkDir\cygwin\opt\bin\filezilla\ftp_root" | sed 's/\\/\\\\/g' )
+
+#echo $FTP_ROOT
+
+sed -i "s/<Permission Dir.*/<Permission Dir = \"$FTP_ROOT\">/" "$ConEmuWorkDir\\cygwin\\opt\\bin\\filezilla\\FileZilla Server.xml"

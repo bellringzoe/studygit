@@ -1,0 +1,4 @@
+#!/bin/sh
+#startup the server @backgroud,will be shutdown when the main process were shutdown
+/opt/bin/filezilla/FileZilla\ Server.exe /compat /start & 
+bash -i
