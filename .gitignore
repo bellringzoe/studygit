@@ -12,3 +12,4 @@ cygwin/opt/bin/gdb
 wind/
 cygwin/var/run/*
 cygwin/var/tmp/*
+cygwin/var/lib/tftpboot/
