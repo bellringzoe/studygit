@@ -1,0 +1,10 @@
+#!/bin/python3
+
+from dhcp import *
+
+configuration =DHCPServerConfiguration()
+configuration.load('dhcpd.conf')
+server=DHCPServer(configuration)
+server.run()
+
+

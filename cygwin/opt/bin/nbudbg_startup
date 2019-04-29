@@ -6,4 +6,4 @@ FTP_ROOT=$(echo "$ConEmuWorkDir\cygwin\opt\bin\filezilla\ftp_root" | sed 's/\\/\
 
 #echo $FTP_ROOT
 
-sed -i "s/<Permission Dir.*/<Permission Dir = \"$FTP_ROOT\">/" "$ConEmuWorkDir\\cygwin\\opt\\bin\\filezilla\\FileZilla Server.xml"
+sed -i "s/<Permission Dir.*/<Permission Dir = \"$FTP_ROOT\">/" "$(cygpath -u $ConEmuWorkDir)/cygwin/opt/bin/filezilla/FileZilla Server.xml"

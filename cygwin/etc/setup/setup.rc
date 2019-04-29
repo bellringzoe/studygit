@@ -1,5 +1,5 @@
 last-cache
-	C:\nbudbg\cygwin\install
+	c:\nbudbg\cygwin\install
 mirrors-lst
 	http://cygwin.mirror.constant.com/;cygwin.mirror.constant.com;United States;New Jersey
 	http://cygwin.mirrors.hoobly.com/;cygwin.mirrors.hoobly.com;United States;Pennsylvania
@@ -48,6 +48,7 @@ mirrors-lst
 	http://mirror.csclub.uwaterloo.ca/cygwin/;mirror.csclub.uwaterloo.ca;Canada;Ontario
 	ftp://mirror.checkdomain.de/cygwin/;mirror.checkdomain.de;Europe;Germany
 	http://mirror.checkdomain.de/cygwin/;mirror.checkdomain.de;Europe;Germany
+	ftp://ftp.fau.de/cygwin/;ftp.fau.de;Europe;Germany
 	http://ftp.fau.de/cygwin/;ftp.fau.de;Europe;Germany
 	http://www.gutscheinrausch.de/mirror/cygwin/;www.gutscheinrausch.de;Europe;Germany
 	ftp://ftp-stud.hs-esslingen.de/pub/Mirrors/sources.redhat.com/cygwin/;ftp-stud.hs-esslingen.de;Europe;Germany
@@ -78,6 +79,7 @@ mirrors-lst
 	http://mirror.rise.ph/cygwin/cygwin/;mirror.rise.ph;Asia;Philippines
 	ftp://ftp.rnl.tecnico.ulisboa.pt/pub/cygwin/;ftp.rnl.tecnico.ulisboa.pt;Europe;Portugal
 	http://ftp.rnl.tecnico.ulisboa.pt/pub/cygwin/;ftp.rnl.tecnico.ulisboa.pt;Europe;Portugal
+	http://ftp.acc.umu.se/mirror/cygwin/;ftp.acc.umu.se;Europe;Sweden
 	http://cygwin.mirror.globo.tech/;cygwin.mirror.globo.tech;Canada;Quebec
 	ftp://ftp.cse.yzu.edu.tw/pub/cygwin/;ftp.cse.yzu.edu.tw;Asia;Taiwan
 	http://ftp.cse.yzu.edu.tw/pub/cygwin/;ftp.cse.yzu.edu.tw;Asia;Taiwan
@@ -90,3 +92,5 @@ net-method
 	IE
 last-action
 	Download,Install
+chooser_window_settings
+	44,2,3,4294967295,4294967295,4294967295,4294967295,411,256,957,656

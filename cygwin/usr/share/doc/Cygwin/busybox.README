@@ -1,0 +1,116 @@
+busybox
+----------------------------------------------------------------------
+Tiny utilities in a single executable
+
+Busybox combines tiny versions of many common utilities into a single
+executable.
+
+Runtime requirements (these or newer):
+  cygwin-2.0.4-1
+
+Build requirements (these or newer):
+  binutils-2.25-1
+  coreutils-8.23-4
+  cygport-0.20.1-1
+  findutils-4.5.12-1
+  gcc-core-4.9.3-1
+  grep-2.21-1
+  make-4.1-1
+  sed-4.2.2-3
+
+Canonical homepage:
+  http://www.busybox.net/
+
+Canonical download:
+  http://www.busybox.net/downloads/
+
+Version control repository:
+  http://git.busybox.net/busybox/
+
+Mailing lists:
+  http://lists.busybox.net/mailman/listinfo/busybox
+
+License:
+  GPLv2+
+
+Language:
+  C
+
+---------------------------------------------
+
+Port notes:
+
+All configuration options which work on Cygwin are enabled (see output
+of "busybox bbconfig").
+
+The extra busybox-standalone package contains a version compiled with
+'standalone shell' feature enabled.  Then the Busybox shell runs any
+built-in applets before checking the command path.
+
+Both packages install a symlink to busybox.exe with alternatives(8):
+  /usr/bin/busybox -> /usr/libexec/busybox/bin/busybox.exe
+  /usr/bin/busybox -> /usr/libexec/busybox-standalone/bin/busybox.exe
+If both packages are installed, the non-standalone version takes
+precedence.
+
+
+Usage examples:
+- Run some Busybox command (for example the ash shell):
+
+  $ busybox ash
+or
+  $ /usr/libexec/busybox/bin/ash
+
+- Insert a Busybox command into default PATH (for example dos2unix):
+
+  $ ln -s /usr/bin/busybox /usr/local/bin/dos2unix
+
+- Append all Busybox commands to the end of the PATH:
+
+  $ export PATH="$PATH:/usr/libexec/busybox/bin"
+
+- Create a tiny version of Cygwin:
+
+  $ cp -a /usr/libexec/busybox /some/where/busybox
+or
+  $ cp -a /usr/libexec/busybox-standalone /some/where/busybox
+
+  $ cp -p /bin/cygwin1.dll /some/where/busybox/bin
+
+Add terminal emulator (recommended):
+  $ cp -p /bin/mintty.exe /some/where/busybox/bin
+
+Add Cygwin specific tools (optional):
+  $ cp -p /bin/cygpath.exe /bin/mkpasswd.exe .... /some/where/busybox/bin
+
+
+Known issues and limitations:
+- 'cp', 'install', 'ln' and 'mv' do not provide any automatic handling of
+names with a '.exe' suffix (see coreutils.README).
+
+- 'df' does not recognize Cygwin mount information (see coreutils.README).
+
+- 'nslookup' always uses default Windows DNS server settings.
+The /etc/resolv.conf file and the SERVER parameter are ignored.
+
+- 'ping', 'ping6' and 'traceroute' require admin rights.
+
+- 'traceroute' only supports ICMPv4.  The -I option is ignored.
+To see intermediate hops, ICMPv4 incoming must be enabled in Windows firewall.
+
+- 'mpstat', 'nmeter' and 'top' do not provide all info due to limitations of
+Cygwin /proc filesystem.
+
+
+--------  busybox-1.23.2-1  -- 2015-07-05 --------
+First experimental release for Cygwin.
+busybox 1.23.2  2015-03-23
+
+
+For more information about this package, see the upstream documentation in
+/usr/share/doc/busybox.
+
+Cygwin port by: Christian Franke <franke@computer.org>
+
+Please address all questions to the Cygwin mailing list at <cygwin@cygwin.com>.
+

@@ -1,0 +1,43 @@
+#!/bin/sh
+
+#prepare envirments
+#prepare network
+function service_nc_select {
+	local index=0;
+#	netsh interface show interface | sed '/Enable/ !d' | sed -e 's/^\([a-zA-Z]\+\s\+\)\{3\}//g' > /tmp/interfaces	
+	netsh interface show interface | tail -n +4 | perl -p -e 's/^([^\s]+\s+){3}//g' | head -n -1 > /tmp/interfaces
+	while read interfaces;
+	do
+		index=$((index + 1));
+		echo $index:$interfaces;
+	done </tmp/interfaces
+	while read -p "choose dhcp interface from 1 to $index:" integer;
+	do
+		if [[ "$integer" =~ [[:digit:]]+ ]];then
+			if [ "$integer" -gt "0" ]  &&  [ "$integer" -le "$index"  ];then
+				break;
+			fi
+		fi
+	done
+#	integer=2
+
+	IF_NAME=\"$(sed "$integer !d" /tmp/interfaces | sed "s/\r//")\"
+	netsh interface ipv4 show ipaddresses interface=$IF_NAME
+#	netsh interface show interface \"$(sed "$integer !d" /tmp/interfaces | sed "s/\r//")\"
+	echo "setting ether interface ip to 10.26.0.2,dhcp server will run through it."
+	netsh interface ipv4 add address name=$IF_NAME address=10.26.0.2
+}
+
+
+service_nc_select
+#function start_services {
+#startup the server @backgroud,will be shutdown when the main process were shutdown
+/opt/bin/filezilla/FileZilla\ Server.exe /compat /start & 
+
+#startup the dhcpd server
+cd /opt/bin/dhcpd/
+/opt/bin/dhcpd/dhcpd </dev/null 1>/dev/null &
+
+bash -i
+#}
+

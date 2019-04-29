@@ -208,3 +208,4 @@ export PS1="\n\e[1;30m[\j:\!\e[1;30m]\e[0;36m \
 \w - \u@\H +$SHLVL @`tty 2>/dev/null` - \007\]\n\[\]\$ "
 
 export SVN_EDITOR="rm svn-commit.*tmp && cp ~/.subversion/log.tmpl svn-commit.tmp && vi "
+cd ~

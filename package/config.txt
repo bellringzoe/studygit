@@ -15,6 +15,6 @@ ExtractTitle="正在安装..."
 GUIFlags="8+32+64+256+4096"
 GUIMode="1"
 InstallPath="C:\\"
-RunProgram="nbudbg\\conemu\\conemu.exe"
-Shortcut="Du,{nbudbg\\conemu\\conemu.exe},{},{},{进入windbg环境},{},{},{nbudbg\\conemu\\conemu\\watching_you.ico},{0}"
+RunProgram="%%T\\nbudbg\\nbudbg.lnk"
+Shortcut="Du,{%%T\\nbudbg\\nbudbg.lnk},{},{},{进入windbg环境},{},{},{nbudbg\\conemu\\ConEmu\\watching_you.ico},{0}"
 ;!@InstallEnd@!
