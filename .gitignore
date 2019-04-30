@@ -7,11 +7,9 @@ log/
 package/symlink_file
 */tftpd32/tftproot/*
 */filezilla/ftp_root/*
-cygwin/opt/bin/edb
-cygwin/opt/bin/gdb
 wind/
 cygwin/var/run/*
 cygwin/var/tmp/*
 cygwin/var/lib/tftpboot/
 maintain/symlink_file
-
+cygwin/opt/bin/dhcpd/hosts.csv
