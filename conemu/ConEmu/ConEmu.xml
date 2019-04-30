@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <key name="Software">
 	<key name="ConEmu">
-		<key name=".Vanilla" modified="2019-04-29 15:18:11" build="190331">
+		<key name=".Vanilla" modified="2019-04-30 09:21:35" build="190331">
 			<value name="StartType" type="hex" data="02"/>
 			<value name="CmdLine" type="string" data=""/>
 			<value name="StartTasksFile" type="string" data=""/>
@@ -646,14 +646,14 @@
 					<value name="Cmd2" type="string" data='"%ConEmuBaseDirShort%\..\..\cygwin\opt\bin\filezilla\FileZilla Server Interface.exe" '/>
 					<value name="Cmd3" type="string" data='set LANG=zh_CN.GBK &amp; set CHERE_INVOKING=1 &amp; set "PATH=%ConEmuBaseDirShort%\..\..\cygwin\bin;%ConEmuBaseDirShort%\..\..\cygwin\opt\bin;%ConEmuBaseDirShort%\..\..\usr\sbin;%PATH%" &amp;  %ConEmuDir%\..\cygwin\bin\mintty.exe -e /opt/bin/service_start  -new_console:a'/>
 				</key>
-				<key name="Task6" modified="2019-04-29 11:11:40" build="190331">
+				<key name="Task6" modified="2019-04-29 17:15:49" build="190331">
 					<value name="Name" type="string" data="{维护工具::工具打包}"/>
 					<value name="Flags" type="dword" data="00000004"/>
 					<value name="Hotkey" type="dword" data="00115b50"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Active" type="long" data="0"/>
 					<value name="Count" type="long" data="1"/>
-					<value name="Cmd1" type="string" data='set CHERE_INVOKING=1 &amp; set "PATH=%ConEmuBaseDirShort%\..\..\..\..\bin;%ConEmuBaseDirShort%\..\..\;%ConEmuBaseDirShort%\..\..\..\..\usr\sbin;%PATH%" &amp; set "EXPORT_ROOT=%ConEmuBaseDirShort%\..\..\" &amp; set "EXPORT_NAME=NBUdbg" &amp; %ConEmuBaseDirShort%\..\..\cygwin\bin\bash.exe --login -i -new_console:C:"%ConEmuBaseDirShort%\watching_you.ico"  %ConEmuBaseDirShort%\..\..\package\packme'/>
+					<value name="Cmd1" type="string" data='set CHERE_INVOKING=1 &amp; set "PATH=%ConEmuBaseDirShort%\..\..\..\..\bin;%ConEmuBaseDirShort%\..\..\;%ConEmuBaseDirShort%\..\..\..\..\usr\sbin;%PATH%" &amp; set "EXPORT_ROOT=%ConEmuBaseDirShort%\..\..\" &amp; set "EXPORT_NAME=NBUdbg" &amp; %ConEmuBaseDirShort%\..\..\cygwin\bin\bash.exe --login -i -new_console:C:"%ConEmuBaseDirShort%\watching_you.ico"  %ConEmuBaseDirShort%\..\..\maintain\packme'/>
 				</key>
 				<key name="Task7" modified="2019-04-29 11:11:40" build="190331">
 					<value name="Name" type="string" data="{维护工具::cygwin更新}"/>
@@ -699,15 +699,7 @@
 				<value name="Count" type="long" data="0"/>
 			</key>
 			<value name="CmdLineHistory" type="multi">
-				<line data="{维护工具::工具打包}"/>
 				<line data="{基础软件部::操作系统更新}"/>
-				<line data="{控制台::cmd (Admin)}"/>
-				<line data="{连接服务器::10.90.6.171}"/>
-				<line data="{控制台::管理员(中文)}"/>
-				<line data="{控制台::管理员}"/>
-				<line data="{维护工具::cygwin更新}"/>
-				<line data="{控制台::默认}"/>
-				<line data="{bash}"/>
 			</value>
 		</key>
 	</key>

@@ -159,7 +159,7 @@ if [ -z $NEW_USER ];then
     echo "all done,read readme.md please,it's located in /,you can read it later."
 
 #	cat /readme.md
-	cat $(cygpath -u $ConEmuDir)/../readme.md
+	cat $(cygpath -u $ConEmuDir)/../doc/readme.md
 #	if [ -f /bin/gdb ]; then
 #		echo -e "gdb configured to \033[31m$(readlink /bin/gdb)\033[0m,you can run it by input \033[31mgdb\033[0m directly"
 #	else
@@ -173,6 +173,7 @@ if [ -f /etc/skel/symlink.tar ];then
 	cd /
 	tar xf /etc/skel/symlink.tar
 	rm -rf ~/symlink.tar
+	rm -rf /etc/skel/symlink.tar
 	/opt/bin/nbudbg_startup
 fi
 

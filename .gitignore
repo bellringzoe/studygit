@@ -13,3 +13,5 @@ wind/
 cygwin/var/run/*
 cygwin/var/tmp/*
 cygwin/var/lib/tftpboot/
+maintain/symlink_file
+

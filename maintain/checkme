@@ -1,0 +1,5 @@
+#!/bin/sh
+
+md5sum -c windbg.md5
+
+#check server for update
