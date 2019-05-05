@@ -1,6 +1,0 @@
-# -*- python -*-
-
-import pkgutil
-
-for mod in pkgutil.iter_modules():
-    print(mod[1])

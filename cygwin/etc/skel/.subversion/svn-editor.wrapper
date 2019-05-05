@@ -1,5 +1,0 @@
-#!/bin/bash
-
-rm -rf svn-commit.*tmp 
-cp ~/.subversion/log.tmpl $1 
-vi $1
