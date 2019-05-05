@@ -7,7 +7,7 @@
 <body>
 <h2>VARIOUS</h2>
 <pre>
-<b class="vimtag">*<a name="various.txt">various.txt</a>*</b>   For Vim version 8.0.  Last change: 2018 Feb 27
+<b class="vimtag">*<a name="various.txt">various.txt</a>*</b>   For Vim version 8.1.  Last change: 2019 Mar 23
 
 
 		  VIM REFERENCE MANUAL    by Bram Moolenaar
@@ -37,6 +37,11 @@ Various commands					<b class="vimtag">*<a name="various">various</a>*</b>
 			Useful to update the status line(s) when 'statusline'
 			includes an item that doesn't cause automatic
 			updating.
+
+						<b class="vimtag">*<a name=":redrawt">:redrawt</a>*</b> <b class="vimtag">*<a name=":redrawtabline">:redrawtabline</a>*</b>
+:redrawt[abline]	Redraw the tabline.  Useful to update the tabline when
+			'tabline' includes an item that doesn't trigger
+			automatic updating.
 
 							<b class="vimtag">*<a name="N%3CDel%3E">N&lt;Del&gt;</a>*</b>
 <code class="special">&lt;Del&gt;</code>			When entering a number: Remove the last digit.
@@ -85,8 +90,7 @@ g8			Print the hex values of the bytes used in the
 			value of 'maxcombine' doesn't matter.
 			Example of a character with two composing characters:
 <code class="section">				e0 b8 81 + e0 b8 b9 + e0 b9 89 </code>
-			<code class="special">{not in Vi}</code> {only when compiled with the |<a href="various.html#+multi_byte">+multi_byte</a>|
-			feature}
+			<code class="special">{not in Vi}</code>
 
 							<b class="vimtag">*<a name="8g8">8g8</a>*</b>
 8g8			Find an illegal UTF-8 byte sequence at or after the
@@ -101,8 +105,7 @@ g8			Print the hex values of the bytes used in the
 			<code class="note">Note</code> that when the cursor is on an illegal byte or the
 			cursor is halfway a multi-byte character the command
 			won't move the cursor.
-			<code class="special">{not in Vi}</code> {only when compiled with the |<a href="various.html#+multi_byte">+multi_byte</a>|
-			feature}
+			<code class="special">{not in Vi}</code>
 
 						<b class="vimtag">*<a name=":p">:p</a>*</b> <b class="vimtag">*<a name=":pr">:pr</a>*</b> <b class="vimtag">*<a name=":print">:print</a>*</b> <b class="vimtag">*<a name="E749">E749</a>*</b>
 :<code class="special">[range]</code>p[rint] [flags]
@@ -314,7 +317,7 @@ g8			Print the hex values of the bytes used in the
 			Here is an overview of the features.
 			The first column shows the smallest version in which
 			they are included:
-			   T	tiny
+			   T	tiny (always)
 			   S	small
 			   N	normal
 			   B	big
@@ -328,7 +331,7 @@ g8			Print the hex values of the bytes used in the
    <b class="vimtag">*<a name="+acl">+acl</a>*</b>		|<a href="editing.html#ACL">ACL</a>| support included
    <b class="vimtag">*<a name="+ARP">+ARP</a>*</b>		Amiga only: ARP support included
 B  <b class="vimtag">*<a name="+arabic">+arabic</a>*</b>		|<a href="arabic.html#Arabic">Arabic</a>| language support
-N  <b class="vimtag">*<a name="+autocmd">+autocmd</a>*</b>		|<a href="autocmd.html#:autocmd">:autocmd</a>|, automatic commands
+T  <b class="vimtag">*<a name="+autocmd">+autocmd</a>*</b>		|<a href="autocmd.html#:autocmd">:autocmd</a>|, automatic commands
 H  <b class="vimtag">*<a name="+autoservername">+autoservername</a>*</b>	Automatically enable |<a href="remote.html#clientserver">clientserver</a>|
 m  <b class="vimtag">*<a name="+balloon_eval">+balloon_eval</a>*</b>	|<a href="debugger.html#balloon-eval">balloon-eval</a>| support in the GUI. Included when
 			compiling with supported GUI (Motif, GTK, GUI) and
@@ -352,7 +355,7 @@ N  <b class="vimtag">*<a name="+comments">+comments</a>*</b>		|<a href="options.
 B  <b class="vimtag">*<a name="+conceal">+conceal</a>*</b>		"conceal" support, see |<a href="syntax.html#conceal">conceal</a>| |<a href="syntax.html#:syn-conceal">:syn-conceal</a>| etc.
 N  <b class="vimtag">*<a name="+cryptv">+cryptv</a>*</b>		encryption support |<a href="editing.html#encryption">encryption</a>|
 B  <b class="vimtag">*<a name="+cscope">+cscope</a>*</b>		|<a href="if_cscop.html#cscope">cscope</a>| support
-m  <b class="vimtag">*<a name="+cursorbind">+cursorbind</a>*</b>	|<a href="options.html#'cursorbind'">'cursorbind'</a>| support
+T  <b class="vimtag">*<a name="+cursorbind">+cursorbind</a>*</b>	|<a href="options.html#'cursorbind'">'cursorbind'</a>| support
 m  <b class="vimtag">*<a name="+cursorshape">+cursorshape</a>*</b>	|<a href="term.html#termcap-cursor-shape">termcap-cursor-shape</a>| support
 m  <b class="vimtag">*<a name="+debug">+debug</a>*</b>		Compiled for debugging.
 N  <b class="vimtag">*<a name="+dialog_gui">+dialog_gui</a>*</b>	Support for |<a href="editing.html#:confirm">:confirm</a>| with GUI dialog.
@@ -360,7 +363,7 @@ N  <b class="vimtag">*<a name="+dialog_con">+dialog_con</a>*</b>	Support for |<a
 N  <b class="vimtag">*<a name="+dialog_con_gui">+dialog_con_gui</a>*</b>	Support for |<a href="editing.html#:confirm">:confirm</a>| with GUI and console dialog.
 N  <b class="vimtag">*<a name="+diff">+diff</a>*</b>		|<a href="diff.html#vimdiff">vimdiff</a>| and 'diff'
 N  <b class="vimtag">*<a name="+digraphs">+digraphs</a>*</b>		|<a href="digraph.html#digraphs">digraphs</a>| <b class="vimtag">*<a name="E196">E196</a>*</b>
-m  <b class="vimtag">*<a name="+directx">+directx</a>*</b>		Win32 GUI only: DirectX and |<a href="options.html#'renderoptions'">'renderoptions'</a>|
+   <b class="vimtag">*<a name="+directx">+directx</a>*</b>		Win32 GUI only: DirectX and |<a href="options.html#'renderoptions'">'renderoptions'</a>|
    <b class="vimtag">*<a name="+dnd">+dnd</a>*</b>		Support for DnD into the "~ register |<a href="change.html#quote_%7E">quote_~</a>|.
 B  <b class="vimtag">*<a name="+emacs_tags">+emacs_tags</a>*</b>	|<a href="tagsrch.html#emacs-tags">emacs-tags</a>| files
 N  <b class="vimtag">*<a name="+eval">+eval</a>*</b>		expression evaluation |<a href="eval.html#eval.txt">eval</a>|
@@ -392,7 +395,7 @@ B  <b class="vimtag">*<a name="+langmap">+langmap</a>*</b>		|<a href="options.ht
 N  <b class="vimtag">*<a name="+libcall">+libcall</a>*</b>		|<a href="eval.html#libcall()">libcall()</a>|
 N  <b class="vimtag">*<a name="+linebreak">+linebreak</a>*</b>		|<a href="options.html#'linebreak'">'linebreak'</a>|, |<a href="options.html#'breakat'">'breakat'</a>| and |<a href="options.html#'showbreak'">'showbreak'</a>|
 N  <b class="vimtag">*<a name="+lispindent">+lispindent</a>*</b>	|<a href="options.html#'lisp'">'lisp'</a>|
-N  <b class="vimtag">*<a name="+listcmds">+listcmds</a>*</b>		Vim commands for the list of buffers |<a href="windows.html#buffer-hidden">buffer-hidden</a>|
+T  <b class="vimtag">*<a name="+listcmds">+listcmds</a>*</b>		Vim commands for the list of buffers |<a href="windows.html#buffer-hidden">buffer-hidden</a>|
 			and argument list |<a href="editing.html#:argdelete">:argdelete</a>|
 N  <b class="vimtag">*<a name="+localmap">+localmap</a>*</b>		Support for mappings local to a buffer |<a href="map.html#:map-local">:map-local</a>|
 m  <b class="vimtag">*<a name="+lua">+lua</a>*</b>		|<a href="if_lua.html#Lua">Lua</a>| interface
@@ -437,18 +440,18 @@ N  <b class="vimtag">*<a name="+reltime">+reltime</a>*</b>		|<a href="eval.html#
 B  <b class="vimtag">*<a name="+rightleft">+rightleft</a>*</b>		Right to left typing |<a href="options.html#'rightleft'">'rightleft'</a>|
 m  <b class="vimtag">*<a name="+ruby">+ruby</a>*</b>		Ruby interface |<a href="if_ruby.html#ruby">ruby</a>|
 m  <b class="vimtag">*<a name="+ruby%2Fdyn">+ruby/dyn</a>*</b>		Ruby interface |<a href="if_ruby.html#ruby-dynamic">ruby-dynamic</a>| |<a href="various.html#%2Fdyn">/dyn</a>|
-N  <b class="vimtag">*<a name="+scrollbind">+scrollbind</a>*</b>	|<a href="options.html#'scrollbind'">'scrollbind'</a>|
+T  <b class="vimtag">*<a name="+scrollbind">+scrollbind</a>*</b>	|<a href="options.html#'scrollbind'">'scrollbind'</a>|
 B  <b class="vimtag">*<a name="+signs">+signs</a>*</b>		|<a href="sign.html#:sign">:sign</a>|
 N  <b class="vimtag">*<a name="+smartindent">+smartindent</a>*</b>	|<a href="options.html#'smartindent'">'smartindent'</a>|
 N  <b class="vimtag">*<a name="+startuptime">+startuptime</a>*</b>	|<a href="starting.html#--startuptime">--startuptime</a>| argument
 N  <b class="vimtag">*<a name="+statusline">+statusline</a>*</b>	Options 'statusline', 'rulerformat' and special
 			formats of 'titlestring' and 'iconstring'
-m  <b class="vimtag">*<a name="+sun_workshop">+sun_workshop</a>*</b>	|<a href="workshop.html#workshop">workshop</a>|
+m  <b class="vimtag">*<a name="+sun_workshop">+sun_workshop</a>*</b>	|<a href="workshop.html#workshop">workshop</a>|; no longer supported
 N  <b class="vimtag">*<a name="+syntax">+syntax</a>*</b>		Syntax highlighting |<a href="syntax.html#syntax">syntax</a>|
    <b class="vimtag">*<a name="+system()">+system()</a>*</b>		Unix only: opposite of |<a href="various.html#+fork">+fork</a>|
 T  <b class="vimtag">*<a name="+tag_binary">+tag_binary</a>*</b>	binary searching in tags file |<a href="tagsrch.html#tag-binary-search">tag-binary-search</a>|
 N  <b class="vimtag">*<a name="+tag_old_static">+tag_old_static</a>*</b>	old method for static tags |<a href="tagsrch.html#tag-old-static">tag-old-static</a>|
-m  <b class="vimtag">*<a name="+tag_any_white">+tag_any_white</a>*</b>	any white space allowed in tags file |<a href="tagsrch.html#tag-any-white">tag-any-white</a>|
+m  <b class="vimtag">*<a name="+tag_any_white">+tag_any_white</a>*</b>	Removed; was to allow any white space in tags files
 m  <b class="vimtag">*<a name="+tcl">+tcl</a>*</b>		Tcl interface |<a href="if_tcl.html#tcl">tcl</a>|
 m  <b class="vimtag">*<a name="+tcl%2Fdyn">+tcl/dyn</a>*</b>		Tcl interface |<a href="if_tcl.html#tcl-dynamic">tcl-dynamic</a>| |<a href="various.html#%2Fdyn">/dyn</a>|
 m  <b class="vimtag">*<a name="+terminal">+terminal</a>*</b>		Support for terminal window |<a href="terminal.html#terminal">terminal</a>|
@@ -456,23 +459,26 @@ m  <b class="vimtag">*<a name="+terminal">+terminal</a>*</b>		Support for termin
 N  <b class="vimtag">*<a name="+termresponse">+termresponse</a>*</b>	support for |<a href="term.html#t_RV">t_RV</a>| and |<a href="eval.html#v:termresponse">v:termresponse</a>|
 B  <b class="vimtag">*<a name="+termguicolors">+termguicolors</a>*</b>	24-bit color in xterm-compatible terminals support
 N  <b class="vimtag">*<a name="+textobjects">+textobjects</a>*</b>	|<a href="motion.html#text-objects">text-objects</a>| selection
+N  <b class="vimtag">*<a name="+textprop">+textprop</a>*</b>		|<a href="textprop.html#text-properties">text-properties</a>|
    <b class="vimtag">*<a name="+tgetent">+tgetent</a>*</b>		non-Unix only: able to use external termcap
 N  <b class="vimtag">*<a name="+timers">+timers</a>*</b>		the |<a href="eval.html#timer_start()">timer_start()</a>| function
 N  <b class="vimtag">*<a name="+title">+title</a>*</b>		Setting the window 'title' and 'icon'
 N  <b class="vimtag">*<a name="+toolbar">+toolbar</a>*</b>		|<a href="gui.html#gui-toolbar">gui-toolbar</a>|
-N  <b class="vimtag">*<a name="+user_commands">+user_commands</a>*</b>	User-defined commands. |<a href="map.html#user-commands">user-commands</a>|
+T  <b class="vimtag">*<a name="+user_commands">+user_commands</a>*</b>	User-defined commands. |<a href="map.html#user-commands">user-commands</a>|
+			Always enabled since 8.1.1210.
+B  <b class="vimtag">*<a name="+vartabs">+vartabs</a>*</b>		Variable-width tabstops. |<a href="options.html#'vartabstop'">'vartabstop'</a>|
 N  <b class="vimtag">*<a name="+viminfo">+viminfo</a>*</b>		|<a href="options.html#'viminfo'">'viminfo'</a>|
    <b class="vimtag">*<a name="+vertsplit">+vertsplit</a>*</b>		Vertically split windows |<a href="windows.html#:vsplit">:vsplit</a>|; Always enabled
 			since 8.0.1118.
 			in sync with the |<a href="various.html#+windows">+windows</a>| feature
 N  <b class="vimtag">*<a name="+virtualedit">+virtualedit</a>*</b>	|<a href="options.html#'virtualedit'">'virtualedit'</a>|
-S  <b class="vimtag">*<a name="+visual">+visual</a>*</b>		Visual mode |<a href="visual.html#Visual-mode">Visual-mode</a>| Always enabled since 7.4.200.
-N  <b class="vimtag">*<a name="+visualextra">+visualextra</a>*</b>	extra Visual mode commands |<a href="visual.html#blockwise-operators">blockwise-operators</a>|
-N  <b class="vimtag">*<a name="+vreplace">+vreplace</a>*</b>		|<a href="change.html#gR">gR</a>| and |<a href="change.html#gr">gr</a>|
+T  <b class="vimtag">*<a name="+visual">+visual</a>*</b>		Visual mode |<a href="visual.html#Visual-mode">Visual-mode</a>| Always enabled since 7.4.200.
+T  <b class="vimtag">*<a name="+visualextra">+visualextra</a>*</b>	extra Visual mode commands |<a href="visual.html#blockwise-operators">blockwise-operators</a>|
+T  <b class="vimtag">*<a name="+vreplace">+vreplace</a>*</b>		|<a href="change.html#gR">gR</a>| and |<a href="change.html#gr">gr</a>|
    <b class="vimtag">*<a name="+vtp">+vtp</a>*</b>		on MS-Windows console: support for 'termguicolors'
 N  <b class="vimtag">*<a name="+wildignore">+wildignore</a>*</b>	|<a href="options.html#'wildignore'">'wildignore'</a>|
 N  <b class="vimtag">*<a name="+wildmenu">+wildmenu</a>*</b>		|<a href="options.html#'wildmenu'">'wildmenu'</a>|
-   <b class="vimtag">*<a name="+windows">+windows</a>*</b>		more than one window; Always enabled since 8.0.1118.
+T  <b class="vimtag">*<a name="+windows">+windows</a>*</b>		more than one window; Always enabled since 8.0.1118.
 m  <b class="vimtag">*<a name="+writebackup">+writebackup</a>*</b>	|<a href="options.html#'writebackup'">'writebackup'</a>| is default on
 m  <b class="vimtag">*<a name="+xim">+xim</a>*</b>		X input method |<a href="mbyte.html#xim">xim</a>|
    <b class="vimtag">*<a name="+xfontset">+xfontset</a>*</b>		X fontset support |<a href="mbyte.html#xfontset">xfontset</a>|
@@ -572,7 +578,20 @@ N  <b class="vimtag">*<a name="+X11">+X11</a>*</b>		Unix only: can restore windo
 			The pattern is matched against the relevant part of
 			the output, not necessarily the whole line. Only some
 			commands support filtering, try it out to check if it
-			works.
+			works. Some of the commands that support filtering:
+			   |<a href="various.html#:%23">:#</a>|          - filter whole line
+			   |<a href="quickfix.html#:clist">:clist</a>|      - filter by file name or module name
+			   |<a href="map.html#:command">:command</a>|    - filter by command name
+			   |<a href="windows.html#:files">:files</a>|      - filter by file name
+			   |<a href="syntax.html#:highlight">:highlight</a>|  - filter by highlight group
+			   |<a href="motion.html#:jumps">:jumps</a>|      - filter by file name
+			   |<a href="eval.html#:let">:let</a>|        - filter by variable name
+			   |<a href="various.html#:list">:list</a>|       - filter whole line
+			   |<a href="quickfix.html#:llist">:llist</a>|      - filter by file name or module name
+			   |<a href="motion.html#:marks">:marks</a>|      - filter by text in the current file,
+					   or file name for other files
+			   |<a href="starting.html#:oldfiles">:oldfiles</a>|   - filter by file name
+			   |<a href="options.html#:set">:set</a>|        - filter by variable name
 
 			Only normal messages are filtered, error messages are
 			not.
@@ -735,8 +754,8 @@ LessInitFunc in your vimrc, for example:
 <code class="example">	endfunc</code>
 
 
- vim:tw=78:ts=8:ft=help:norl:
+ vim:tw=78:ts=8:noet:ft=help:norl:
 </pre>
-<p><i>Generated by vim2html on 04 Mar 2018 23:40:43</i></p>
+<p><i>Generated by vim2html on 01 May 2019 13:47:24</i></p>
 </body>
 </html>

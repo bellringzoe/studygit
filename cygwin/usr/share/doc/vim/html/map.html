@@ -7,7 +7,7 @@
 <body>
 <h2>MAP</h2>
 <pre>
-<b class="vimtag">*<a name="map.txt">map.txt</a>*</b>       For Vim version 8.0.  Last change: 2017 Sep 23
+<b class="vimtag">*<a name="map.txt">map.txt</a>*</b>       For Vim version 8.1.  Last change: 2019 Apr 25
 
 
 		  VIM REFERENCE MANUAL    by Bram Moolenaar
@@ -379,8 +379,9 @@ job running in the terminal.  See |<a href="terminal.html#terminal-typing">termi
 
 							<b class="vimtag">*<a name="omap-info">omap-info</a>*</b>
 Operator-pending mappings can be used to define a movement command that can be
-used with any operator.  Simple example: ":omap { w" makes "y{" work like "yw"
-and "d{" like "dw".
+used with any operator.  Simple example:
+<code class="example">	:omap { w</code>
+makes "y{" work like "yw" and "d{" like "dw".
 
 To ignore the starting cursor position and select different text, you can have
 the omap start Visual mode to select the text to be operated upon.  Example
@@ -391,9 +392,11 @@ Normal mode commands find the first '(' character and select the first word
 before it.  That usually is the function name.
 
 To enter a mapping for Normal and Visual mode, but not Operator-pending mode,
-first define it for all three modes, then unmap it for Operator-pending mode:
-	:map    xx something-difficult
-	:ounmap xx
+first define it for all three modes, then unmap it for
+Operator-pending mode:
+<code class="example">	:map    xx something-difficult</code>
+<code class="example">	:ounmap xx</code>
+<code class="example"></code>
 Likewise for a mapping for Visual and Operator-pending mode or Normal and
 Operator-pending mode.
 
@@ -550,9 +553,9 @@ scenario:
 <code class="example">	:imap <code class="special">&lt;M-C&gt;</code> foo</code>
 <code class="example">	:set encoding=utf-8</code>
 The mapping for <code class="special">&lt;M-C&gt;</code> is defined with the latin1 encoding, resulting in a 0xc3
-byte.  If you type the character แ (0xe1 <code class="special">&lt;M-a&gt;</code>) in UTF-8 encoding this is the
+byte.  If you type the character รก (0xe1 <code class="special">&lt;M-a&gt;</code>) in UTF-8 encoding this is the
 two bytes 0xc3 0xa1.  You don't want the 0xc3 byte to be mapped then or
-otherwise it would be impossible to type the แ character.
+otherwise it would be impossible to type the รก character.
 
 					<b class="vimtag">*<a name="%3CLeader%3E">&lt;Leader&gt;</a>*</b> <b class="vimtag">*<a name="mapleader">mapleader</a>*</b>
 To define a mapping which uses the "mapleader" variable, the special string
@@ -924,7 +927,9 @@ an additional rule:
 full-id	  In front of the match is a non-keyword character, or this is where
 	  the line or insertion starts.  Exception: When the abbreviation is
 	  only one character, it is not recognized if there is a non-keyword
-	  character in front of it, other than a space or a tab.
+	  character in front of it, other than a space or a tab. However, for
+	  the command line "'<code class="special">&lt;,'&gt;</code>" (or any other marks) is ignored, as if the
+	  command line starts after it.
 
 end-id	  In front of the match is a keyword character, or a space or a tab,
 	  or this is where the line or insertion starts.
@@ -1193,9 +1198,10 @@ scripts.
 
 :com[mand]						<b class="vimtag">*<a name=":com">:com</a>*</b> <b class="vimtag">*<a name=":command">:command</a>*</b>
 			List all user-defined commands.  When listing commands,
-			the characters in the first two columns are
+			the characters in the first columns are:
 			    !	Command has the -bang attribute
 			    "	Command has the -register attribute
+			    |   Command has the -bar attribute
 			    b	Command is local to current buffer
 			(see below for details on attributes)
 			The list can be filtered on command name with
@@ -1223,6 +1229,10 @@ See |<a href="various.html#:verbose-cmd">:verbose-cmd</a>| for more information.
 			attributes (see below) are <code class="special">{attr}</code>.  If the command
 			already exists, an error is reported, unless a ! is
 			specified, in which case the command is redefined.
+			There is one exception: When sourcing a script again,
+			a command that was previously defined in that script
+			will be silently replaced.
+
 
 :delc[ommand] <code class="special">{cmd}</code>				<b class="vimtag">*<a name=":delc">:delc</a>*</b> <b class="vimtag">*<a name=":delcommand">:delcommand</a>*</b> <b class="vimtag">*<a name="E184">E184</a>*</b>
 			Delete the user-defined command <code class="special">{cmd}</code>.
@@ -1230,7 +1240,8 @@ See |<a href="various.html#:verbose-cmd">:verbose-cmd</a>| for more information.
 :comc[lear]						<b class="vimtag">*<a name=":comc">:comc</a>*</b> <b class="vimtag">*<a name=":comclear">:comclear</a>*</b>
 			Delete all user-defined commands.
 
-Command attributes
+
+<code class="section">Command attributes </code>
 
 User-defined commands are treated by Vim just like any other Ex commands.  They
 can have arguments, or have a range specified.  Arguments are subject to
@@ -1241,8 +1252,9 @@ There are a number of attributes, split into four categories: argument
 handling, completion behavior, range handling, and special cases.  The
 attributes are described below, by category.
 
-Argument handling				<b class="vimtag">*<a name="E175">E175</a>*</b> <b class="vimtag">*<a name="E176">E176</a>*</b> <b class="vimtag">*<a name=":command-nargs">:command-nargs</a>*</b>
 
+<code class="section">Argument handling </code>
+						<b class="vimtag">*<a name="E175">E175</a>*</b> <b class="vimtag">*<a name="E176">E176</a>*</b> <b class="vimtag">*<a name=":command-nargs">:command-nargs</a>*</b>
 By default, a user defined command will take no arguments (and an error is
 reported if any are supplied).  However, it is possible to specify that the
 command can take arguments, using the -nargs attribute.  Valid cases are:
@@ -1271,12 +1283,15 @@ defined, not where it is invoked!  Example:
 Executing script2.vim will result in "None" being echoed.  Not what you
 intended!  Calling a function may be an alternative.
 
-Completion behavior				<b class="vimtag">*<a name=":command-completion">:command-completion</a>*</b> <b class="vimtag">*<a name="E179">E179</a>*</b>
-					<b class="vimtag">*<a name="E180">E180</a>*</b> <b class="vimtag">*<a name="E181">E181</a>*</b> <b class="vimtag">*<a name=":command-complete">:command-complete</a>*</b>
+
+<code class="section">Completion behavior </code>
+				<b class="vimtag">*<a name=":command-completion">:command-completion</a>*</b> <b class="vimtag">*<a name="E179">E179</a>*</b> <b class="vimtag">*<a name="E180">E180</a>*</b> <b class="vimtag">*<a name="E181">E181</a>*</b>
+				<b class="vimtag">*<a name=":command-complete">:command-complete</a>*</b>
 By default, the arguments of user defined commands do not undergo completion.
 However, by specifying one or the other of the following attributes, argument
 completion can be enabled:
 
+	-complete=arglist	file names in argument list
 	-complete=augroup	autocmd groups
 	-complete=buffer	buffer names
 	-complete=behave	:behave suboptions
@@ -1316,9 +1331,9 @@ completion can be enabled:
 <code class="note">Note:</code> That some completion methods might expand environment variables.
 
 
-Custom completion			<b class="vimtag">*<a name=":command-completion-custom">:command-completion-custom</a>*</b>
-					<b class="vimtag">*<a name=":command-completion-customlist">:command-completion-customlist</a>*</b>
-					<b class="vimtag">*<a name="E467">E467</a>*</b> <b class="vimtag">*<a name="E468">E468</a>*</b>
+<code class="section">Custom completion </code>
+				<b class="vimtag">*<a name=":command-completion-custom">:command-completion-custom</a>*</b>
+				<b class="vimtag">*<a name=":command-completion-customlist">:command-completion-customlist</a>*</b> <b class="vimtag">*<a name="E467">E467</a>*</b> <b class="vimtag">*<a name="E468">E468</a>*</b>
 It is possible to define customized completion schemes via the "custom,<code class="special">{func}</code>"
 or the "customlist,<code class="special">{func}</code>" completion argument.  The <code class="special">{func}</code> part should be a
 function with the following signature:
@@ -1363,8 +1378,8 @@ the 'path' option:
 This example does not work for file names with spaces!
 
 
-Range handling				<b class="vimtag">*<a name="E177">E177</a>*</b> <b class="vimtag">*<a name="E178">E178</a>*</b> <b class="vimtag">*<a name=":command-range">:command-range</a>*</b>
-							<b class="vimtag">*<a name=":command-count">:command-count</a>*</b>
+<code class="section">Range handling </code>
+				<b class="vimtag">*<a name="E177">E177</a>*</b> <b class="vimtag">*<a name="E178">E178</a>*</b> <b class="vimtag">*<a name=":command-range">:command-range</a>*</b> <b class="vimtag">*<a name=":command-count">:command-count</a>*</b>
 By default, user-defined commands do not accept a line number range.  However,
 it is possible to specify that the command does take a range (the -range
 attribute), or that it takes an arbitrary count value, either in the line
@@ -1391,15 +1406,19 @@ It is possible that the special characters in the range like ., $ or % which
 by default correspond to the current line, last line and the whole buffer,
 relate to arguments, (loaded) buffers, windows or tab pages.
 
-Possible values are:
-	-addr=lines		Range of lines (this is the default)
-	-addr=arguments		Range for arguments
-	-addr=buffers		Range for buffers (also not loaded buffers)
-	-addr=loaded_buffers	Range for loaded buffers
-	-addr=windows		Range for windows
-	-addr=tabs		Range for tab pages
+Possible values are (second column is the short name used in listing):
+    -addr=lines		  	Range of lines (this is the default)
+    -addr=arguments	  arg	Range for arguments
+    -addr=buffers	  buf	Range for buffers (also not loaded buffers)
+    -addr=loaded_buffers  load	Range for loaded buffers
+    -addr=windows	  win	Range for windows
+    -addr=tabs		  tab	Range for tab pages
+    -addr=quickfix	  qf	Range for quickfix entries
+    -addr=other		  ?	other kind of range
 
-Special cases				<b class="vimtag">*<a name=":command-bang">:command-bang</a>*</b> <b class="vimtag">*<a name=":command-bar">:command-bar</a>*</b>
+
+<code class="section">Special cases </code>
+					<b class="vimtag">*<a name=":command-bang">:command-bang</a>*</b> <b class="vimtag">*<a name=":command-bar">:command-bar</a>*</b>
 					<b class="vimtag">*<a name=":command-register">:command-register</a>*</b> <b class="vimtag">*<a name=":command-buffer">:command-buffer</a>*</b>
 There are some special cases as well:
 
@@ -1417,7 +1436,8 @@ replacement text separately.
 <code class="note">Note</code> that these arguments can be abbreviated, but that is a deprecated
 feature.  Use the full name for new scripts.
 
-Replacement text
+
+<code class="section">Replacement text </code>
 
 The replacement text for a user defined command is scanned for special escape
 sequences, using <code class="special">&lt;...&gt;</code> notation.  Escape sequences are replaced with values
@@ -1554,8 +1574,8 @@ local to the script and use mappings local to the script.  When the user
 invokes the user command, it will run in the context of the script it was
 defined in.  This matters if |<a href="map.html#%3CSID%3E">&lt;SID&gt;</a>| is used in a command.
 
- vim:tw=78:ts=8:ft=help:norl:
+ vim:tw=78:ts=8:noet:ft=help:norl:
 </pre>
-<p><i>Generated by vim2html on 04 Mar 2018 23:40:43</i></p>
+<p><i>Generated by vim2html on 01 May 2019 13:47:24</i></p>
 </body>
 </html>

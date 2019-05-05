@@ -7,7 +7,7 @@
 <body>
 <h2>REPEAT</h2>
 <pre>
-<b class="vimtag">*<a name="repeat.txt">repeat.txt</a>*</b>    For Vim version 8.0.  Last change: 2018 Feb 11
+<b class="vimtag">*<a name="repeat.txt">repeat.txt</a>*</b>    For Vim version 8.1.  Last change: 2019 Apr 05
 
 
 		  VIM REFERENCE MANUAL    by Bram Moolenaar
@@ -270,6 +270,7 @@ For writing a Vim script, see chapter 41 of the user manual |<a href="usr_41.htm
 			loaded during initialization, see |<a href="starting.html#load-plugins">load-plugins</a>|.
 
 			Also see |<a href="repeat.html#pack-add">pack-add</a>|.
+			{only available when compiled with |<a href="various.html#+eval">+eval</a>|}
 
 						<b class="vimtag">*<a name=":packl">:packl</a>*</b> <b class="vimtag">*<a name=":packloadall">:packloadall</a>*</b>
 :packl[oadall][!]	Load all packages in the "start" directory under each
@@ -293,6 +294,7 @@ For writing a Vim script, see chapter 41 of the user manual |<a href="usr_41.htm
 			An error only causes sourcing the script where it
 			happens to be aborted, further plugins will be loaded.
 			See |<a href="repeat.html#packages">packages</a>|.
+			{only available when compiled with |<a href="various.html#+eval">+eval</a>|}
 
 :scripte[ncoding] [encoding]		<b class="vimtag">*<a name=":scripte">:scripte</a>*</b> <b class="vimtag">*<a name=":scriptencoding">:scriptencoding</a>*</b> <b class="vimtag">*<a name="E167">E167</a>*</b>
 			Specify the character encoding used in the script.
@@ -326,9 +328,19 @@ For writing a Vim script, see chapter 41 of the user manual |<a href="usr_41.htm
 <code class="example">				set encoding=utf-8</code>
 <code class="example">				scriptencoding utf-8</code>
 
-			When compiled without the |<a href="various.html#+multi_byte">+multi_byte</a>| feature this
-			command is ignored.
 			<code class="special">{not in Vi}</code>
+
+:scriptv[ersion] <code class="special">{version}</code>		<b class="vimtag">*<a name=":scriptv">:scriptv</a>*</b> <b class="vimtag">*<a name=":scriptversion">:scriptversion</a>*</b>
+								<b class="vimtag">*<a name="E999">E999</a>*</b> <b class="vimtag">*<a name="E984">E984</a>*</b>
+			Specify the version of Vim for the lines that follow
+			in the same file.  Only applies at the toplevel of
+			sourced scripts, not inside functions.
+
+			If <code class="special">{version}</code> is higher than what the current Vim
+			version supports E999 will be given.  You either need
+			to rewrite the script to make it work with an older
+			Vim version, or update Vim to a newer version.  See
+			|<a href="eval.html#vimscript-version">vimscript-version</a>| for what changed between versions.
 
 						<b class="vimtag">*<a name=":scr">:scr</a>*</b> <b class="vimtag">*<a name=":scriptnames">:scriptnames</a>*</b>
 :scr[iptnames]		List all sourced script names, in the order they were
@@ -336,6 +348,12 @@ For writing a Vim script, see chapter 41 of the user manual |<a href="usr_41.htm
 			|<a href="map.html#%3CSID%3E">&lt;SID&gt;</a>|.
 			<code class="special">{not in Vi}</code> {not available when compiled without the
 			|<a href="various.html#+eval">+eval</a>| feature}
+
+:scr[iptnames][!] <code class="special">{scriptId}</code>			<b class="vimtag">*<a name=":script">:script</a>*</b>
+			Edit script <code class="special">{scriptId}</code>.  Although ":scriptnames name"
+			works, using ":script name" is recommended.
+			When the current buffer can't be |<a href="editing.html#abandon">abandon</a>|ed and the !
+			is not present, the command fails.
 
 						<b class="vimtag">*<a name=":fini">:fini</a>*</b> <b class="vimtag">*<a name=":finish">:finish</a>*</b> <b class="vimtag">*<a name="E168">E168</a>*</b>
 :fini[sh]		Stop sourcing a script.  Can only be used in a Vim
@@ -468,6 +486,16 @@ flag when defining the function, it is not relevant when executing it.
 <code class="example">   .</code>
 <code class="example">   :endfunction</code>
 <code class="example">   :set cpo-=C</code>
+
+					<b class="vimtag">*<a name="line-continuation-comment">line-continuation-comment</a>*</b>
+To add a comment in between the lines start with '"\ '.  Notice the space
+after the backslash.  Example:
+<code class="example">	let array = [</code>
+<code class="example">		"\ first entry comment</code>
+<code class="example">		\ 'first',</code>
+<code class="example">		"\ second entry comment</code>
+<code class="example">		\ 'second',</code>
+<code class="example">		\ ]</code>
 <code class="example"></code>
 Rationale:
 	Most programs work with a trailing backslash to indicate line
@@ -475,6 +503,14 @@ Rationale:
 	For example for this Vi mapping:
 <code class="example">		:map xx  asdf\</code>
 	Therefore the unusual leading backslash is used.
+
+	Starting a comment in a continuation line results in all following
+	continuation lines to be part of the comment.  Since it was like this
+	for a long time, when making it possible to add a comment halfway a
+	sequence of continuation lines, it was not possible to use \", since
+	that was a valid continuation line.  Using '"\ ' comes closest, even
+	though it may look a bit weird.  Requiring the space after the
+	backslash is to make it very unlikely this is a normal comment line.
 
 </pre><hr><pre>5. Using Vim packages					<b class="vimtag">*<a name="packages">packages</a>*</b>
 
@@ -1009,8 +1045,8 @@ mind there are various things that may clobber the results:
 - The "self" time is wrong when a function is used recursively.
 
 
- vim:tw=78:ts=8:ft=help:norl:
+ vim:tw=78:ts=8:noet:ft=help:norl:
 </pre>
-<p><i>Generated by vim2html on 04 Mar 2018 23:40:43</i></p>
+<p><i>Generated by vim2html on 01 May 2019 13:47:24</i></p>
 </body>
 </html>

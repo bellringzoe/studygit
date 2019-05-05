@@ -7,7 +7,7 @@
 <body>
 <h2>EDITING</h2>
 <pre>
-<b class="vimtag">*<a name="editing.txt">editing.txt</a>*</b>   For Vim version 8.0.  Last change: 2018 Feb 19
+<b class="vimtag">*<a name="editing.txt">editing.txt</a>*</b>   For Vim version 8.1.  Last change: 2018 Dec 16
 
 
 		  VIM REFERENCE MANUAL    by Bram Moolenaar
@@ -431,6 +431,15 @@ On Unix and a few other systems you can also use backticks for the file name
 argument, for example:
 <code class="example">	:next `find . -name ver\\*.c -print`</code>
 <code class="example">	:view `ls -t *.patch  \| head -n1`</code>
+Vim will run the command in backticks using the 'shell' and use the standard
+output as argument for the given Vim command (error messages from the shell
+command will be discarded).
+To see what shell command Vim is running, set the 'verbose' option to 4. When
+the shell command returns a non-zero exit code, an error message will be
+displayed and the Vim command will be aborted. To avoid this make the shell
+always return zero like so:
+<code class="example">       :next `find . -name ver\\*.c -print \|<code class="badlink">\</code>| true`</code>
+<code class="example"></code>
 The backslashes before the star are required to prevent the shell from
 expanding "ver*.c" prior to execution of the find program.  The backslash
 before the shell pipe symbol "|" prevents Vim from parsing it as command
@@ -656,8 +665,7 @@ list of the current window.
 			There is no check for duplicates, it is possible to
 			add a file to the argument list twice.
 			The currently edited file is not changed.
-			<code class="special">{not in Vi}</code> {not available when compiled without the
-			|<a href="various.html#+listcmds">+listcmds</a>| feature}
+			<code class="special">{not in Vi}</code>
 			<code class="note">Note:</code> you can also use this method:
 <code class="example">				:args ## x</code>
 			This will add the "x" item and sort the new list.
@@ -671,8 +679,7 @@ list of the current window.
 			when it's deleted from the argument list.
 			Example:
 <code class="example">				:argdel *.obj</code>
-			<code class="special">{not in Vi}</code> {not available when compiled without the
-			|<a href="various.html#+listcmds">+listcmds</a>| feature}
+			<code class="special">{not in Vi}</code>
 
 :<code class="special">[range]</code>argd[elete]	Delete the <code class="special">{range}</code> files from the argument list.
 			Example:
@@ -687,8 +694,7 @@ list of the current window.
 			Removes all the files from the arglist.
 			When the last number in the range is too high, up to
 			the last argument is deleted.
-			<code class="special">{not in Vi}</code> {not available when compiled without the
-			|<a href="various.html#+listcmds">+listcmds</a>| feature}
+			<code class="special">{not in Vi}</code>
 
 							<b class="vimtag">*<a name=":argu">:argu</a>*</b> <b class="vimtag">*<a name=":argument">:argument</a>*</b>
 :<code class="special">[count]</code>argu[ment] <code class="special">[count]</code> [++opt] [+cmd]
@@ -697,16 +703,14 @@ list of the current window.
 			when changes have been made and Vim does not want to
 			|<a href="editing.html#abandon">abandon</a>| the current buffer.
 			Also see |<a href="editing.html#++opt">++opt</a>| and |<a href="editing.html#+cmd">+cmd</a>|.
-			<code class="special">{not in Vi}</code> {not available when compiled without the
-			|<a href="various.html#+listcmds">+listcmds</a>| feature}
+			<code class="special">{not in Vi}</code>
 
 :<code class="special">[count]</code>argu[ment]! <code class="special">[count]</code> [++opt] [+cmd]
 			Edit file <code class="special">[count]</code> in the argument list, discard any
 			changes to the current buffer.  When <code class="special">[count]</code> is
 			omitted the current entry is used.
 			Also see |<a href="editing.html#++opt">++opt</a>| and |<a href="editing.html#+cmd">+cmd</a>|.
-			<code class="special">{not in Vi}</code> {not available when compiled without the
-			|<a href="various.html#+listcmds">+listcmds</a>| feature}
+			<code class="special">{not in Vi}</code>
 
 :<code class="special">[count]</code>n[ext] [++opt] [+cmd]			<b class="vimtag">*<a name=":n">:n</a>*</b> <b class="vimtag">*<a name=":ne">:ne</a>*</b> <b class="vimtag">*<a name=":next">:next</a>*</b> <b class="vimtag">*<a name="E165">E165</a>*</b> <b class="vimtag">*<a name="E163">E163</a>*</b>
 			Edit <code class="special">[count]</code> next file.  This fails when changes have
@@ -829,7 +833,6 @@ fourth file in the argument list.  This happens when you do ":e file".
 LOCAL ARGUMENT LIST
 
 <code class="special">{not in Vi}</code>
-{not available when compiled without the |<a href="various.html#+windows">+windows</a>| or |<a href="various.html#+listcmds">+listcmds</a>| features}
 
 							<b class="vimtag">*<a name=":arglocal">:arglocal</a>*</b>
 :argl[ocal]		Make a local copy of the global argument list.
@@ -881,8 +884,7 @@ USING THE ARGUMENT LIST
 			autocommand event is disabled by adding it to
 			'eventignore'.  This considerably speeds up editing
 			each file.
-			<code class="special">{not in Vi}</code> {not available when compiled without the
-			|<a href="various.html#+listcmds">+listcmds</a>| feature}
+			<code class="special">{not in Vi}</code>
 			Also see |<a href="windows.html#:windo">:windo</a>|, |<a href="tabpage.html#:tabdo">:tabdo</a>|, |<a href="windows.html#:bufdo">:bufdo</a>|, |<a href="quickfix.html#:cdo">:cdo</a>|, |<a href="quickfix.html#:ldo">:ldo</a>|,
 			|<a href="quickfix.html#:cfdo">:cfdo</a>| and |<a href="quickfix.html#:lfdo">:lfdo</a>|
 
@@ -904,8 +906,8 @@ flag is used for the ":substitute" command to avoid an error for files where
 <code class="note">Note:</code> When the 'write' option is off, you are not able to write any file.
 
 							<b class="vimtag">*<a name=":w">:w</a>*</b> <b class="vimtag">*<a name=":write">:write</a>*</b>
-						<b class="vimtag">*<a name="E502">E502</a>*</b> <b class="vimtag">*<a name="E503">E503</a>*</b> <b class="vimtag">*<a name="E504">E504</a>*</b> <b class="vimtag">*<a name="E505">E505</a>*</b>
-						<b class="vimtag">*<a name="E512">E512</a>*</b> <b class="vimtag">*<a name="E514">E514</a>*</b> <b class="vimtag">*<a name="E667">E667</a>*</b> <b class="vimtag">*<a name="E796">E796</a>*</b> <b class="vimtag">*<a name="E949">E949</a>*</b>
+					<b class="vimtag">*<a name="E502">E502</a>*</b> <b class="vimtag">*<a name="E503">E503</a>*</b> <b class="vimtag">*<a name="E504">E504</a>*</b> <b class="vimtag">*<a name="E505">E505</a>*</b>
+					<b class="vimtag">*<a name="E512">E512</a>*</b> <b class="vimtag">*<a name="E514">E514</a>*</b> <b class="vimtag">*<a name="E667">E667</a>*</b> <b class="vimtag">*<a name="E796">E796</a>*</b> <b class="vimtag">*<a name="E949">E949</a>*</b>
 :w[rite] [++opt]	Write the whole buffer to the current file.  This is
 			the normal way to save changes to a file.  It fails
 			when the 'readonly' option is set or when there is
@@ -1304,9 +1306,10 @@ use has("browsefilter"):
 <code class="example"></code>
 </pre><hr><pre>7. The current directory				<b class="vimtag">*<a name="current-directory">current-directory</a>*</b>
 
-You may use the |<a href="editing.html#:cd">:cd</a>| and |<a href="editing.html#:lcd">:lcd</a>| commands to change to another directory, so
-you will not have to type that directory name in front of the file names.  It
-also makes a difference for executing external commands, e.g. ":!ls".
+You can use the |<a href="editing.html#:cd">:cd</a>|, |<a href="editing.html#:tcd">:tcd</a>| and |<a href="editing.html#:lcd">:lcd</a>| commands to change to another
+directory, so you will not have to type that directory name in front of the
+file names.  It also makes a difference for executing external commands, e.g.
+":!ls".
 
 Changing directory fails when the current buffer is modified, the '.' flag is
 present in 'cpoptions' and "!" is not used in the command.
@@ -1334,6 +1337,17 @@ present in 'cpoptions' and "!" is not used in the command.
 							<b class="vimtag">*<a name=":chd">:chd</a>*</b> <b class="vimtag">*<a name=":chdir">:chdir</a>*</b>
 :chd[ir][!] [path]	Same as |<a href="editing.html#:cd">:cd</a>|.
 
+							<b class="vimtag">*<a name=":tcd">:tcd</a>*</b>
+:tcd[!] <code class="special">{path}</code>		Like |<a href="editing.html#:cd">:cd</a>|, but only set the directory for the current
+			tab.  The current window will also use this directory.
+			The current directory is not changed for windows in
+			other tabs and for windows in the current tab that
+			have their own window-local directory.
+			<code class="special">{not in Vi}</code>
+
+							<b class="vimtag">*<a name=":tch">:tch</a>*</b> <b class="vimtag">*<a name=":tchdir">:tchdir</a>*</b>
+:tch[dir][!]		Same as |<a href="editing.html#:tcd">:tcd</a>|. <code class="special">{not in Vi}</code>
+
 							<b class="vimtag">*<a name=":lc">:lc</a>*</b> <b class="vimtag">*<a name=":lcd">:lcd</a>*</b>
 :lc[d][!] <code class="special">{path}</code>	Like |<a href="editing.html#:cd">:cd</a>|, but only set the current directory when
 			the cursor is in the current window.  The current
@@ -1348,17 +1362,26 @@ present in 'cpoptions' and "!" is not used in the command.
 :pw[d]			Print the current directory name.  <code class="special">{Vi: no pwd}</code>
 			Also see |<a href="eval.html#getcwd()">getcwd()</a>|.
 
-So long as no |<a href="editing.html#:lcd">:lcd</a>| command has been used, all windows share the same current
-directory.  Using a command to jump to another window doesn't change anything
-for the current directory.
+So long as no |<a href="editing.html#:lcd">:lcd</a>| or |<a href="editing.html#:tcd">:tcd</a>| command has been used, all windows share the
+same current directory.  Using a command to jump to another window doesn't
+change anything for the current directory.
+
 When a |<a href="editing.html#:lcd">:lcd</a>| command has been used for a window, the specified directory
 becomes the current directory for that window.  Windows where the |<a href="editing.html#:lcd">:lcd</a>|
-command has not been used stick to the global current directory.  When jumping
-to another window the current directory will become the last specified local
-current directory.  If none was specified, the global current directory is
-used.
-When a |<a href="editing.html#:cd">:cd</a>| command is used, the current window will lose his local current
-directory and will use the global current directory from now on.
+command has not been used stick to the global or tab-local current directory.
+When jumping to another window the current directory will become the last
+specified local current directory.  If none was specified, the global or
+tab-local current directory is used.
+
+When a |<a href="editing.html#:tcd">:tcd</a>| command has been used for a tab page, the specified directory
+becomes the current directory for the current tab page and the current window.
+The current directory of other tab pages is not affected.  When jumping to
+another tab page, the current directory will become the last specified local
+directory for that tab page. If the current tab has no local current directory
+the global current directory is used.
+
+When a |<a href="editing.html#:cd">:cd</a>| command is used, the current window and tab page will lose the
+local current directory and will use the global current directory from now on.
 
 After using |<a href="editing.html#:cd">:cd</a>| the full path name will be used for reading and writing
 files.  On some networked file systems this may cause problems.  The result of
@@ -1413,7 +1436,7 @@ cannot be read without the right key.
 The text in the swap file and the undo file is also encrypted.  <b class="vimtag">*<a name="E843">E843</a>*</b>
 However, this is done block-by-block and may reduce the time needed to crack a
 password.  You can disable the swap file, but then a crash will cause you to
-lose your work.  The undo file can be disabled without much disadvantage.
+lose your work.  The undo file can be disabled without too much disadvantage.
 <code class="example">	:set noundofile</code>
 <code class="example">	:noswapfile edit secrets</code>
 <code class="example"></code>
@@ -1743,8 +1766,8 @@ There are three different types of searching:
    currently work with 'path' items that contain a URL or use the double star
    with depth limiter (/usr/**2) or upward search (;) notations.
 
- vim:tw=78:ts=8:ft=help:norl:
+ vim:tw=78:ts=8:noet:ft=help:norl:
 </pre>
-<p><i>Generated by vim2html on 04 Mar 2018 23:40:43</i></p>
+<p><i>Generated by vim2html on 01 May 2019 13:47:24</i></p>
 </body>
 </html>

@@ -7,7 +7,7 @@
 <body>
 <h2>INDENT</h2>
 <pre>
-<b class="vimtag">*<a name="indent.txt">indent.txt</a>*</b>    For Vim version 8.0.  Last change: 2014 Dec 06
+<b class="vimtag">*<a name="indent.txt">indent.txt</a>*</b>    For Vim version 8.1.  Last change: 2019 Feb 21
 
 
 		  VIM REFERENCE MANUAL    by Bram Moolenaar
@@ -68,12 +68,13 @@ typing certain characters or commands in certain contexts.  <code class="note">N
 only triggers C-indenting.  When 'indentexpr' is not empty 'indentkeys' is
 used instead.  The format of 'cinkeys' and 'indentkeys' is equal.
 
-The default is "0<code class="special">{,0}</code>,0),:,0#,!^F,o,O,e" which specifies that indenting occurs
-as follows:
+The default is "0<code class="special">{,0}</code>,0),0],:,0#,!^F,o,O,e" which specifies that indenting
+occurs as follows:
 
 	"0{"	if you type '{' as the first character in a line
 	"0}"	if you type '}' as the first character in a line
 	"0)"	if you type ')' as the first character in a line
+	"0]"	if you type ']' as the first character in a line
 	":"	if you type ':' after a label or case statement
 	"0#"	if you type '#' as the first character in a line
 	"!^F"	if you type <code class="keystroke">CTRL-F</code> (which is not inserted)
@@ -422,10 +423,10 @@ The examples below assume a 'shiftwidth' of 4.
 							<b class="vimtag">*<a name="cino-(">cino-(</a>*</b>
 	(N    When in unclosed parentheses, indent N characters from the line
 	      with the unclosed parentheses.  Add a 'shiftwidth' for every
-	      unclosed parentheses.  When N is 0 or the unclosed parentheses
-	      is the first non-white character in its line, line up with the
-	      next non-white character after the unclosed parentheses.
-	      (default 'shiftwidth' * 2).
+	      extra unclosed parentheses.  When N is 0 or the unclosed
+	      parentheses is the first non-white character in its line, line
+	      up with the next non-white character after the unclosed
+	      parentheses.  (default 'shiftwidth' * 2).
 
 		cino=			  cino=(0
 <code class="example">		  if (c1 &amp;&amp; (c2 ||<code class="badlink">	    if (c1 && (c2 </code>||</code>
@@ -436,7 +437,8 @@ The examples below assume a 'shiftwidth' of 4.
 <code class="example">		     {			       {</code>
 
 							<b class="vimtag">*<a name="cino-u">cino-u</a>*</b>
-	uN    Same as (N, but for one level deeper.  (default 'shiftwidth').
+	uN    Same as (N, but for one nesting level deeper.
+	      (default 'shiftwidth').
 
 		cino=			  cino=u2
 <code class="example">		  if (c123456789	    if (c123456789</code>
@@ -594,8 +596,9 @@ The basics for using flexible indenting are explained in section |<a href="usr_3
 user manual.
 
 If you want to write your own indent file, it must set the 'indentexpr'
-option.  Setting the 'indentkeys' option is often useful.  See the
-$VIMRUNTIME/indent directory for examples.
+option.  Setting the 'indentkeys' option is often useful.
+See the $VIMRUNTIME/indent/README.txt file for hints.
+See the $VIMRUNTIME/indent directory for examples.
 
 
 <code class="section">REMARKS ABOUT SPECIFIC INDENT FILES </code>
@@ -608,14 +611,14 @@ the use of square and curly brackets, and otherwise by community convention.
 These conventions are not universally followed, so the Clojure indent script
 offers a few configurable options, listed below.
 
-If the current vim does not include searchpairpos(), the indent script falls
+If the current vim does not include |<a href="eval.html#searchpairpos()">searchpairpos()</a>|, the indent script falls
 back to normal 'lisp' indenting, and the following options are ignored.
 
 							<b class="vimtag">*<a name="g:clojure_maxlines">g:clojure_maxlines</a>*</b>
 
-Set maximum scan distance of searchpairpos(). Larger values trade performance
-for correctness when dealing with very long forms. A value of 0 will scan
-without limits.
+Set maximum scan distance of |<a href="eval.html#searchpairpos()">searchpairpos()</a>|. Larger values trade
+performance for correctness when dealing with very long forms. A value of 0
+will scan without limits.
 
 <code class="example">	" Default</code>
 <code class="example">	let g:clojure_maxlines = 100</code>
@@ -907,8 +910,26 @@ In PHP braces are not required inside 'case/default' blocks therefore 'case:'
 and 'default:' are indented at the same level than the 'switch()' to avoid
 meaningless indentation. You can use the above option to return to the
 traditional way.
-
-
+</pre><hr><pre>
+							<b class="vimtag">*<a name="PHP_noArrowMatching">PHP_noArrowMatching</a>*</b>
+By default the indent script will indent multi-line chained calls by matching
+the position of the '-&gt;':
+<code class="example"></code>
+<code class="example">    $user_name_very_long-&gt;name()</code>
+<code class="example">                        -&gt;age()</code>
+<code class="example">                        -&gt;info();</code>
+<code class="example"></code>
+You can revert to the classic way of indenting by setting this option to 1:
+<code class="example">    :let g:PHP_noArrowMatching = 1</code>
+<code class="example"></code>
+You will obtain the following result:
+<code class="example"></code>
+<code class="example">    $user_name_very_long-&gt;name()</code>
+<code class="example">        -&gt;age()</code>
+<code class="example">        -&gt;info();</code>
+<code class="example"></code>
+<code class="example"></code>
+<code class="example"></code>
 PYTHON							<b class="vimtag">*<a name="ft-python-indent">ft-python-indent</a>*</b>
 
 The amount of indent can be set for the following situations.  The examples
@@ -916,11 +937,21 @@ given are the defaults.  <code class="note">Note</code> that the variables are s
 that you can change the value of 'shiftwidth' later.
 
 Indent after an open paren:
-<code class="example">	let g:pyindent_open_paren = '&amp;sw * 2'</code>
+<code class="example">	let g:pyindent_open_paren = 'shiftwidth() * 2'</code>
 Indent after a nested paren:
-<code class="example">	let g:pyindent_nested_paren = '&amp;sw'</code>
+<code class="example">	let g:pyindent_nested_paren = 'shiftwidth()'</code>
 Indent for a continuation line:
-<code class="example">	let g:pyindent_continue = '&amp;sw * 2'</code>
+<code class="example">	let g:pyindent_continue = 'shiftwidth() * 2'</code>
+<code class="example"></code>
+The method uses |<a href="eval.html#searchpair()">searchpair()</a>| to look back for unclosed parenthesis.  This
+can sometimes be slow, thus it timeouts after 150 msec.  If you notice the
+indenting isn't correct, you can set a larger timeout in msec:
+<code class="example">	let g:pyindent_searchpair_timeout = 500</code>
+<code class="example"></code>
+If looking back for unclosed parenthesis is still too slow, especially during
+a copy-paste operation, or if you don't need indenting inside multi-line
+parentheses, you can completely disable this feature:
+<code class="example">	let g:pyindent_disable_parentheses_indenting = 1</code>
 <code class="example"></code>
 <code class="example"></code>
 R								<b class="vimtag">*<a name="ft-r-indent">ft-r-indent</a>*</b>
@@ -958,6 +989,11 @@ Below is an example of indentation with and without this option enabled:
 <code class="example">   {                                             {</code>
 <code class="example">       paste(x)                                      paste(x)</code>
 <code class="example">   }                                             }</code>
+
+The code will be indented after lines that match the pattern
+`'\(&amp;\||<code class="badlink">\</code>|+\|<code class="badlink">-\</code>|\<b class="vimtag">*<a name="\|%2F\|%20\|\%7E\|%\|-%3E\)\s">\|/\|=\|\~\|%\|-&gt;\)\s</a>*</b>$'`. If you want indentation after
+lines that match a different pattern, you should set the appropriate value of
+`r_indent_op_pattern` in your |<a href="starting.html#vimrc">vimrc</a>|.
 
 
 SHELL							<b class="vimtag">*<a name="ft-sh-indent">ft-sh-indent</a>*</b>
@@ -1009,7 +1045,7 @@ Furthermore, setting the variable b:verilog_indent_width to change the
 indenting width (default is 'shiftwidth'):
 <code class="example"></code>
 <code class="example">  let b:verilog_indent_width = 4</code>
-<code class="example">  let b:verilog_indent_width = &amp;sw * 2</code>
+<code class="example">  let b:verilog_indent_width = shiftwidth() * 2</code>
 <code class="example"></code>
 In addition, you can turn the verbose mode for debug issue:
 <code class="example"></code>
@@ -1130,13 +1166,13 @@ VIM							<b class="vimtag">*<a name="ft-vim-indent">ft-vim-indent</a>*</b>
 For indenting Vim scripts there is one variable that specifies the amount of
 indent for a continuation line, a line that starts with a backslash:
 <code class="example"></code>
-<code class="example">	:let g:vim_indent_cont = &amp;sw * 3</code>
+<code class="example">	:let g:vim_indent_cont = shiftwidth() * 3</code>
 <code class="example"></code>
 Three times shiftwidth is the default value.
 
 
- vim:tw=78:ts=8:ft=help:norl:
+ vim:tw=78:ts=8:noet:ft=help:norl:
 </pre>
-<p><i>Generated by vim2html on 04 Mar 2018 23:40:43</i></p>
+<p><i>Generated by vim2html on 01 May 2019 13:47:24</i></p>
 </body>
 </html>

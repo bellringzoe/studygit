@@ -7,7 +7,7 @@
 <body>
 <h2>INSERT</h2>
 <pre>
-<b class="vimtag">*<a name="insert.txt">insert.txt</a>*</b>    For Vim version 8.0.  Last change: 2018 Feb 10
+<b class="vimtag">*<a name="insert.txt">insert.txt</a>*</b>    For Vim version 8.1.  Last change: 2019 Apr 06
 
 
 		  VIM REFERENCE MANUAL    by Bram Moolenaar
@@ -383,8 +383,8 @@ CTRL-\ <code class="keystroke">CTRL-O</code>	like <code class="keystroke">CTRL-O
 <code class="keystroke">CTRL-L</code>		when 'insertmode' is set: go to Normal mode  <b class="vimtag">*<a name="i_CTRL-L">i_CTRL-L</a>*</b>
 <code class="keystroke">CTRL-G</code> u	break undo sequence, start new change	     <b class="vimtag">*<a name="i_CTRL-G_u">i_CTRL-G_u</a>*</b>
 <code class="keystroke">CTRL-G</code> U	don't break undo with next left/right cursor <b class="vimtag">*<a name="i_CTRL-G_U">i_CTRL-G_U</a>*</b>
-		movement (but only if the cursor stays
-		within same the line)
+		movement, if the cursor stays within
+		same the line
 </pre><hr><pre>
 <code class="note">Note:</code> If the cursor keys take you out of Insert mode, check the 'noesckeys'
 option.
@@ -438,10 +438,10 @@ An example for using <code class="keystroke">CTRL-G</code> U:
 This makes it possible to use the cursor keys in Insert mode, without breaking
 the undo sequence and therefore using |<a href="repeat.html#.">.</a>| (redo) will work as expected.
 Also entering a text like (with the "(" mapping from above):
-<code class="example"></code>
-<code class="example">   Lorem ipsum (dolor</code>
-<code class="example"></code>
-will be repeatable by the |<a href="repeat.html#.">.</a>|to the expected
+
+   Lorem ipsum (dolor
+
+will be repeatable by using |<a href="repeat.html#.">.</a>| to the expected
 
    Lorem ipsum (dolor)
 
@@ -640,6 +640,7 @@ and one of the <code class="keystroke">CTRL-X</code> commands.  You exit <code c
 not a valid <code class="keystroke">CTRL-X</code> mode command.  Valid keys are the <code class="keystroke">CTRL-X</code> command itself,
 <code class="keystroke">CTRL-N</code> (next), and <code class="keystroke">CTRL-P</code> (previous).
 
+To get the current completion information, |<a href="eval.html#complete_info()">complete_info()</a>| can be used.
 Also see the 'infercase' option if you want to adjust the case of the match.
 
 							<b class="vimtag">*<a name="complete_CTRL-E">complete_CTRL-E</a>*</b>
@@ -1049,13 +1050,13 @@ The function must return the column where the completion starts.  It must be a
 number between zero and the cursor column "col('.')".  This involves looking
 at the characters just before the cursor and including those characters that
 could be part of the completed item.  The text between this column and the
-cursor column will be replaced with the matches.
+cursor column will be replaced with the matches.  If the returned value is
+larger than the cursor column, the cursor column is used.
 
-Special return values:
-   -1 If no completion can be done, the completion will be cancelled with an
-      error message.
-   -2 To cancel silently and stay in completion mode.
-   -3 To cancel silently and leave completion mode.
+Negative return values:
+   -2 	To cancel silently and stay in completion mode.
+   -3 	To cancel silently and leave completion mode.
+   Another negative value: completion starts at the cursor column
 
 On the second invocation the arguments are:
    a:findstart  0
@@ -1074,6 +1075,11 @@ that contains the List.  The Dict can have these items:
 			The only value currently recognized is "always", the
 			effect is that the function is called whenever the
 			leading text is changed.
+
+If you want to suppress the warning message for an empty result, return
+|<a href="eval.html#v:none">v:none</a>|.  This is useful to implement asynchronous completion with
+|<a href="eval.html#complete()">complete()</a>|.
+
 Other items are ignored.
 
 For acting upon end of completion, see the |<a href="autocmd.html#CompleteDone">CompleteDone</a>| autocommand event.
@@ -1097,6 +1103,9 @@ items:
 	icase		when non-zero case is to be ignored when comparing
 			items to be equal; when omitted zero is used, thus
 			items that only differ in case are added
+	equal		when non-zero, always treat this item to be equal when
+			comparing. Which means, "equal=1" disables filtering
+			of this item.
 	dup		when non-zero this match will be added even when an
 			item with the same word is already present.
 	empty		when non-zero this match will be added even when it is
@@ -1104,10 +1113,10 @@ items:
 	user_data 	custom data which is associated with the item and
 			available in |<a href="eval.html#v:completed_item">v:completed_item</a>|
 
-All of these except "icase", "dup" and "empty" must be a string.  If an item
-does not meet these requirements then an error message is given and further
-items in the list are not used.  You can mix string and Dictionary items in
-the returned list.
+All of these except "icase", "equal", "dup" and "empty" must be a string.  If
+an item does not meet these requirements then an error message is given and
+further items in the list are not used.  You can mix string and Dictionary
+items in the returned list.
 
 The "menu" item is used in the popup menu and may be truncated, thus it should
 be relatively short.  The "info" item can be longer, it will  be displayed in
@@ -1533,7 +1542,7 @@ phpFunctions.
 
 If you wish non-filetype syntax items to also be included, you can use a
 regular expression syntax (added in version 13.0 of
-autoload\syntaxcomplete.vim) to add items.  Looking at the output from
+autoload/syntaxcomplete.vim) to add items.  Looking at the output from
 ":syntax list" while editing a PHP file I can see some of these entries:
 <code class="example">    htmlArg,htmlTag,htmlTagName,javaScriptStatement,javaScriptGlobalObjects</code>
 <code class="example"></code>
@@ -2000,8 +2009,8 @@ self explanatory.  Using the long or the short version depends on the
 	[READ ERRORS]			not all of the file could be read
 
 
- vim:tw=78:ts=8:ft=help:norl:
+ vim:tw=78:ts=8:noet:ft=help:norl:
 </pre>
-<p><i>Generated by vim2html on 04 Mar 2018 23:40:43</i></p>
+<p><i>Generated by vim2html on 01 May 2019 13:47:24</i></p>
 </body>
 </html>

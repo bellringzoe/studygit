@@ -7,7 +7,7 @@
 <body>
 <h2>GUI</h2>
 <pre>
-<b class="vimtag">*<a name="gui.txt">gui.txt</a>*</b>       For Vim version 8.0.  Last change: 2017 Nov 09
+<b class="vimtag">*<a name="gui.txt">gui.txt</a>*</b>       For Vim version 8.1.  Last change: 2019 Apr 28
 
 
 		  VIM REFERENCE MANUAL    by Bram Moolenaar
@@ -20,8 +20,9 @@ Vim's Graphical User Interface				<b class="vimtag">*<a name="gui">gui</a>*</b> 
 3. Mouse Control		|<a href="gui.html#gui-mouse">gui-mouse</a>|
 4. Making GUI Selections	|<a href="gui.html#gui-selections">gui-selections</a>|
 5. Menus			|<a href="gui.html#menus">menus</a>|
-6. Extras			|<a href="gui.html#gui-extras">gui-extras</a>|
-7. Shell Commands		|<a href="gui.html#gui-shell">gui-shell</a>|
+6. Font				|<a href="gui.html#gui-font">gui-font</a>|
+7. Extras			|<a href="gui.html#gui-extras">gui-extras</a>|
+8. Shell Commands		|<a href="gui.html#gui-shell">gui-shell</a>|
 
 Other GUI documentation:
 |<a href="gui_x11.html#gui_x11.txt">gui_x11</a>|	For specific items of the X11 GUI.
@@ -142,7 +143,7 @@ task bar with the 'guiheadroom' option.
 :winp[os]
 		Display current position of the top left corner of the GUI vim
 		window in pixels.  Does not work in all versions.
-		Also see |<a href="eval.html#getwinposx()">getwinposx()</a>| and |<a href="eval.html#getwinposy()">getwinposy()</a>|.
+		Also see |<a href="eval.html#getwinpos()">getwinpos()</a>|, |<a href="eval.html#getwinposx()">getwinposx()</a>| and |<a href="eval.html#getwinposy()">getwinposy()</a>|.
 
 :winp[os] <code class="special">{X}</code> <code class="special">{Y}</code>							<b class="vimtag">*<a name="E466">E466</a>*</b>
 		Put the GUI vim window at the given <code class="special">{X}</code> and <code class="special">{Y}</code> coordinates.
@@ -551,15 +552,16 @@ floating menus that do not appear on the main menu bar.
 
 5.2 Creating New Menus					<b class="vimtag">*<a name="creating-menus">creating-menus</a>*</b>
 
-				<b class="vimtag">*<a name=":me">:me</a>*</b>  <b class="vimtag">*<a name=":menu">:menu</a>*</b>  <b class="vimtag">*<a name=":noreme">:noreme</a>*</b>  <b class="vimtag">*<a name=":noremenu">:noremenu</a>*</b>
-				<b class="vimtag">*<a name=":am">:am</a>*</b>  <b class="vimtag">*<a name=":amenu">:amenu</a>*</b> <b class="vimtag">*<a name=":an">:an</a>*</b>      <b class="vimtag">*<a name=":anoremenu">:anoremenu</a>*</b>
-				<b class="vimtag">*<a name=":nme">:nme</a>*</b> <b class="vimtag">*<a name=":nmenu">:nmenu</a>*</b> <b class="vimtag">*<a name=":nnoreme">:nnoreme</a>*</b> <b class="vimtag">*<a name=":nnoremenu">:nnoremenu</a>*</b>
-				<b class="vimtag">*<a name=":ome">:ome</a>*</b> <b class="vimtag">*<a name=":omenu">:omenu</a>*</b> <b class="vimtag">*<a name=":onoreme">:onoreme</a>*</b> <b class="vimtag">*<a name=":onoremenu">:onoremenu</a>*</b>
-				<b class="vimtag">*<a name=":vme">:vme</a>*</b> <b class="vimtag">*<a name=":vmenu">:vmenu</a>*</b> <b class="vimtag">*<a name=":vnoreme">:vnoreme</a>*</b> <b class="vimtag">*<a name=":vnoremenu">:vnoremenu</a>*</b>
-				<b class="vimtag">*<a name=":xme">:xme</a>*</b> <b class="vimtag">*<a name=":xmenu">:xmenu</a>*</b> <b class="vimtag">*<a name=":xnoreme">:xnoreme</a>*</b> <b class="vimtag">*<a name=":xnoremenu">:xnoremenu</a>*</b>
-				<b class="vimtag">*<a name=":sme">:sme</a>*</b> <b class="vimtag">*<a name=":smenu">:smenu</a>*</b> <b class="vimtag">*<a name=":snoreme">:snoreme</a>*</b> <b class="vimtag">*<a name=":snoremenu">:snoremenu</a>*</b>
-				<b class="vimtag">*<a name=":ime">:ime</a>*</b> <b class="vimtag">*<a name=":imenu">:imenu</a>*</b> <b class="vimtag">*<a name=":inoreme">:inoreme</a>*</b> <b class="vimtag">*<a name=":inoremenu">:inoremenu</a>*</b>
-				<b class="vimtag">*<a name=":cme">:cme</a>*</b> <b class="vimtag">*<a name=":cmenu">:cmenu</a>*</b> <b class="vimtag">*<a name=":cnoreme">:cnoreme</a>*</b> <b class="vimtag">*<a name=":cnoremenu">:cnoremenu</a>*</b>
+				<b class="vimtag">*<a name=":me">:me</a>*</b>  <b class="vimtag">*<a name=":menu">:menu</a>*</b>   <b class="vimtag">*<a name=":noreme">:noreme</a>*</b>  <b class="vimtag">*<a name=":noremenu">:noremenu</a>*</b>
+				<b class="vimtag">*<a name=":am">:am</a>*</b>  <b class="vimtag">*<a name=":amenu">:amenu</a>*</b>  <b class="vimtag">*<a name=":an">:an</a>*</b>      <b class="vimtag">*<a name=":anoremenu">:anoremenu</a>*</b>
+				<b class="vimtag">*<a name=":nme">:nme</a>*</b> <b class="vimtag">*<a name=":nmenu">:nmenu</a>*</b>  <b class="vimtag">*<a name=":nnoreme">:nnoreme</a>*</b> <b class="vimtag">*<a name=":nnoremenu">:nnoremenu</a>*</b>
+				<b class="vimtag">*<a name=":ome">:ome</a>*</b> <b class="vimtag">*<a name=":omenu">:omenu</a>*</b>  <b class="vimtag">*<a name=":onoreme">:onoreme</a>*</b> <b class="vimtag">*<a name=":onoremenu">:onoremenu</a>*</b>
+				<b class="vimtag">*<a name=":vme">:vme</a>*</b> <b class="vimtag">*<a name=":vmenu">:vmenu</a>*</b>  <b class="vimtag">*<a name=":vnoreme">:vnoreme</a>*</b> <b class="vimtag">*<a name=":vnoremenu">:vnoremenu</a>*</b>
+				<b class="vimtag">*<a name=":xme">:xme</a>*</b> <b class="vimtag">*<a name=":xmenu">:xmenu</a>*</b>  <b class="vimtag">*<a name=":xnoreme">:xnoreme</a>*</b> <b class="vimtag">*<a name=":xnoremenu">:xnoremenu</a>*</b>
+				<b class="vimtag">*<a name=":sme">:sme</a>*</b> <b class="vimtag">*<a name=":smenu">:smenu</a>*</b>  <b class="vimtag">*<a name=":snoreme">:snoreme</a>*</b> <b class="vimtag">*<a name=":snoremenu">:snoremenu</a>*</b>
+				<b class="vimtag">*<a name=":ime">:ime</a>*</b> <b class="vimtag">*<a name=":imenu">:imenu</a>*</b>  <b class="vimtag">*<a name=":inoreme">:inoreme</a>*</b> <b class="vimtag">*<a name=":inoremenu">:inoremenu</a>*</b>
+				<b class="vimtag">*<a name=":cme">:cme</a>*</b> <b class="vimtag">*<a name=":cmenu">:cmenu</a>*</b>  <b class="vimtag">*<a name=":cnoreme">:cnoreme</a>*</b> <b class="vimtag">*<a name=":cnoremenu">:cnoremenu</a>*</b>
+				<b class="vimtag">*<a name=":tlm">:tlm</a>*</b> <b class="vimtag">*<a name=":tlmenu">:tlmenu</a>*</b> <b class="vimtag">*<a name=":tln">:tln</a>*</b>     <b class="vimtag">*<a name=":tlnoremenu">:tlnoremenu</a>*</b>
 				<b class="vimtag">*<a name="E330">E330</a>*</b> <b class="vimtag">*<a name="E327">E327</a>*</b> <b class="vimtag">*<a name="E331">E331</a>*</b> <b class="vimtag">*<a name="E336">E336</a>*</b> <b class="vimtag">*<a name="E333">E333</a>*</b>
 				<b class="vimtag">*<a name="E328">E328</a>*</b> <b class="vimtag">*<a name="E329">E329</a>*</b> <b class="vimtag">*<a name="E337">E337</a>*</b> <b class="vimtag">*<a name="E792">E792</a>*</b>
 To create a new menu item, use the ":menu" commands.  They are mostly like
@@ -574,6 +576,10 @@ This last one will create a new item in the menu bar called "Edit", holding
 the mouse button down on this will pop up a menu containing the item
 "Big Changes", which is a sub-menu containing the item "Delete All Spaces",
 which when selected, performs the operation.
+
+To create a menu for terminal mode, use |<a href="gui.html#:tlmenu">:tlmenu</a>| instead of |<a href="gui.html#:tmenu">:tmenu</a>| unlike
+key mapping (|<a href="map.html#:tmap">:tmap</a>|). This is because |<a href="gui.html#:tmenu">:tmenu</a>| is already used for defining
+tooltips for menus. See |<a href="terminal.html#terminal-typing">terminal-typing</a>|.
 
 Special characters in a menu name:
 
@@ -593,9 +599,9 @@ With the shortcut "F" (while keeping the <code class="special">&lt;Alt&gt;</code
 this menu can be used.  The second part is shown as "Open     :e".  The ":e"
 is right aligned, and the "O" is underlined, to indicate it is the shortcut.
 
-The ":amenu" command can be used to define menu entries for all modes at once.
-To make the command work correctly, a character is automatically inserted for
-some modes:
+The ":amenu" command can be used to define menu entries for all modes at once,
+except for Terminal mode.  To make the command work correctly, a character is
+automatically inserted for some modes:
 <code class="section">	mode		inserted	appended	</code>
 	Normal		nothing		nothing
 	Visual		<code class="special">&lt;C-C&gt;</code>		<code class="special">&lt;C-\&gt;</code><code class="special">&lt;C-G&gt;</code>
@@ -869,6 +875,16 @@ be used to complete the name of the menu item.
 				insert-mode menu Eg:
 <code class="example">	:emenu File.Exit</code>
 <code class="example"></code>
+:<code class="special">[range]</code>em[enu] <code class="special">{mode}</code> <code class="special">{menu}</code>	Like above, but execute the menu for <code class="special">{mode}</code>:
+				    'n': |<a href="gui.html#:nmenu">:nmenu</a>|  Normal mode
+				    'v': |<a href="gui.html#:vmenu">:vmenu</a>|  Visual mode
+				    's': |<a href="gui.html#:smenu">:smenu</a>|  Select mode
+				    'o': |<a href="gui.html#:omenu">:omenu</a>|  Operator-pending mode
+				    't': |<a href="gui.html#:tlmenu">:tlmenu</a>| Terminal mode
+				    'i': |<a href="gui.html#:imenu">:imenu</a>|  Insert mode
+				    'c': |<a href="gui.html#:cmenu">:cmenu</a>|  Cmdline mode
+
+
 If the console-mode vim has been compiled with WANT_MENU defined, you can
 use :emenu to access useful menu items you may have got used to from GUI
 mode.  See 'wildmenu' for an option that works well with this.  See
@@ -889,6 +905,7 @@ using the last visual selection.
 						<b class="vimtag">*<a name=":sunme">:sunme</a>*</b> <b class="vimtag">*<a name=":sunmenu">:sunmenu</a>*</b>
 						<b class="vimtag">*<a name=":iunme">:iunme</a>*</b> <b class="vimtag">*<a name=":iunmenu">:iunmenu</a>*</b>
 						<b class="vimtag">*<a name=":cunme">:cunme</a>*</b> <b class="vimtag">*<a name=":cunmenu">:cunmenu</a>*</b>
+						<b class="vimtag">*<a name=":tlu">:tlu</a>*</b>   <b class="vimtag">*<a name=":tlunmenu">:tlunmenu</a>*</b>
 To delete a menu item or a whole submenu, use the unmenu commands, which are
 analogous to the unmap commands.  Eg:
 <code class="example">    :unmenu! Edit.Paste</code>
@@ -902,7 +919,9 @@ may be used to complete the name of the menu item for the appropriate mode.
 To remove all menus use:			<b class="vimtag">*<a name=":unmenu-all">:unmenu-all</a>*</b>
 <code class="example">	:unmenu *	" remove all menus in Normal and visual mode</code>
 <code class="example">	:unmenu! *	" remove all menus in Insert and Command-line mode</code>
-<code class="example">	:aunmenu *	" remove all menus in all modes</code>
+<code class="example">	:aunmenu *	" remove all menus in all modes, except for Terminal</code>
+<code class="example">			" mode</code>
+<code class="example">	:tlunmenu *	" remove all menus in Terminal mode</code>
 <code class="example"></code>
 If you want to get rid of the menu bar:
 <code class="example">	:set guioptions-=m</code>
@@ -955,6 +974,8 @@ See section |<a href="usr_42.html#42.4">42.4</a>| in the user manual.
 :tu[nmenu] <code class="special">{menupath}</code>		Remove a tip for a menu or tool.
 				<code class="special">{only in X11 and Win32 GUI}</code>
 
+<code class="note">Note:</code> To create menus for terminal mode, use |<a href="gui.html#:tlmenu">:tlmenu</a>| instead.
+
 When a tip is defined for a menu item, it appears in the command-line area
 when the mouse is over that item, much like a standard Windows menu hint in
 the status bar.  (Except when Vim is in Command-line mode, when of course
@@ -996,10 +1017,14 @@ it behaves in a strange way.
 :popu[p] <code class="special">{name}</code>			Popup the menu <code class="special">{name}</code>.  The menu named must
 				have at least one subentry, but need not
 				appear on the menu-bar (see |<a href="gui.html#hidden-menus">hidden-menus</a>|).
-				<code class="special">{only available for Win32 and GTK GUI}</code>
+				{only available for Win32 and GTK GUI or in
+				the terminal when compiled with +insert_expand}
 
 :popu[p]! <code class="special">{name}</code>		Like above, but use the position of the mouse
 				pointer instead of the cursor.
+				In the terminal this is the last known
+				position, which is usually at the last click
+				or release (mouse movement is irrelevant).
 
 Example:
 <code class="example">	:popup File</code>
@@ -1010,9 +1035,144 @@ pointer if ! was used).
 <code class="example">	:popup ]Toolbar</code>
 This creates a popup menu that doesn't exist on the main menu-bar.
 
+<code class="note">Note</code> that in the GUI the :popup command will return immediately, before a
+selection has been made.  In the terminal the commands waits for the user to
+make a selection.
+
 <code class="note">Note</code> that a menu that starts with ']' will not be displayed.
 
-</pre><hr><pre>6. Extras						<b class="vimtag">*<a name="gui-extras">gui-extras</a>*</b>
+</pre><hr><pre>6. Font
+
+This section describes font related options.
+
+GUIFONT							<b class="vimtag">*<a name="gui-font">gui-font</a>*</b>
+
+'guifont' is the option that tells Vim what font to use.  In its simplest form
+the value is just one font name.  It can also be a list of font names
+separated with commas.  The first valid font is used.  When no valid font can
+be found you will get an error message.
+
+On systems where 'guifontset' is supported (X11) and 'guifontset' is not
+empty, then 'guifont' is not used.  See |<a href="mbyte.html#xfontset">xfontset</a>|.
+
+<code class="note">Note:</code> As to the GTK GUIs, no error is given against any invalid names, and the
+first element of the list is always picked up and made use of.  This is
+because, instead of identifying a given name with a font, the GTK GUIs use it
+to construct a pattern and try to look up a font which best matches the
+pattern among available fonts, and this way, the matching never fails.  An
+invalid name doesn't matter because a number of font properties other than
+name will do to get the matching done.
+
+Spaces after a comma are ignored.  To include a comma in a font name precede
+it with a backslash.  Setting an option requires an extra backslash before a
+space and a backslash.  See also |<a href="options.html#option-backslash">option-backslash</a>|.  For example:
+<code class="example">    :set guifont=Screen15,\ 7x13,font\\,with\\,commas</code>
+will make Vim try to use the font "Screen15" first, and if it fails it will
+try to use "7x13" and then "font,with,commas" instead.
+
+If none of the fonts can be loaded, Vim will keep the current setting.  If an
+empty font list is given, Vim will try using other resource settings (for X,
+it will use the Vim.font resource), and finally it will try some builtin
+default which should always be there ("7x13" in the case of X).  The font
+names given should be "normal" fonts.  Vim will try to find the related bold
+and italic fonts.
+
+For Win32, GTK, Motif, Mac OS and Photon:
+<code class="example">    :set guifont=*</code>
+will bring up a font requester, where you can pick the font you want.
+
+The font name depends on the GUI used.  See |<a href="gui.html#setting-guifont">setting-guifont</a>| for a way to set
+'guifont' for various systems.
+
+For the GTK+ 2 and 3 GUIs, the font name looks like this:
+<code class="example">    :set guifont=Andale\ Mono\ 11</code>
+That's all.  XLFDs are not used.  For Chinese this is reported to work well:
+<code class="example">    if has("gui_gtk2")</code>
+<code class="example">      set guifont=Bitstream\ Vera\ Sans\ Mono\ 12,Fixed\ 12</code>
+<code class="example">      set guifontwide=Microsoft\ Yahei\ 12,WenQuanYi\ Zen\ Hei\ 12</code>
+<code class="example">    endif</code>
+
+(Replace gui_gtk2 with gui_gtk3 for the GTK+ 3 GUI)
+
+For Mac OSX you can use something like this:
+<code class="example">    :set guifont=Monaco:h10</code>
+Also see 'macatsui', it can help fix display problems.
+							<b class="vimtag">*<a name="E236">E236</a>*</b>
+<code class="note">Note</code> that the fonts must be mono-spaced (all characters have the same width).
+An exception is GTK: all fonts are accepted, but mono-spaced fonts look best.
+
+To preview a font on X11, you might be able to use the "xfontsel" program.
+The "xlsfonts" program gives a list of all available fonts.
+
+For the Win32 GUI					<b class="vimtag">*<a name="E244">E244</a>*</b> <b class="vimtag">*<a name="E245">E245</a>*</b>
+- Takes these options in the font name (use a ':' to separate the options):
+	hXX - height is XX (points, can be floating-point)
+	wXX - width is XX (points, can be floating-point)
+	WXX - weight is XX (see <code class="note">Note</code> on Weights below)
+	b   - bold. This is equivalent to setting the weight to 700.
+	i   - italic
+	u   - underline
+	s   - strikeout
+	cXX - character set XX.  Valid charsets are: ANSI, ARABIC, BALTIC,
+	      CHINESEBIG5, DEFAULT, EASTEUROPE, GB2312, GREEK, HANGEUL,
+	      HEBREW, JOHAB, MAC, OEM, RUSSIAN, SHIFTJIS, SYMBOL, THAI,
+	      TURKISH, VIETNAMESE ANSI and BALTIC.  Normally you would use
+	      "cDEFAULT".
+	qXX - quality XX.  Valid quality names are: PROOF, DRAFT, ANTIALIASED,
+	      NONANTIALIASED, CLEARTYPE, DEFAULT.  Normally you would use
+	      "qDEFAULT".
+	      Some quality values are not supported in legacy OSs.
+- A '_' can be used in the place of a space, so you don't need to use
+  backslashes to escape the spaces.
+Examples:
+<code class="example">    :set guifont=courier_new:h12:w5:b:cRUSSIAN</code>
+<code class="example">    :set guifont=Andale_Mono:h7.5:w4.5</code>
+<code class="example"></code>
+See also |<a href="gui_x11.html#font-sizes">font-sizes</a>|.
+
+<code class="note">Note</code> on Weights: Fonts often come with a variety of weights. "Normal" weights
+in Windows have a value of 400 and, left unspecified, this is the value that
+will be used when attempting to find fonts. Windows will often match fonts
+based on their weight with higher priority than the font name which means a
+Book or Medium variant of a font might be used despite specifying a Light or
+ExtraLight variant. If you are experiencing heavier weight substitution, then
+explicitly setting a lower weight value may mitigate against this unwanted
+substitution.
+
+
+GUIFONTWIDE						<b class="vimtag">*<a name="gui-fontwide">gui-fontwide</a>*</b>
+
+When not empty, 'guifontwide' specifies a comma-separated list of fonts to be
+used for double-width characters.  The first font that can be loaded is
+used.
+
+<code class="note">Note:</code> The size of these fonts must be exactly twice as wide as the one
+specified with 'guifont' and the same height.  If there is a mismatch then
+the text will not be drawn correctly.
+
+All GUI versions but GTK+:
+
+'guifontwide' is only used when 'encoding' is set to "utf-8" and
+'guifontset' is empty or invalid.
+When 'guifont' is set and a valid font is found in it and
+'guifontwide' is empty Vim will attempt to find a matching
+double-width font and set 'guifontwide' to it.
+
+GTK+ GUI only:  		    	<b class="vimtag">*<a name="guifontwide_gtk">guifontwide_gtk</a>*</b>
+
+If set and valid, 'guifontwide' is always used for double width
+characters, even if 'encoding' is not set to "utf-8".
+Vim does not attempt to find an appropriate value for 'guifontwide'
+automatically.  If 'guifontwide' is empty Pango/Xft will choose the
+font for characters not available in 'guifont'.  Thus you do not need
+to set 'guifontwide' at all unless you want to override the choice
+made by Pango/Xft.
+
+Windows +multibyte only:		<b class="vimtag">*<a name="guifontwide_win_mbyte">guifontwide_win_mbyte</a>*</b>
+
+If set and valid, 'guifontwide' is used for IME instead of 'guifont'.
+
+</pre><hr><pre>7. Extras						<b class="vimtag">*<a name="gui-extras">gui-extras</a>*</b>
 
 This section describes other features which are related to the GUI.
 
@@ -1055,7 +1215,7 @@ This section describes other features which are related to the GUI.
 A recommended Japanese font is MS Mincho.  You can find info here:
 http://www.lexikan.com/mincho.htm
 
-</pre><hr><pre>7. Shell Commands					<b class="vimtag">*<a name="gui-shell">gui-shell</a>*</b>
+</pre><hr><pre>8. Shell Commands					<b class="vimtag">*<a name="gui-shell">gui-shell</a>*</b>
 
 For the X11 GUI the external commands are executed inside the gvim window.
 See |<a href="gui_x11.html#gui-pty">gui-pty</a>|.
@@ -1069,8 +1229,8 @@ careful!
 For the Win32 GUI the external commands are executed in a separate window.
 See |<a href="gui_w32.html#gui-shell-win32">gui-shell-win32</a>|.
 
- vim:tw=78:sw=4:ts=8:ft=help:norl:
+ vim:tw=78:sw=4:ts=8:noet:ft=help:norl:
 </pre>
-<p><i>Generated by vim2html on 04 Mar 2018 23:40:43</i></p>
+<p><i>Generated by vim2html on 01 May 2019 13:47:24</i></p>
 </body>
 </html>

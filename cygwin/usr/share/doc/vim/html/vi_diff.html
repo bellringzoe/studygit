@@ -7,7 +7,7 @@
 <body>
 <h2>VI_DIFF</h2>
 <pre>
-<b class="vimtag">*<a name="vi_diff.txt">vi_diff.txt</a>*</b>   For Vim version 8.0.  Last change: 2016 Aug 16
+<b class="vimtag">*<a name="vi_diff.txt">vi_diff.txt</a>*</b>   For Vim version 8.1.  Last change: 2019 Apr 28
 
 
 		  VIM REFERENCE MANUAL    by Bram Moolenaar
@@ -28,8 +28,9 @@ is missing something or because Posix is beside the mark).
 3. Limits				|<a href="vi_diff.html#limits">limits</a>|
 4. The most interesting additions	|<a href="vi_diff.html#vim-additions">vim-additions</a>|
 5. Other vim features			|<a href="vi_diff.html#other-features">other-features</a>|
-6. Command-line arguments		|<a href="vi_diff.html#cmdline-arguments">cmdline-arguments</a>|
-7. POSIX compliance			|<a href="vi_diff.html#posix-compliance">posix-compliance</a>|
+6. Supported Vi features		|<a href="vi_diff.html#vi-features">vi-features</a>|
+7. Command-line arguments		|<a href="vi_diff.html#cmdline-arguments">cmdline-arguments</a>|
+8. POSIX compliance			|<a href="vi_diff.html#posix-compliance">posix-compliance</a>|
 
 </pre><hr><pre>1. Simulated command					<b class="vimtag">*<a name="simulated-command">simulated-command</a>*</b>
 
@@ -789,7 +790,79 @@ message, since that may cause a mapping to be aborted.
 
 The AUX: device of the Amiga is supported.
 
-</pre><hr><pre>6. Command-line arguments				<b class="vimtag">*<a name="cmdline-arguments">cmdline-arguments</a>*</b>
+</pre><hr><pre>6. Supported Vi features				<b class="vimtag">*<a name="vi-features">vi-features</a>*</b>
+
+Vim supports nearly all Vi commands and mostly in the same way.  That is when
+the 'compatible' option is set and 'cpoptions' contains all flags.  What the
+effect is of resetting 'compatible' and removing flags from 'cpoptions' can be
+found at the help for the specific command.
+
+Below is listed what features are present in Vi.  Anything else has been added
+by Vim.
+
+<code class="section">The following Ex commands are supported by Vi: </code>
+
+TODO
+
+`:set`		but not `:set inv<code class="special">{option}</code>`, `:set option&amp;`, `:set all&amp;`,
+		`:set option+=value`,
+		`:set option^=value`
+		`:set option-=value`
+		`:set option&lt;`
+
+
+<code class="section">The following Normal mode commands are supported by Vi: </code>
+
+TODO
+
+
+<code class="section">The following options are supported by Vi: </code>
+
+'autoindent'	  'ai'	    take indent for new line from previous line
+'autowrite'	  'aw'	    automatically write file if changed
+'directory'	  'dir'     list of directory names for the swap file
+'edcompatible'	  'ed'	    toggle flags of ":substitute" command
+'errorbells'	  'eb'	    ring the bell for error messages
+'ignorecase'	  'ic'	    ignore case in search patterns
+'lines'			    number of lines in the display
+'lisp'			    automatic indenting for Lisp
+'list'			    show <code class="special">&lt;Tab&gt;</code> and <code class="special">&lt;EOL&gt;</code>
+'magic'			    changes special characters in search patterns
+'modeline'	  'ml'	    recognize 'modelines' at start or end of file
+				<code class="special">{called modelines in some Vi versions}</code>
+'number'	  'nu'	    print the line number in front of each line
+'paragraphs'	  'para'    nroff macros that separate paragraphs
+'prompt'	  'prompt'  enable prompt in Ex mode
+'readonly'	  'ro'	    disallow writing the buffer {Vim sets 'readonly'
+				when editing a file with `:view`}
+'remap'			    allow mappings to work recursively
+'report'		    threshold for reporting nr. of lines changed
+'scroll'	  'scr'     lines to scroll with <code class="keystroke">CTRL-U</code> and <code class="keystroke">CTRL-D</code>
+'sections'	  'sect'    nroff macros that separate sections
+'shell'		  'sh'	    name of shell to use for external commands
+'shiftwidth'	  'sw'	    number of spaces to use for (auto)indent step
+'showmatch'	  'sm'	    briefly jump to matching bracket if insert one
+'showmode'	  'smd'     message on status line to show current mode
+'tabstop'	  'ts'	    number of spaces that <code class="special">&lt;Tab&gt;</code> in file uses
+'taglength'	  'tl'	    number of significant characters for a tag
+'tags'		  'tag'     list of file names used by the tag command
+'tagstack'	  'tgst'    push tags onto the tag stack {not in all versions
+				of Vi}
+'term'			    name of the terminal
+'terse'			    shorten some messages
+'timeout'	  'to'	    time out on mappings and key codes
+'ttytype'	  'tty'     alias for 'term'
+'verbose'	  'vbs'     give informative messages {only in some Vi
+				versions as a boolean option}
+'warn'			    warn for shell command when buffer was changed
+'window'	  'wi'	    nr of lines to scroll for <code class="keystroke">CTRL-F</code> and <code class="keystroke">CTRL-B</code>
+'wrapmargin'	  'wm'	    chars from the right where wrapping starts
+'wrapscan'	  'ws'	    searches wrap around the end of the file
+'writeany'	  'wa'	    write to file with no need for "!" override
+
+Also see |<a href="vi_diff.html#missing-options">missing-options</a>|.
+
+</pre><hr><pre>7. Command-line arguments				<b class="vimtag">*<a name="cmdline-arguments">cmdline-arguments</a>*</b>
 
 Different versions of Vi have different command-line arguments.  This can be
 confusing.  To help you, this section gives an overview of the differences.
@@ -968,7 +1041,7 @@ Only Vim is able to accept options in between and after the file names.
 
 @<code class="special">{cmdfile}</code>	Vile: use <code class="special">{cmdfile}</code> as startup file.
 
-</pre><hr><pre>7. POSIX compliance				<b class="vimtag">*<a name="posix">posix</a>*</b> <b class="vimtag">*<a name="posix-compliance">posix-compliance</a>*</b>
+</pre><hr><pre>8. POSIX compliance				<b class="vimtag">*<a name="posix">posix</a>*</b> <b class="vimtag">*<a name="posix-compliance">posix-compliance</a>*</b>
 
 In 2005 the POSIX test suite was run to check the compatibility of Vim.  Most
 of the test was executed properly.  There are the few things where Vim
@@ -1022,8 +1095,8 @@ These are remarks about running the POSIX test suite:
 - ex test 534 fails because .exrc isn't read in silent mode.
 
 
- vim:tw=78:ts=8:ft=help:norl:
+ vim:tw=78:ts=8:noet:ft=help:norl:
 </pre>
-<p><i>Generated by vim2html on 04 Mar 2018 23:40:43</i></p>
+<p><i>Generated by vim2html on 01 May 2019 13:47:24</i></p>
 </body>
 </html>

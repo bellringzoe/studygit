@@ -7,7 +7,7 @@
 <body>
 <h2>INDEX</h2>
 <pre>
-<b class="vimtag">*<a name="index.txt">index.txt</a>*</b>     For Vim version 8.0.  Last change: 2017 Aug 02
+<b class="vimtag">*<a name="index.txt">index.txt</a>*</b>     For Vim version 8.1.  Last change: 2019 Apr 19
 
 
 		  VIM REFERENCE MANUAL    by Bram Moolenaar
@@ -26,9 +26,11 @@ to look for deleting something, use: "/delete".
    2.3. Square bracket commands		|<a href="index.html#[">[</a>|
    2.4. Commands starting with 'g'	|<a href="index.html#g">g</a>|
    2.5. Commands starting with 'z'	|<a href="index.html#z">z</a>|
+   2.6. Operator-pending mode		|<a href="index.html#operator-pending-index">operator-pending-index</a>|
 3. Visual mode				|<a href="index.html#visual-index">visual-index</a>|
 4. Command-line editing			|<a href="index.html#ex-edit-index">ex-edit-index</a>|
-5. EX commands				|<a href="index.html#ex-cmd-index">ex-cmd-index</a>|
+5. Terminal-Job mode			|<a href="index.html#terminal-job-index">terminal-job-index</a>|
+6. EX commands				|<a href="index.html#ex-cmd-index">ex-cmd-index</a>|
 
 For an overview of options see help.txt |<a href="quickref.html#option-list">option-list</a>|.
 For an overview of built-in functions see |<a href="eval.html#functions">functions</a>|.
@@ -172,6 +174,20 @@ commands in <code class="keystroke">CTRL-X</code> submode				<b class="vimtag">*
 |<a href="insert.html#i_CTRL-X_CTRL-]">i_CTRL-X_CTRL-]</a>|	<code class="keystroke">CTRL-X</code> CTRL-]	complete tags
 |<a href="insert.html#i_CTRL-X_s">i_CTRL-X_s</a>|		<code class="keystroke">CTRL-X</code> s	spelling suggestions
 {not available when compiled without the |<a href="various.html#+insert_expand">+insert_expand</a>| feature}
+
+commands in completion mode (see |<a href="insert.html#popupmenu-keys">popupmenu-keys</a>|)
+
+|<a href="insert.html#complete_CTRL-E">complete_CTRL-E</a>| <code class="keystroke">CTRL-E</code>	stop completion and go back to original text
+|<a href="insert.html#complete_CTRL-Y">complete_CTRL-Y</a>| <code class="keystroke">CTRL-Y</code>	accept selected match and stop completion
+		<code class="keystroke">CTRL-L</code>		insert one character from the current match
+		<code class="special">&lt;CR&gt;</code>		insert currently selected match
+		<code class="special">&lt;BS&gt;</code>		delete one character and redo search
+		<code class="keystroke">CTRL-H</code>		same as <code class="special">&lt;BS&gt;</code>
+		<code class="special">&lt;Up&gt;</code>		select the previous match
+		<code class="special">&lt;Down&gt;</code>		select the next match
+		<code class="special">&lt;PageUp&gt;</code>	select a match several entries back
+		<code class="special">&lt;PageDown&gt;</code>	select a match several entries forward
+		other		stop completion and insert the typed character
 
 </pre><hr><pre>2. Normal mode						<b class="vimtag">*<a name="normal-index">normal-index</a>*</b>
 
@@ -529,10 +545,8 @@ These can be used after an operator or in Visual mode to select an object.
 |<a href="windows.html#CTRL-W_CTRL-]">CTRL-W_CTRL-]</a>|	<code class="keystroke">CTRL-W</code> CTRL-]	   same as "<code class="keystroke">CTRL-W</code> ]"
 |<a href="windows.html#CTRL-W_CTRL-^">CTRL-W_CTRL-^</a>|	<code class="keystroke">CTRL-W</code> CTRL-^	   same as "<code class="keystroke">CTRL-W</code> ^"
 |<a href="windows.html#CTRL-W_CTRL-_">CTRL-W_CTRL-_</a>|	<code class="keystroke">CTRL-W</code> <code class="keystroke">CTRL-_</code>	   same as "<code class="keystroke">CTRL-W</code> _"
-|<a href="terminal.html#CTRL-W_quote">CTRL-W_quote</a>|	<code class="keystroke">CTRL-W</code> "	   terminal window: paste register
 |<a href="windows.html#CTRL-W_+">CTRL-W_+</a>|	<code class="keystroke">CTRL-W</code> +	   increase current window height N lines
 |<a href="windows.html#CTRL-W_-">CTRL-W_-</a>|	<code class="keystroke">CTRL-W</code> -	   decrease current window height N lines
-|<a href="terminal.html#CTRL-W_.">CTRL-W_.</a>|	<code class="keystroke">CTRL-W</code> .	   terminal window: type <code class="keystroke">CTRL-W</code>
 |<a href="windows.html#CTRL-W_:">CTRL-W_:</a>|	<code class="keystroke">CTRL-W</code> :	   same as |<a href="cmdline.html#:">:</a>|, edit a command line
 |<a href="windows.html#CTRL-W_%3C">CTRL-W_&lt;</a>|	<code class="keystroke">CTRL-W</code> &lt;	   decrease current window width N columns
 |<a href="windows.html#CTRL-W_%20">CTRL-W_=</a>|	<code class="keystroke">CTRL-W</code> =	   make all windows the same height &amp; width
@@ -541,7 +555,6 @@ These can be used after an operator or in Visual mode to select an object.
 |<a href="windows.html#CTRL-W_J">CTRL-W_J</a>|	<code class="keystroke">CTRL-W</code> J	   move current window to the very bottom
 |<a href="windows.html#CTRL-W_K">CTRL-W_K</a>|	<code class="keystroke">CTRL-W</code> K	   move current window to the very top
 |<a href="windows.html#CTRL-W_L">CTRL-W_L</a>|	<code class="keystroke">CTRL-W</code> L	   move current window to the far right
-|<a href="terminal.html#CTRL-W_N">CTRL-W_N</a>|	<code class="keystroke">CTRL-W</code> N	   terminal window: go to Terminal Normal mode
 |<a href="windows.html#CTRL-W_P">CTRL-W_P</a>|	<code class="keystroke">CTRL-W</code> P	   go to preview window
 |<a href="windows.html#CTRL-W_R">CTRL-W_R</a>|	<code class="keystroke">CTRL-W</code> R	   rotate windows upwards N times
 |<a href="windows.html#CTRL-W_S">CTRL-W_S</a>|	<code class="keystroke">CTRL-W</code> S	   same as "<code class="keystroke">CTRL-W</code> s"
@@ -571,6 +584,8 @@ These can be used after an operator or in Visual mode to select an object.
 |<a href="windows.html#CTRL-W_gF">CTRL-W_gF</a>|	<code class="keystroke">CTRL-W</code> g F	   edit file name under the cursor in a new
 				   tab page and jump to the line number
 				   following the file name.
+|<a href="windows.html#CTRL-W_gt">CTRL-W_gt</a>|	<code class="keystroke">CTRL-W</code> g t	   same as `gt`: go to next tab page
+|<a href="windows.html#CTRL-W_gT">CTRL-W_gT</a>|	<code class="keystroke">CTRL-W</code> g T	   same as `gT`: go to previous tab page
 |<a href="windows.html#CTRL-W_h">CTRL-W_h</a>|	<code class="keystroke">CTRL-W</code> h	   go to Nth left window (stop at first window)
 |<a href="tagsrch.html#CTRL-W_i">CTRL-W_i</a>|	<code class="keystroke">CTRL-W</code> i	   split window and jump to declaration of
 				   identifier under the cursor
@@ -849,6 +864,15 @@ These can be used after an operator or in Visual mode to select an object.
 |<a href="scroll.html#z%3CLeft%3E">z&lt;Left&gt;</a>|	z<code class="special">&lt;Left&gt;</code>		   same as "zh"
 |<a href="scroll.html#z%3CRight%3E">z&lt;Right&gt;</a>|	z<code class="special">&lt;Right&gt;</code>	   same as "zl"
 
+</pre><hr><pre>2.6 Operator-pending mode			<b class="vimtag">*<a name="operator-pending-index">operator-pending-index</a>*</b>
+
+These can be used after an operator, but before a <code class="special">{motion}</code> has been entered.
+
+<code class="section">tag		char		action in Operator-pending mode	</code>
+</pre><hr><pre>|<a href="motion.html#o_v">o_v</a>|		v		force operator to work characterwise
+|<a href="motion.html#o_V">o_V</a>|		V		force operator to work linewise
+|<a href="motion.html#o_CTRL-V">o_CTRL-V</a>|	<code class="keystroke">CTRL-V</code>		force operator to work blockwise
+
 </pre><hr><pre>3. Visual mode						<b class="vimtag">*<a name="visual-index">visual-index</a>*</b>
 
 Most commands in Visual mode are the same as in Normal mode.  The ones listed
@@ -952,7 +976,7 @@ here are those that are different.
 |<a href="motion.html#v_i{">v_i{</a>|		i{		   same as iB
 |<a href="motion.html#v_i}">v_i}</a>|		i}		   same as iB
 |<a href="visual.html#v_o">v_o</a>|		o		   move cursor to other corner of area
-|<a href="change.html#v_r">v_r</a>|		r		2  delete highlighted area and start insert
+|<a href="change.html#v_r">v_r</a>|		r		2  replace highlighted area with a character
 |<a href="change.html#v_s">v_s</a>|		s		2  delete highlighted area and start insert
 |<a href="change.html#v_u">v_u</a>|		u		2  make highlighted area lowercase
 |<a href="visual.html#v_v">v_v</a>|		v		   make Visual mode characterwise or stop
@@ -968,7 +992,7 @@ Normal characters are inserted at the current cursor position.
 "Completion" below refers to context-sensitive completion.  It will complete
 file names, tags, commands etc. as appropriate.
 
-<code class="section">tag		command	      action in Command-line editing mode	</code>
+<code class="section">tag		command		action in Command-line editing mode	</code>
 </pre><hr><pre>		CTRL-@		not used
 |<a href="cmdline.html#c_CTRL-A">c_CTRL-A</a>|	<code class="keystroke">CTRL-A</code>		do completion on the pattern in front of the
 				cursor and insert all matches
@@ -1007,10 +1031,11 @@ file names, tags, commands etc. as appropriate.
 				command-line from history.
 |<a href="cmdline.html#c_CTRL-Q">c_CTRL-Q</a>|	<code class="keystroke">CTRL-Q</code>		same as <code class="keystroke">CTRL-V</code>, unless it's used for terminal
 				control flow
-|<a href="cmdline.html#c_CTRL-R">c_CTRL-R</a>|	<code class="keystroke">CTRL-R</code> <code class="special">{0-9a-z"%#*:= <code class="keystroke">CTRL-F</code> <code class="keystroke">CTRL-P</code> <code class="keystroke">CTRL-W</code> <code class="keystroke">CTRL-A</code>}</code>
+|<a href="cmdline.html#c_CTRL-R">c_CTRL-R</a>|	<code class="keystroke">CTRL-R</code> <code class="special">{regname}</code>
 				insert the contents of a register or object
 				under the cursor as if typed
-|<a href="cmdline.html#c_CTRL-R_CTRL-R">c_CTRL-R_CTRL-R</a>| <code class="keystroke">CTRL-R</code> <code class="keystroke">CTRL-R</code> <code class="special">{0-9a-z"%#*:= <code class="keystroke">CTRL-F</code> <code class="keystroke">CTRL-P</code> <code class="keystroke">CTRL-W</code> <code class="keystroke">CTRL-A</code>}</code>
+|<a href="cmdline.html#c_CTRL-R_CTRL-R">c_CTRL-R_CTRL-R</a>| <code class="keystroke">CTRL-R</code> <code class="keystroke">CTRL-R</code> <code class="special">{regname}</code>
+|<a href="cmdline.html#c_CTRL-R_CTRL-O">c_CTRL-R_CTRL-O</a>| <code class="keystroke">CTRL-R</code> <code class="keystroke">CTRL-O</code> <code class="special">{regname}</code>
 				insert the contents of a register or object
 				under the cursor literally
 		<code class="keystroke">CTRL-S</code>		(used for terminal control flow)
@@ -1057,15 +1082,34 @@ file names, tags, commands etc. as appropriate.
 |<a href="cmdline.html#c_%3CInsert%3E">c_&lt;Insert&gt;</a>|	<code class="special">&lt;Insert&gt;</code>	toggle insert/overstrike mode
 |<a href="cmdline.html#c_%3CLeftMouse%3E">c_&lt;LeftMouse&gt;</a>|	<code class="special">&lt;LeftMouse&gt;</code>	cursor at mouse click
 
+</pre><hr><pre>5. Terminal-Job mode				<b class="vimtag">*<a name="terminal-job-index">terminal-job-index</a>*</b>
+
+Most Normal mode commands except for window commands (|<a href="index.html#CTRL-W">CTRL-W</a>|) do not work in
+a terminal window. Switch to Terminal-Normal mode to use them.
+This assumes 'termwinkey' is not set.
+
+<code class="section">tag		char		action in Terminal-Job mode	</code>
+</pre><hr><pre>|<a href="terminal.html#t_CTRL-\_CTRL-N">t_CTRL-\_CTRL-N</a>| CTRL-\ <code class="keystroke">CTRL-N</code>	switch to Terminal-Normal mode
+|<a href="terminal.html#t_CTRL-W_N">t_CTRL-W_N</a>|	<code class="keystroke">CTRL-W</code> N	switch to Terminal-Normal mode
+|<a href="terminal.html#t_CTRL-W_:">t_CTRL-W_:</a>|	<code class="keystroke">CTRL-W</code> :	enter an Ex command
+|<a href="terminal.html#t_CTRL-W_.">t_CTRL-W_.</a>|	<code class="keystroke">CTRL-W</code> .	type <code class="keystroke">CTRL-W</code> in the terminal
+		<code class="keystroke">CTRL-W</code> CTRL-\	send a CTRL-\ to the job in the terminal
+|<a href="terminal.html#t_CTRL-W_quote">t_CTRL-W_quote</a>|  <code class="keystroke">CTRL-W</code> " <code class="special">{0-9a-z"%#*:=}</code>
+				paste register in the terminal
+|<a href="terminal.html#t_CTRL-W_CTRL-C">t_CTRL-W_CTRL-C</a>| <code class="keystroke">CTRL-W</code> <code class="keystroke">CTRL-C</code>	forcefully ends the job
+|<a href="terminal.html#t_CTRL-W_CTRL-W">t_CTRL-W_CTRL-W</a>| <code class="keystroke">CTRL-W</code> <code class="keystroke">CTRL-W</code>	move focus to the next window
+|<a href="terminal.html#t_CTRL-W_gt">t_CTRL-W_gt</a>|	<code class="keystroke">CTRL-W</code> gt	go to next tabpage, same as `gt`
+|<a href="terminal.html#t_CTRL-W_gT">t_CTRL-W_gT</a>|	<code class="keystroke">CTRL-W</code> gT	go to previous tabpage, same as `gT`
+
 You found it, Arthur!				<b class="vimtag">*<a name="holy-grail">holy-grail</a>*</b> <b class="vimtag">*<a name=":smile">:smile</a>*</b>
 
-</pre><hr><pre>5. EX commands					<b class="vimtag">*<a name="ex-cmd-index">ex-cmd-index</a>*</b> <b class="vimtag">*<a name=":index">:index</a>*</b>
+</pre><hr><pre>6. EX commands					<b class="vimtag">*<a name="ex-cmd-index">ex-cmd-index</a>*</b> <b class="vimtag">*<a name=":index">:index</a>*</b>
 
 This is a brief but complete listing of all the ":" commands, without
 mentioning any arguments.  The optional part of the command name is inside [].
 The commands are sorted on the non-optional part of their name.
 
-<code class="section">tag	      command	      action </code>
+<code class="section">tag		command		action </code>
 </pre><hr><pre>|<a href="various.html#:!">:!</a>|		:!		filter lines or execute an external command
 |<a href="various.html#:!!">:!!</a>|		:!!		repeat last ":!" command
 |<a href="various.html#:%23">:#</a>|		:#		same as ":number"
@@ -1446,8 +1490,9 @@ The commands are sorted on the non-optional part of their name.
 |<a href="recover.html#:recover">:recover</a>|	:rec[over]	recover a file from a swap file
 |<a href="undo.html#:redo">:redo</a>|		:red[o]		redo one undone change
 |<a href="various.html#:redir">:redir</a>|	:redi[r]	redirect messages to a file or register
-|<a href="various.html#:redraw">:redraw</a>|	:redr[aw]	force a redraw of the display
-|<a href="various.html#:redrawstatus">:redrawstatus</a>|	:redraws[tatus]	force a redraw of the status line(s)
+|<a href="various.html#:redraw">:redraw</a>|	:redr[aw]	  force a redraw of the display
+|<a href="various.html#:redrawstatus">:redrawstatus</a>|	:redraws[tatus]	  force a redraw of the status line(s)
+|<a href="various.html#:redrawtabline">:redrawtabline</a>|  :redrawt[abline]  force a redraw of the tabline
 |<a href="change.html#:registers">:registers</a>|	:reg[isters]	display the contents of registers
 |<a href="windows.html#:resize">:resize</a>|	:res[ize]	change current window height
 |<a href="change.html#:retab">:retab</a>|	:ret[ab]	change tab size
@@ -1487,7 +1532,8 @@ The commands are sorted on the non-optional part of their name.
 |<a href="windows.html#:sbrewind">:sbrewind</a>|	:sbr[ewind]	split window and go to first file in the
 				buffer list
 |<a href="repeat.html#:scriptnames">:scriptnames</a>|	:scr[iptnames]	list names of all sourced Vim scripts
-|<a href="repeat.html#:scriptencoding">:scriptencoding</a>| :scripte[ncoding]	encoding used in sourced Vim script
+|<a href="repeat.html#:scriptencoding">:scriptencoding</a>| :scripte[ncoding]  encoding used in sourced Vim script
+|<a href="repeat.html#:scriptversion">:scriptversion</a>|  :scriptv[ersion]   version of Vim script used
 |<a href="if_cscop.html#:scscope">:scscope</a>|	:scs[cope]	split window and execute cscope command
 |<a href="options.html#:set">:set</a>|		:se[t]		show or set options
 |<a href="options.html#:setfiletype">:setfiletype</a>|	:setf[iletype]	set 'filetype', unless it was set already
@@ -1562,6 +1608,8 @@ The commands are sorted on the non-optional part of their name.
 |<a href="tabpage.html#:tab">:tab</a>|		:tab		create new tab when opening new window
 |<a href="tagsrch.html#:tag">:tag</a>|		:ta[g]		jump to tag
 |<a href="tagsrch.html#:tags">:tags</a>|		:tags		show the contents of the tag stack
+|<a href="editing.html#:tcd">:tcd</a>|		:tcd		change directory for tab page
+|<a href="editing.html#:tchdir">:tchdir</a>|	:tch[dir]	change directory for tab page
 |<a href="if_tcl.html#:tcl">:tcl</a>|		:tc[l]		execute Tcl command
 |<a href="if_tcl.html#:tcldo">:tcldo</a>|	:tcld[o]	execute Tcl command for each line
 |<a href="if_tcl.html#:tclfile">:tclfile</a>|	:tclf[ile]	execute Tcl script file
@@ -1572,6 +1620,9 @@ The commands are sorted on the non-optional part of their name.
 |<a href="tagsrch.html#:tjump">:tjump</a>|	:tj[ump]	like ":tselect", but jump directly when there
 				is only one match
 |<a href="tagsrch.html#:tlast">:tlast</a>|	:tl[ast]	jump to last matching tag
+|<a href="gui.html#:tlmenu">:tlmenu</a>|	:tlm[enu]	add menu for Terminal-Job mode
+|<a href="gui.html#:tlnoremenu">:tlnoremenu</a>|	:tln[oremenu]	like ":noremenu" but for Terminal-Job mode
+|<a href="gui.html#:tlunmenu">:tlunmenu</a>|	:tlu[nmenu]	remove menu for Terminal-Job mode
 |<a href="map.html#:tmapclear">:tmapclear</a>|	:tmapc[lear]	remove all mappings for Terminal-Job mode
 |<a href="map.html#:tmap">:tmap</a>|		:tma[p]		like ":map" but for Terminal-Job mode
 |<a href="gui.html#:tmenu">:tmenu</a>|	:tm[enu]	define menu tooltip
@@ -1629,7 +1680,6 @@ The commands are sorted on the non-optional part of their name.
 				argument list
 |<a href="editing.html#:wq">:wq</a>|		:wq		write to a file and quit window or Vim
 |<a href="editing.html#:wqall">:wqall</a>|	:wqa[ll]	write all changed buffers and quit Vim
-|<a href="workshop.html#:wsverb">:wsverb</a>|	:ws[verb]	pass the verb to workshop over IPC
 |<a href="undo.html#:wundo">:wundo</a>|	:wu[ndo]	write undo information to a file
 |<a href="starting.html#:wviminfo">:wviminfo</a>|	:wv[iminfo]	write to viminfo file
 |<a href="editing.html#:xit">:xit</a>|		:x[it]		write if buffer changed and quit window or Vim
@@ -1646,8 +1696,8 @@ The commands are sorted on the non-optional part of their name.
 |<a href="change.html#:%7E">:~</a>|		:~		repeat last ":substitute"
 
 
- vim:tw=78:ts=8:ft=help:norl:
+ vim:tw=78:ts=8:noet:ft=help:norl:
 </pre>
-<p><i>Generated by vim2html on 04 Mar 2018 23:40:43</i></p>
+<p><i>Generated by vim2html on 01 May 2019 13:47:24</i></p>
 </body>
 </html>

@@ -998,93 +998,93 @@
 # rebase_pkg information from: /etc/setup/libXss1.lst.gz
 /usr/bin/cygXss-1.dll
 # rebase_pkg information from: /etc/setup/python36-tkinter.lst.gz
-/usr/lib/python3.6/lib-dynload/_tkinter.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_tkinter.cpython-36m-i386-cygwin.dll
 # rebase_pkg information from: /etc/setup/python36.lst.gz
 /usr/bin/libpython3.6m.dll
-/usr/bin/python3.6m.exe
-/usr/lib/python3.6/lib-dynload/array.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/audioop.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/binascii.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/cmath.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/fcntl.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/grp.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/math.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/mmap.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/parser.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/pyexpat.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/readline.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/resource.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/select.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/syslog.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/termios.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/unicodedata.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/xxlimited.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/zlib.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_asyncio.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_bisect.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_blake2.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_bz2.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_codecs_cn.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_codecs_hk.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_codecs_iso2022.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_codecs_jp.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_codecs_kr.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_codecs_tw.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_crypt.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_csv.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_ctypes.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_curses.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_curses_panel.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_datetime.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_dbm.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_decimal.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_elementtree.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_gdbm.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_hashlib.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_heapq.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_json.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_lsprof.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_md5.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_multibytecodec.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_multiprocessing.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_opcode.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_pickle.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_posixsubprocess.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_random.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_sha1.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_sha256.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_sha3.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_sha512.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_socket.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_sqlite3.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_ssl.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/lib-dynload/_struct.cpython-36m-i386-cygwin.dll
-/usr/lib/python3.6/distutils/command/wininst-10.0-amd64.exe
-/usr/lib/python3.6/distutils/command/wininst-10.0.exe
-/usr/lib/python3.6/distutils/command/wininst-14.0-amd64.exe
-/usr/lib/python3.6/distutils/command/wininst-14.0.exe
-/usr/lib/python3.6/distutils/command/wininst-6.0.exe
-/usr/lib/python3.6/distutils/command/wininst-7.1.exe
-/usr/lib/python3.6/distutils/command/wininst-8.0.exe
-/usr/lib/python3.6/distutils/command/wininst-9.0-amd64.exe
-/usr/lib/python3.6/distutils/command/wininst-9.0.exe
+#/usr/bin/python3.6m.exe
+#/usr/lib/python3.6/lib-dynload/array.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/audioop.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/binascii.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/cmath.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/fcntl.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/grp.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/math.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/mmap.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/parser.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/pyexpat.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/readline.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/resource.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/select.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/syslog.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/termios.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/unicodedata.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/xxlimited.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/zlib.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_asyncio.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_bisect.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_blake2.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_bz2.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_codecs_cn.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_codecs_hk.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_codecs_iso2022.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_codecs_jp.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_codecs_kr.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_codecs_tw.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_crypt.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_csv.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_ctypes.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_curses.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_curses_panel.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_datetime.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_dbm.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_decimal.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_elementtree.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_gdbm.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_hashlib.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_heapq.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_json.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_lsprof.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_md5.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_multibytecodec.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_multiprocessing.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_opcode.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_pickle.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_posixsubprocess.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_random.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_sha1.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_sha256.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_sha3.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_sha512.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_socket.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_sqlite3.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_ssl.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/lib-dynload/_struct.cpython-36m-i386-cygwin.dll
+#/usr/lib/python3.6/distutils/command/wininst-10.0-amd64.exe
+#/usr/lib/python3.6/distutils/command/wininst-10.0.exe
+#/usr/lib/python3.6/distutils/command/wininst-14.0-amd64.exe
+#/usr/lib/python3.6/distutils/command/wininst-14.0.exe
+#/usr/lib/python3.6/distutils/command/wininst-6.0.exe
+#/usr/lib/python3.6/distutils/command/wininst-7.1.exe
+#/usr/lib/python3.6/distutils/command/wininst-8.0.exe
+#/usr/lib/python3.6/distutils/command/wininst-9.0-amd64.exe
+#/usr/lib/python3.6/distutils/command/wininst-9.0.exe
 # rebase_pkg information from: /etc/setup/tcl-tix.lst.gz
 /usr/lib/Tix8.4.3/libTix8.4.3.dll
 # rebase_pkg information from: /etc/setup/tcl-tk.lst.gz
 /usr/bin/libtk8.6.dll
 /usr/bin/wish8.6.exe
 # rebase_pkg information from: /etc/setup/python36-pip.lst.gz
-/usr/lib/python3.6/site-packages/pip/_vendor/distlib/t32.exe
-/usr/lib/python3.6/site-packages/pip/_vendor/distlib/t64.exe
-/usr/lib/python3.6/site-packages/pip/_vendor/distlib/w32.exe
-/usr/lib/python3.6/site-packages/pip/_vendor/distlib/w64.exe
+#/usr/lib/python3.6/site-packages/pip/_vendor/distlib/t32.exe
+#/usr/lib/python3.6/site-packages/pip/_vendor/distlib/t64.exe
+#/usr/lib/python3.6/site-packages/pip/_vendor/distlib/w32.exe
+#/usr/lib/python3.6/site-packages/pip/_vendor/distlib/w64.exe
 # rebase_pkg information from: /etc/setup/python36-setuptools.lst.gz
-/usr/lib/python3.6/site-packages/setuptools/cli-32.exe
-/usr/lib/python3.6/site-packages/setuptools/cli-64.exe
-/usr/lib/python3.6/site-packages/setuptools/cli.exe
-/usr/lib/python3.6/site-packages/setuptools/gui-32.exe
-/usr/lib/python3.6/site-packages/setuptools/gui-64.exe
-/usr/lib/python3.6/site-packages/setuptools/gui.exe
+#/usr/lib/python3.6/site-packages/setuptools/cli-32.exe
+#/usr/lib/python3.6/site-packages/setuptools/cli-64.exe
+#/usr/lib/python3.6/site-packages/setuptools/cli.exe
+#/usr/lib/python3.6/site-packages/setuptools/gui-32.exe
+#/usr/lib/python3.6/site-packages/setuptools/gui-64.exe
+#/usr/lib/python3.6/site-packages/setuptools/gui.exe
 # rebase_pkg information from: /etc/setup/python36-wheel.lst.gz
 # rebase_pkg information from: /etc/setup/python37-pip.lst.gz
 /usr/lib/python3.7/site-packages/pip/_vendor/distlib/t32.exe
@@ -1173,3 +1173,62 @@
 /usr/lib/python3.7/distutils/command/wininst-8.0.exe
 /usr/lib/python3.7/distutils/command/wininst-9.0-amd64.exe
 /usr/lib/python3.7/distutils/command/wininst-9.0.exe
+# rebase_pkg information from: /etc/setup/ca-certificates.lst.gz
+# rebase_pkg information from: /etc/setup/cygwin.lst.gz
+/usr/bin/chattr.exe
+/usr/bin/cygpath.exe
+/usr/bin/gencat.exe
+/usr/bin/getconf.exe
+/usr/bin/getfacl.exe
+/usr/bin/ldd.exe
+/usr/bin/locale.exe
+/usr/bin/lsattr.exe
+/usr/bin/kill.exe
+/usr/bin/minidumper.exe
+/usr/bin/mkgroup.exe
+/usr/bin/mkpasswd.exe
+/usr/bin/mount.exe
+/usr/bin/passwd.exe
+/usr/bin/pldd.exe
+/usr/bin/ps.exe
+/usr/bin/regtool.exe
+/usr/bin/setfacl.exe
+/usr/bin/setmetamode.exe
+/usr/bin/ssp.exe
+/usr/bin/tzset.exe
+/usr/bin/umount.exe
+/usr/bin/dumper.exe
+/usr/bin/cygcheck.exe
+/usr/bin/cygwin-console-helper.exe
+/usr/bin/ldh.exe
+/usr/bin/strace.exe
+/usr/sbin/cygserver.exe
+# rebase_pkg information from: /etc/setup/jq.lst.gz
+/usr/bin/jq.exe
+# rebase_pkg information from: /etc/setup/libcurl4.lst.gz
+/usr/bin/cygcurl-4.dll
+# rebase_pkg information from: /etc/setup/libjq1.lst.gz
+/usr/bin/cygjq-1.dll
+# rebase_pkg information from: /etc/setup/libonig5.lst.gz
+/usr/bin/cygonig-5.dll
+# rebase_pkg information from: /etc/setup/libssh-common.lst.gz
+# rebase_pkg information from: /etc/setup/libssh4.lst.gz
+/usr/bin/cygssh-4.dll
+# rebase_pkg information from: /etc/setup/mariadb-common.lst.gz
+/usr/lib/mariadb/plugin/auth_gssapi_client.dll
+/usr/lib/mariadb/plugin/caching_sha2_password.dll
+/usr/lib/mariadb/plugin/dialog.dll
+/usr/lib/mariadb/plugin/mysql_clear_password.dll
+/usr/lib/mariadb/plugin/remote_io.dll
+/usr/lib/mariadb/plugin/sha256_password.dll
+# rebase_pkg information from: /etc/setup/mysql-common.lst.gz
+# rebase_pkg information from: /etc/setup/perl-YAML.lst.gz
+# rebase_pkg information from: /etc/setup/publicsuffix-list-dafsa.lst.gz
+# rebase_pkg information from: /etc/setup/vim-common.lst.gz
+# rebase_pkg information from: /etc/setup/vim-doc.lst.gz
+# rebase_pkg information from: /etc/setup/vim-minimal.lst.gz
+/usr/bin/vi.exe
+# rebase_pkg information from: /etc/setup/vim.lst.gz
+/usr/bin/vim.exe
+# rebase_pkg information from: /etc/setup/xxd.lst.gz
+/usr/bin/xxd.exe

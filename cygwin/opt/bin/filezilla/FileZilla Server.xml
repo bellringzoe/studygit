@@ -15,7 +15,7 @@
                 <Allowed />
             </IpFilter>
             <Permissions>
-                <Permission Dir = "C:\nbudbg\cygwin\opt\bin\filezilla\ftp_root">
+                <Permission Dir = "C:\nbudbg\cygwin\cygwin\opt\bin\filezilla\ftp_root">
                     <Option Name="FileRead">1</Option>
                     <Option Name="FileWrite">0</Option>
                     <Option Name="FileDelete">0</Option>
@@ -50,7 +50,7 @@
                 <Allowed />
             </IpFilter>
             <Permissions>
-                <Permission Dir = "C:\nbudbg\cygwin\opt\bin\filezilla\ftp_root">
+                <Permission Dir = "C:\nbudbg\cygwin\cygwin\opt\bin\filezilla\ftp_root">
                     <Option Name="FileRead">1</Option>
                     <Option Name="FileWrite">0</Option>
                     <Option Name="FileDelete">0</Option>
@@ -83,7 +83,7 @@
                 <Allowed />
             </IpFilter>
             <Permissions>
-                <Permission Dir = "C:\nbudbg\cygwin\opt\bin\filezilla\ftp_root">
+                <Permission Dir = "C:\nbudbg\cygwin\cygwin\opt\bin\filezilla\ftp_root">
                     <Option Name="FileRead">1</Option>
                     <Option Name="FileWrite">0</Option>
                     <Option Name="FileDelete">0</Option>

@@ -19,9 +19,7 @@ Archiving
 
 Basics
 * Bash: (bash).                 The GNU Bourne-Again SHell.
-* Common options: (inetutils)Common options.
-                                Common options.
-* Inetutils: (inetutils).       GNU networking utilities.
+* Common options: (coreutils)Common options.
 * Coreutils: (coreutils).       Core GNU (file, text, shell) utilities.
 * Date input formats: (coreutils)Date input formats.
 * File permissions: (coreutils)File permissions.
@@ -89,8 +87,6 @@ Individual utilities
 * find: (find)Invoking find.                    Finding and acting on files.
 * fmt: (coreutils)fmt invocation.               Reformat paragraph text.
 * fold: (coreutils)fold invocation.             Wrap long input lines.
-* ftp: (inetutils)ftp invocation.               FTP client.
-* ftpd: (inetutils)ftpd invocation.             FTP Daemon.
 * groups: (coreutils)groups invocation.         Print group names a user is in.
 * gunzip: (gzip)Overview.                       Decompression.
 * gzexe: (gzip)Overview.                        Compress executables.
@@ -98,7 +94,6 @@ Individual utilities
 * hostid: (coreutils)hostid invocation.         Print numeric host identifier.
 * hostname: (coreutils)hostname invocation.     Print or set system name.
 * id: (coreutils)id invocation.                 Print user identity.
-* inetd: (inetutils)inetd invocation.           Internet super-server.
 * install: (coreutils)install invocation.       Copy files and set attributes.
 * join: (coreutils)join invocation.             Join lines on a common field.
 * kill: (coreutils)kill invocation.             Send a signal to processes.
@@ -162,15 +157,10 @@ Individual utilities
 * stty: (coreutils)stty invocation.             Print/change terminal settings.
 * sum: (coreutils)sum invocation.               Print traditional checksum.
 * sync: (coreutils)sync invocation.             Synchronize memory to disk.
-* syslogd: (inetutils)syslogd invocation.       Syslog server.
 * tac: (coreutils)tac invocation.               Reverse files.
 * tail: (coreutils)tail invocation.             Output the last part of files.
-* talk: (inetutils)talk invocation.             Talk client.
-* talkd: (inetutils)talkd invocation.           Talk server.
 * tar: (tar)tar invocation.                     Invoking GNU 'tar'.
 * tee: (coreutils)tee invocation.               Redirect to multiple files.
-* telnet: (inetutils)telnet invocation.         User interface to TELNET.
-* telnetd: (inetutils)telnetd invocation.       Telnet server.
 * test: (coreutils)test invocation.             File/string tests.
 * timeout: (coreutils)timeout invocation.       Run with time limit.
 * touch: (coreutils)touch invocation.           Change file timestamps.
@@ -186,7 +176,6 @@ Individual utilities
 * updatedb: (find)Invoking updatedb.            Building the locate database.
 * uptime: (coreutils)uptime invocation.         Print uptime and load.
 * users: (coreutils)users invocation.           Print current user names.
-* uucpd: (inetutils)uucpd invocation.           Unix to Unix Copy.
 * vdir: (coreutils)vdir invocation.             List directories verbosely.
 * wc: (coreutils)wc invocation.                 Line, word, and byte counts.
 * who: (coreutils)who invocation.               Print who is logged in.
@@ -214,7 +203,6 @@ Software development
 * Gas: (as).                    The GNU assembler.
 * Gdb: (gdb).                   The GNU debugger.
 * Ld: (ld).                     The GNU linker.
-* Make: (make).                 Remake files automatically.
 * Stabs: (stabs).               The "stabs" debugging information format.
 * gdbserver: (gdb) Server.      The GNU debugging server.
 * gprof: (gprof).               Profiling your program's execution

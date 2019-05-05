@@ -7,7 +7,7 @@
 <body>
 <h2>IF_LUA</h2>
 <pre>
-<b class="vimtag">*<a name="if_lua.txt">if_lua.txt</a>*</b>    For Vim version 8.0.  Last change: 2015 Oct 16
+<b class="vimtag">*<a name="if_lua.txt">if_lua.txt</a>*</b>    For Vim version 8.1.  Last change: 2015 Oct 16
 
 
 		  VIM REFERENCE MANUAL    by Luis Carvalho
@@ -19,11 +19,12 @@ The Lua Interface to Vim				<b class="vimtag">*<a name="lua">lua</a>*</b> <b cla
 2. The vim module		|<a href="if_lua.html#lua-vim">lua-vim</a>|
 3. List userdata		|<a href="if_lua.html#lua-list">lua-list</a>|
 4. Dict userdata		|<a href="if_lua.html#lua-dict">lua-dict</a>|
-5. Funcref userdata		|<a href="if_lua.html#lua-funcref">lua-funcref</a>|
-6. Buffer userdata		|<a href="if_lua.html#lua-buffer">lua-buffer</a>|
-7. Window userdata		|<a href="if_lua.html#lua-window">lua-window</a>|
-8. The luaeval function		|<a href="if_lua.html#lua-luaeval">lua-luaeval</a>|
-9. Dynamic loading		|<a href="if_lua.html#lua-dynamic">lua-dynamic</a>|
+5. Blob userdata		|<a href="if_lua.html#lua-blob">lua-blob</a>|
+6. Funcref userdata		|<a href="if_lua.html#lua-funcref">lua-funcref</a>|
+7. Buffer userdata		|<a href="if_lua.html#lua-buffer">lua-buffer</a>|
+8. Window userdata		|<a href="if_lua.html#lua-window">lua-window</a>|
+9. luaeval() Vim function	|<a href="if_lua.html#lua-luaeval">lua-luaeval</a>|
+10. Dynamic loading		|<a href="if_lua.html#lua-dynamic">lua-dynamic</a>|
 
 <code class="special">{Vi does not have any of these commands}</code>
 
@@ -132,9 +133,9 @@ Vim evaluation and command execution, and others.
 				Non-numeric keys are not used to initialize
 				the list. See also |<a href="if_lua.html#lua-eval">lua-eval</a>| for conversion
 				rules. Example:
-<code class="example">					:lua t = <code class="special">{math.pi, false, say = 'hi'}</code></code>
-<code class="example">					:echo luaeval('vim.list(t)')</code>
-<code class="example">					:" [3.141593, 0], 'say' is ignored</code>
+<code class="example">				    :lua t = <code class="special">{math.pi, false, say = 'hi'}</code></code>
+<code class="example">				    :echo luaeval('vim.list(t)')</code>
+<code class="example">				    :" [3.141593, v:false], 'say' is ignored</code>
 
 	vim.dict([arg])		Returns an empty dictionary or, if "arg" is a
 				Lua table, returns a dict d such that d[k] =
@@ -143,13 +144,22 @@ Vim evaluation and command execution, and others.
 				strings. Keys that are not strings are not
 				used to initialize the dictionary. See also
 				|<a href="if_lua.html#lua-eval">lua-eval</a>| for conversion rules. Example:
-<code class="example">					:lua t = <code class="special">{math.pi, false, say = 'hi'}</code></code>
-<code class="example">					:echo luaeval('vim.dict(t)')</code>
-<code class="example">					:" <code class="special">{'say': 'hi'}</code>, numeric keys ignored</code>
+<code class="example">				    :lua t = <code class="special">{math.pi, false, say = 'hi'}</code></code>
+<code class="example">				    :echo luaeval('vim.dict(t)')</code>
+<code class="example">				    :" {'1': 3.141593, '2': v:false,</code>
+<code class="example">				    :" 'say': 'hi'}</code>
+
+	vim.blob([arg])		Returns an empty blob or, if "arg" is a Lua
+				string, returns a blob b such that b is
+				equivalent to "arg" as a byte string.
+				Examples:
+<code class="example">				    :lua s = "12ab\x00\x80\xfe\xff"</code>
+<code class="example">				    :echo luaeval('vim.blob(s)')</code>
+<code class="example">				    :" 0z31326162.0080FEFF</code>
 
 	vim.funcref(<code class="special">{name}</code>)	Returns a Funcref to function <code class="special">{name}</code> (see
 				|<a href="eval.html#Funcref">Funcref</a>|). It is equivalent to Vim's
-				"function". NOT IMPLEMENTED YET
+				function().
 
 	vim.buffer([arg])	If "arg" is a number, returns buffer with
 				number "arg" in the buffer list or, if "arg"
@@ -173,7 +183,7 @@ Vim evaluation and command execution, and others.
 				or window, respectively. Examples:
 <code class="example">					:lua l = vim.list()</code>
 <code class="example">					:lua print(type(l), vim.type(l))</code>
-<code class="example">					:" userdata list</code>
+<code class="example">					:" list</code>
 
 	vim.command(<code class="special">{cmd}</code>)	Executes the vim (ex-mode) command <code class="special">{cmd}</code>.
 				Examples:
@@ -260,7 +270,31 @@ Examples:
 <code class="example">	:echo d</code>
 
 
-</pre><hr><pre>5. Funcref userdata					<b class="vimtag">*<a name="lua-funcref">lua-funcref</a>*</b>
+</pre><hr><pre>5. Blob userdata					<b class="vimtag">*<a name="lua-blob">lua-blob</a>*</b>
+
+Blob userdata represent vim blobs. A blob "b" has the following properties:
+
+Properties
+</pre><hr><pre>	o "#b" is the length of blob "b", equivalent to "len(b)" in Vim.
+	o "b[k]" returns the k-th item in "b"; "b" is zero-indexed, as in Vim.
+	    To modify the k-th item, simply do "b[k] = number"; in particular,
+	    "b[#b] = number" can append a byte to tail.
+
+Methods
+</pre><hr><pre>	o "b:add(bytes)" appends "bytes" to the end of "b".
+
+Examples:
+
+<code class="example">	:let b = 0z001122</code>
+<code class="example">	:lua b = vim.eval('b') -- same 'b'</code>
+<code class="example">	:lua print(b, b[0], #b)</code>
+<code class="example">	:lua b[1] = 32</code>
+<code class="example">	:lua b[#b] = 0x33 -- append a byte to tail</code>
+<code class="example">	:lua b:add("\x80\x81\xfe\xff")</code>
+<code class="example">	:echo b</code>
+
+
+</pre><hr><pre>6. Funcref userdata					<b class="vimtag">*<a name="lua-funcref">lua-funcref</a>*</b>
 
 Funcref userdata represent funcref variables in Vim. Funcrefs that were
 defined with a "dict" attribute need to be obtained as a dictionary key
@@ -291,7 +325,7 @@ Examples:
 <code class="example">	:lua print(l())</code>
 
 
-</pre><hr><pre>6. Buffer userdata					<b class="vimtag">*<a name="lua-buffer">lua-buffer</a>*</b>
+</pre><hr><pre>7. Buffer userdata					<b class="vimtag">*<a name="lua-buffer">lua-buffer</a>*</b>
 
 Buffer userdata represent vim buffers. A buffer userdata "b" has the following
 properties and methods:
@@ -340,7 +374,7 @@ Examples:
 <code class="example">	endfunction</code>
 
 
-</pre><hr><pre>7. Window userdata					<b class="vimtag">*<a name="lua-window">lua-window</a>*</b>
+</pre><hr><pre>8. Window userdata					<b class="vimtag">*<a name="lua-window">lua-window</a>*</b>
 
 Window objects represent vim windows. A window userdata "w" has the following
 properties and methods:
@@ -369,7 +403,7 @@ Examples:
 <code class="example">	:lua print("There are " .. n .. " windows")</code>
 
 
-</pre><hr><pre>8. The luaeval function					<b class="vimtag">*<a name="lua-luaeval">lua-luaeval</a>*</b> <b class="vimtag">*<a name="lua-eval">lua-eval</a>*</b>
+</pre><hr><pre>9. luaeval() Vim function				<b class="vimtag">*<a name="lua-luaeval">lua-luaeval</a>*</b> <b class="vimtag">*<a name="lua-eval">lua-eval</a>*</b>
 
 The (dual) equivalent of "vim.eval" for passing Lua values to Vim is
 "luaeval". "luaeval" takes an expression string and an optional argument and
@@ -382,10 +416,10 @@ returns the result of the expression. It is semantically equivalent in Lua to:
 <code class="example">	end</code>
 
 <code class="note">Note</code> that "_A" receives the argument to "luaeval". Lua numbers, strings, and
-list, dict, and funcref userdata are converted to their Vim respective types,
-while Lua booleans are converted to numbers. An error is thrown if conversion
-of any of the remaining Lua types, including userdata other than lists, dicts,
-and funcrefs, is attempted.
+list, dict, blob, and funcref userdata are converted to their Vim respective
+types, while Lua booleans are converted to numbers. An error is thrown if
+conversion of any of the remaining Lua types, including userdata other than
+lists, dicts, blobs, and funcrefs, is attempted.
 
 Examples:
 <code class="example"></code>
@@ -399,7 +433,7 @@ Examples:
 <code class="example">	:echo Rand(1,10)</code>
 <code class="example"></code>
 <code class="example"></code>
-</pre><hr><pre>9. Dynamic loading				    <b class="vimtag">*<a name="lua-dynamic">lua-dynamic</a>*</b>
+</pre><hr><pre>10. Dynamic loading				    <b class="vimtag">*<a name="lua-dynamic">lua-dynamic</a>*</b>
 
 On MS-Windows and Unix the Lua library can be loaded dynamically.  The
 |<a href="various.html#:version">:version</a>| output then includes |<a href="various.html#+lua%2Fdyn">+lua/dyn</a>|.
@@ -426,6 +460,6 @@ the shared library must match the Lua version Vim was compiled with.
 
 </pre><hr><pre> vim:tw=78:ts=8:noet:ft=help:norl:
 </pre>
-<p><i>Generated by vim2html on 04 Mar 2018 23:40:43</i></p>
+<p><i>Generated by vim2html on 01 May 2019 13:47:24</i></p>
 </body>
 </html>

@@ -7,7 +7,7 @@
 <body>
 <h2>SPELL</h2>
 <pre>
-<b class="vimtag">*<a name="spell.txt">spell.txt</a>*</b>	For Vim version 8.0.  Last change: 2017 Oct 26
+<b class="vimtag">*<a name="spell.txt">spell.txt</a>*</b>	For Vim version 8.1.  Last change: 2019 Jan 19
 
 
 		  VIM REFERENCE MANUAL	  by Bram Moolenaar
@@ -319,25 +319,25 @@ Exceptions:
   spell file is used.
 
 For example, with these values:
-	'runtimepath' is "~/.vim,/usr/share/vim70,~/.vim/after"
+	'runtimepath' is "~/.vim,/usr/share/vim81,~/.vim/after"
 	'encoding'    is "iso-8859-2"
 	'spelllang'   is "pl"
 
 Vim will look for:
 1. ~/.vim/spell/pl.iso-8859-2.spl
-2. /usr/share/vim70/spell/pl.iso-8859-2.spl
+2. /usr/share/vim81/spell/pl.iso-8859-2.spl
 3. ~/.vim/spell/pl.iso-8859-2.add.spl
-4. /usr/share/vim70/spell/pl.iso-8859-2.add.spl
+4. /usr/share/vim81/spell/pl.iso-8859-2.add.spl
 5. ~/.vim/after/spell/pl.iso-8859-2.add.spl
 
 This assumes 1. is not found and 2. is found.
 
 If 'encoding' is "latin1" Vim will look for:
 1. ~/.vim/spell/pl.latin1.spl
-2. /usr/share/vim70/spell/pl.latin1.spl
+2. /usr/share/vim81/spell/pl.latin1.spl
 3. ~/.vim/after/spell/pl.latin1.spl
 4. ~/.vim/spell/pl.ascii.spl
-5. /usr/share/vim70/spell/pl.ascii.spl
+5. /usr/share/vim81/spell/pl.ascii.spl
 6. ~/.vim/after/spell/pl.ascii.spl
 
 This assumes none of them are found (Polish doesn't make sense when leaving
@@ -583,7 +583,7 @@ When the Myspell files are updated you can merge the differences:
 <code class="example">	vimdiff xx_YY.orig.dic xx_YY.new.dic</code>
 3. Take over the changes you like in xx_YY.dic.
    You may also need to change xx_YY.aff.
-4. Rename xx_YY.new.dic to xx_YY.orig.dic and xx_YY.new.aff to xx_YY.new.aff.
+4. Rename xx_YY.new.dic to xx_YY.orig.dic and xx_YY.new.aff to xx_YY.orig.aff.
 
 
 SPELL FILE VERSIONS					<b class="vimtag">*<a name="E770">E770</a>*</b> <b class="vimtag">*<a name="E771">E771</a>*</b> <b class="vimtag">*<a name="E772">E772</a>*</b>
@@ -912,9 +912,9 @@ when using "cp1250" on Unix.
 						<b class="vimtag">*<a name="spell-LOW">spell-LOW</a>*</b> <b class="vimtag">*<a name="spell-UPP">spell-UPP</a>*</b>
 Three lines in the affix file are needed.  Simplistic example:
 
-<code class="section">	FOL  ·ÎÒ </code>
-<code class="section">	LOW  ·ÎÒ </code>
-<code class="section">	UPP  ¡À— </code>
+<code class="section">	FOL  √°√´√± </code>
+<code class="section">	LOW  √°√´√± </code>
+<code class="section">	UPP  √Å√ã√ë </code>
 
 All three lines must have exactly the same number of characters.
 
@@ -929,9 +929,9 @@ The "UPP" line specifies the characters with upper-case.  That is, a character
 is upper-case where it's different from the character at the same position in
 "FOL".
 
-An exception is made for the German sharp s ﬂ.  The upper-case version is
+An exception is made for the German sharp s √ü.  The upper-case version is
 "SS".  In the FOL/LOW/UPP lines it should be included, so that it's recognized
-as a word character, but use the ﬂ character in all three.
+as a word character, but use the √ü character in all three.
 
 ASCII characters should be omitted, Vim always handles these in the same way.
 When the encoding is UTF-8 no word characters need to be specified.
@@ -1402,7 +1402,7 @@ suggestions would spend most time trying all kind of weird compound words.
 							<b class="vimtag">*<a name="spell-SYLLABLE">spell-SYLLABLE</a>*</b>
 The SYLLABLE item defines characters or character sequences that are used to
 count the number of syllables in a word.  Example:
-<code class="section">	SYLLABLE a·eÈiÌoÛˆıu˙¸˚y/aa/au/ea/ee/ei/ie/oa/oe/oo/ou/uu/ui </code>
+<code class="section">	SYLLABLE a√°e√©i√≠o√≥√∂√µu√∫√º√ªy/aa/au/ea/ee/ei/ie/oa/oe/oo/ou/uu/ui </code>
 
 Before the first slash is the set of characters that are counted for one
 syllable, also when repeated and mixed, until the next character that is not
@@ -1483,8 +1483,8 @@ alike.  This is mostly used for a letter with different accents.  This is used
 to prefer suggestions with these letters substituted.  Example:
 
 <code class="section">	MAP 2 </code>
-<code class="section">	MAP eÈÎÍË </code>
-<code class="section">	MAP u¸˘˙˚ </code>
+<code class="section">	MAP e√©√´√™√® </code>
+<code class="section">	MAP u√º√π√∫√ª </code>
 
 The first line specifies the number of MAP lines following.  Vim ignores the
 number, but the line must be there.
@@ -1587,6 +1587,10 @@ CHECKCOMPOUNDTRIPLE  (Hunspell)			<b class="vimtag">*<a name="spell-CHECKCOMPOUN
 		Forbid three identical characters when compounding.  Not
 		supported.
 
+CHECKSHARPS  (Hunspell))			<b class="vimtag">*<a name="spell-CHECKSHARPS">spell-CHECKSHARPS</a>*</b>
+		SS letter pair in uppercased (German) words may be upper case
+		sharp s (√ü). Not supported.
+
 COMPLEXPREFIXES  (Hunspell)				<b class="vimtag">*<a name="spell-COMPLEXPREFIXES">spell-COMPLEXPREFIXES</a>*</b>
 		Enables using two prefixes.  Not supported.
 
@@ -1600,12 +1604,21 @@ COMPOUNDFIRST	(Hunspell)				<b class="vimtag">*<a name="spell-COMPOUNDFIRST">spe
 		Use COMPOUNDRULE instead. |<a href="spell.html#spell-COMPOUNDRULE">spell-COMPOUNDRULE</a>|
 
 COMPOUNDBEGIN	(Hunspell)				<b class="vimtag">*<a name="spell-COMPOUNDBEGIN">spell-COMPOUNDBEGIN</a>*</b>
+		Words signed with COMPOUNDBEGIN may be first elements in
+		compound words.
+		Use COMPOUNDRULE instead. |<a href="spell.html#spell-COMPOUNDRULE">spell-COMPOUNDRULE</a>|
+
+COMPOUNDLAST	(Hunspell)				<b class="vimtag">*<a name="spell-COMPOUNDLAST">spell-COMPOUNDLAST</a>*</b>
+		Words signed with COMPOUNDLAST may be last elements in
+		compound words.
 		Use COMPOUNDRULE instead. |<a href="spell.html#spell-COMPOUNDRULE">spell-COMPOUNDRULE</a>|
 
 COMPOUNDEND	(Hunspell)				<b class="vimtag">*<a name="spell-COMPOUNDEND">spell-COMPOUNDEND</a>*</b>
-		Use COMPOUNDRULE instead. |<a href="spell.html#spell-COMPOUNDRULE">spell-COMPOUNDRULE</a>|
+		Probably the same as COMPOUNDLAST
 
 COMPOUNDMIDDLE	(Hunspell)				<b class="vimtag">*<a name="spell-COMPOUNDMIDDLE">spell-COMPOUNDMIDDLE</a>*</b>
+		Words signed with COMPOUNDMIDDLE may be middle elements in
+		compound words.
 		Use COMPOUNDRULE instead. |<a href="spell.html#spell-COMPOUNDRULE">spell-COMPOUNDRULE</a>|
 
 COMPOUNDRULES	(Hunspell)				<b class="vimtag">*<a name="spell-COMPOUNDRULES">spell-COMPOUNDRULES</a>*</b>
@@ -1651,8 +1664,8 @@ WORDCHARS	(Hunspell)				<b class="vimtag">*<a name="spell-WORDCHARS">spell-WORDC
 		is no need to separate words before checking them (using a
 		trie instead of a hashtable).
 
- vim:tw=78:sw=4:ts=8:ft=help:norl:
+ vim:tw=78:sw=4:ts=8:noet:ft=help:norl:
 </pre>
-<p><i>Generated by vim2html on 04 Mar 2018 23:40:43</i></p>
+<p><i>Generated by vim2html on 01 May 2019 13:47:24</i></p>
 </body>
 </html>

@@ -7,7 +7,7 @@
 <body>
 <h2>HELP</h2>
 <pre>
-<b class="vimtag">*<a name="help.txt">help.txt</a>*</b>	For Vim version 8.0.  Last change: 2017 Oct 28
+<b class="vimtag">*<a name="help.txt">help.txt</a>*</b>	For Vim version 8.1.  Last change: 2019 Jan 17
 
 			VIM - main help file
 									 k
@@ -19,7 +19,7 @@ Close this window:  Use ":q<code class="special">&lt;Enter&gt;</code>".
 Jump to a subject:  Position the cursor on a tag (e.g. |<a href="help.html#bars">bars</a>|) and hit CTRL-].
    With the mouse:  ":set mouse=a" to enable the mouse (in xterm or GUI).
 		    Double-click the left mouse button on a tag, e.g. |<a href="help.html#bars">bars</a>|.
-	Jump back:  Type <code class="keystroke">CTRL-T</code> or <code class="keystroke">CTRL-O</code>.  Repeat to go further back.
+	Jump back:  Type <code class="keystroke">CTRL-O</code>.  Repeat to go further back.
 
 Get specific help:  It is possible to go directly to whatever you want help
 		    on, by giving an argument to the |<a href="helphelp.html#:help">:help</a>| command.
@@ -40,12 +40,16 @@ Get specific help:  It is possible to go directly to whatever you want help
 		    help entries for "word".
 		    Or use ":helpgrep word". |<a href="helphelp.html#:helpgrep">:helpgrep</a>|
 
+  Getting started:  Do the Vim tutor, a 20 minute interactive training for the
+		    basic commands, see |<a href="usr_01.html#vimtutor">vimtutor</a>|.
+		    Read the user manual from start to end: |<a href="usr_01.html#usr_01.txt">usr_01</a>|
+
 Vim stands for Vi IMproved.  Most of Vim was made by Bram Moolenaar, but only
 through the help of many others.  See |<a href="intro.html#credits">credits</a>|.
 </pre><hr><pre>						<b class="vimtag">*<a name="doc-file-list">doc-file-list</a>*</b> <b class="vimtag">*<a name="Q_ct">Q_ct</a>*</b>
 BASIC:
 |<a href="quickref.html#quickref">quickref</a>|	Overview of the most common commands you will use
-|<a href="usr_01.html#tutor">tutor</a>|		30 minutes training course for beginners
+|<a href="usr_01.html#tutor">tutor</a>|		20 minutes training course for beginners
 |<a href="uganda.html#copying">copying</a>|	About copyrights
 |<a href="uganda.html#iccf">iccf</a>|		Helping poor children in Uganda
 |<a href="sponsor.html#sponsor">sponsor</a>|	Sponsor Vim development, become a registered Vim user
@@ -121,7 +125,6 @@ REFERENCE MANUAL: These files explain every detail of Vim.	<b class="vimtag">*<a
 |<a href="scroll.html#scroll.txt">scroll</a>|	scrolling the text in the window
 |<a href="insert.html#insert.txt">insert</a>|	Insert and Replace mode
 |<a href="change.html#change.txt">change</a>|	deleting and replacing text
-|<a href="indent.html#indent.txt">indent</a>|	automatic indenting for C and other languages
 |<a href="undo.html#undo.txt">undo</a>|	Undo and Redo
 |<a href="repeat.html#repeat.txt">repeat</a>|	repeating commands, Vim scripts and debugging
 |<a href="visual.html#visual.txt">visual</a>|	using the Visual mode (selecting a text area)
@@ -134,14 +137,11 @@ REFERENCE MANUAL: These files explain every detail of Vim.	<b class="vimtag">*<a
 |<a href="pattern.html#pattern.txt">pattern</a>|	regexp patterns and search commands
 |<a href="map.html#map.txt">map</a>|	key mapping and abbreviations
 |<a href="tagsrch.html#tagsrch.txt">tagsrch</a>|	tags and special searches
-|<a href="quickfix.html#quickfix.txt">quickfix</a>|	commands for a quick edit-compile-fix cycle
 |<a href="windows.html#windows.txt">windows</a>|	commands for using multiple windows and buffers
 |<a href="tabpage.html#tabpage.txt">tabpage</a>|	commands for using multiple tab pages
-|<a href="syntax.html#syntax.txt">syntax</a>|	syntax highlighting
 |<a href="spell.html#spell.txt">spell</a>|	spell checking
 |<a href="diff.html#diff.txt">diff</a>|	working with two to four versions of the same file
 |<a href="autocmd.html#autocmd.txt">autocmd</a>|	automatically executing commands on an event
-|<a href="filetype.html#filetype.txt">filetype</a>|	settings done specifically for a type of file
 |<a href="eval.html#eval.txt">eval</a>|	expression evaluation, conditional commands
 |<a href="channel.html#channel.txt">channel</a>|	Jobs, Channels, inter-process communication
 |<a href="fold.html#fold.txt">fold</a>|	hide (fold) ranges of lines
@@ -151,18 +151,27 @@ REFERENCE MANUAL: These files explain every detail of Vim.	<b class="vimtag">*<a
 |<a href="remote.html#remote.txt">remote</a>|	using Vim as a server or client
 |<a href="term.html#term.txt">term</a>|	using different terminals and mice
 |<a href="terminal.html#terminal.txt">terminal</a>|	Terminal window support
+
+<code class="section">Programming language support </code>
+|<a href="indent.html#indent.txt">indent</a>|	automatic indenting for C and other languages
+|<a href="syntax.html#syntax.txt">syntax</a>|	syntax highlighting
+|<a href="textprop.html#textprop.txt">textprop</a>|	Attaching properties to text for highlighting or other
+|<a href="filetype.html#filetype.txt">filetype</a>|	settings done specifically for a type of file
+|<a href="quickfix.html#quickfix.txt">quickfix</a>|	commands for a quick edit-compile-fix cycle
+|<a href="ft_ada.html#ft_ada.txt">ft_ada</a>|	Ada (the programming language) support
+|<a href="ft_rust.html#ft_rust.txt">ft_rust</a>|	Filetype plugin for Rust
+|<a href="ft_sql.html#ft_sql.txt">ft_sql</a>|	about the SQL filetype plugin
+
+<code class="section">Language support </code>
 |<a href="digraph.html#digraph.txt">digraph</a>|	list of available digraphs
 |<a href="mbyte.html#mbyte.txt">mbyte</a>|	multi-byte text support
 |<a href="mlang.html#mlang.txt">mlang</a>|	non-English language support
+|<a href="rileft.html#rileft.txt">rileft</a>|	right-to-left editing mode
 |<a href="arabic.html#arabic.txt">arabic</a>|	Arabic language support and editing
 |<a href="farsi.html#farsi.txt">farsi</a>|	Farsi (Persian) editing
 |<a href="hebrew.html#hebrew.txt">hebrew</a>|	Hebrew language support and editing
 |<a href="russian.html#russian.txt">russian</a>|	Russian language support and editing
-|<a href="ft_ada.html#ft_ada.txt">ft_ada</a>|	Ada (the programming language) support
-|<a href="ft_rust.html#ft_rust.txt">ft_rust</a>|	Filetype plugin for Rust
-|<a href="ft_sql.html#ft_sql.txt">ft_sql</a>|	about the SQL filetype plugin
 |<a href="hangulin.html#hangulin.txt">hangulin</a>|	Hangul (Korean) input mode
-|<a href="rileft.html#rileft.txt">rileft</a>|	right-to-left editing mode
 
 <code class="section">GUI </code>
 |<a href="gui.html#gui.txt">gui</a>|	Graphical User Interface (GUI)
@@ -179,7 +188,6 @@ REFERENCE MANUAL: These files explain every detail of Vim.	<b class="vimtag">*<a
 |<a href="if_ole.html#if_ole.txt">if_ole</a>|	OLE automation interface for Win32
 |<a href="if_ruby.html#if_ruby.txt">if_ruby</a>|	Ruby interface
 |<a href="debugger.html#debugger.txt">debugger</a>|	Interface with a debugger
-|<a href="workshop.html#workshop.txt">workshop</a>|	Sun Visual Workshop interface
 |<a href="netbeans.html#netbeans.txt">netbeans</a>|	NetBeans External Editor interface
 |<a href="sign.html#sign.txt">sign</a>|	debugging signs
 
@@ -231,8 +239,8 @@ Anyway, you can use CTRL-] on any word, also when it is not within |, and Vim
 will try to find help for it.  Especially for options in single quotes, e.g.
 'compatible'.
 
-</pre><hr><pre> vim:tw=78:fo=tcq2:isk=!-~,^*,^\|,^\":ts=8:ft=help:norl:
+</pre><hr><pre> vim:tw=78:isk=!-~,^*,^\|,^\":ts=8:noet:ft=help:norl:
 </pre>
-<p><i>Generated by vim2html on 04 Mar 2018 23:40:43</i></p>
+<p><i>Generated by vim2html on 01 May 2019 13:47:24</i></p>
 </body>
 </html>

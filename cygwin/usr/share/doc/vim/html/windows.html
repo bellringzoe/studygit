@@ -7,7 +7,7 @@
 <body>
 <h2>WINDOWS</h2>
 <pre>
-<b class="vimtag">*<a name="windows.txt">windows.txt</a>*</b>   For Vim version 8.0.  Last change: 2017 Sep 25
+<b class="vimtag">*<a name="windows.txt">windows.txt</a>*</b>   For Vim version 8.1.  Last change: 2019 Mar 17
 
 
 		  VIM REFERENCE MANUAL    by Bram Moolenaar
@@ -89,6 +89,10 @@ will not change within a Vim session. The |<a href="eval.html#win_getid()">win_g
 functions can be used to convert between the window/tab number and the
 identifier.  There is also the window number, which may change whenever
 windows are opened or closed, see |<a href="eval.html#winnr()">winnr()</a>|.
+The window number is only valid in one specific tab.  The window ID is valid
+across tabs.  For most functions that take a window ID or a window number, the
+window number only applies to the current tab, while the window ID can refer
+to a window in any tab.
 
 Each buffer has a unique number and the number will not change within a Vim
 session.  The |<a href="eval.html#bufnr()">bufnr()</a>| and |<a href="eval.html#bufname()">bufname()</a>| functions can be used to convert
@@ -224,14 +228,16 @@ that have termcap codes for italics.
 		|<a href="editing.html#:find">:find</a>|.  Doesn't split if <code class="special">{file}</code> is not found.
 
 <code class="keystroke">CTRL-W</code> CTRL-^					<b class="vimtag">*<a name="CTRL-W_CTRL-^">CTRL-W_CTRL-^</a>*</b> <b class="vimtag">*<a name="CTRL-W_^">CTRL-W_^</a>*</b>
-<code class="keystroke">CTRL-W</code> ^	Does ":split #", split window in two and edit alternate file.
-		When a count is given, it becomes ":split #N", split window
-		and edit buffer N.
+<code class="keystroke">CTRL-W</code> ^	Split the current window in two and edit the alternate file.
+		When a count N is given, split the current window and edit
+		buffer N.  Similar to ":sp #" and ":sp #N", but it allows the
+		other buffer to be unnamed.  This command matches the behavior
+		of |<a href="editing.html#CTRL-^">CTRL-^</a>|, except that it splits a window first.
 
 						<b class="vimtag">*<a name="CTRL-W_:">CTRL-W_:</a>*</b>
-<code class="keystroke">CTRL-W</code> :	Does the same as typing |<a href="cmdline.html#:">:</a>| : edit a command line.  Useful in a
+<code class="keystroke">CTRL-W</code> :	Does the same as typing |<a href="cmdline.html#:">:</a>| - enter a command line.  Useful in a
 		terminal window, where all Vim commands must be preceded with
-		<code class="keystroke">CTRL-W</code> or 'termkey'.
+		<code class="keystroke">CTRL-W</code> or 'termwinkey'.
 
 <code class="note">Note</code> that the 'splitbelow' and 'splitright' options influence where a new
 window will appear.
@@ -730,8 +736,7 @@ can also get to them with the buffer list commands, like ":bnext".
 			the current window.
 			<code class="special">{cmd}</code> can contain '|' to concatenate several commands.
 			<code class="special">{cmd}</code> must not open or close windows or reorder them.
-			<code class="special">{not in Vi}</code> {not available when compiled without the
-			|<a href="various.html#+listcmds">+listcmds</a>| feature}
+			<code class="special">{not in Vi}</code>
 			Also see |<a href="tabpage.html#:tabdo">:tabdo</a>|, |<a href="editing.html#:argdo">:argdo</a>|, |<a href="windows.html#:bufdo">:bufdo</a>|, |<a href="quickfix.html#:cdo">:cdo</a>|, |<a href="quickfix.html#:ldo">:ldo</a>|,
 			|<a href="quickfix.html#:cfdo">:cfdo</a>| and |<a href="quickfix.html#:lfdo">:lfdo</a>|
 
@@ -759,8 +764,7 @@ can also get to them with the buffer list commands, like ":bnext".
 			autocommand event is disabled by adding it to
 			'eventignore'.  This considerably speeds up editing
 			each buffer.
-			<code class="special">{not in Vi}</code> {not available when compiled without the
-			|<a href="various.html#+listcmds">+listcmds</a>| feature}
+			<code class="special">{not in Vi}</code>
 			Also see |<a href="tabpage.html#:tabdo">:tabdo</a>|, |<a href="editing.html#:argdo">:argdo</a>|, |<a href="windows.html#:windo">:windo</a>|, |<a href="quickfix.html#:cdo">:cdo</a>|, |<a href="quickfix.html#:ldo">:ldo</a>|,
 			|<a href="quickfix.html#:cfdo">:cfdo</a>| and |<a href="quickfix.html#:lfdo">:lfdo</a>|
 
@@ -835,6 +839,12 @@ the buffer.  The result is that all buffers will use the 'encoding' encoding
 		the file does not exist.
 		{not available when the |<a href="various.html#+file_in_path">+file_in_path</a>| feature was disabled
 		at compile time}
+
+<code class="keystroke">CTRL-W</code> gt						<b class="vimtag">*<a name="CTRL-W_gt">CTRL-W_gt</a>*</b>
+		Go to next tab page, same as `gt`.
+
+<code class="keystroke">CTRL-W</code> gT						<b class="vimtag">*<a name="CTRL-W_gT">CTRL-W_gT</a>*</b>
+		Go to previous tab page, same as `gT`.
 
 Also see |<a href="tagsrch.html#CTRL-W_CTRL-I">CTRL-W_CTRL-I</a>|: open window for an included file that includes
 the keyword under the cursor.
@@ -970,7 +980,6 @@ is no word under the cursor, and a few other things:
 A hidden buffer is not displayed in a window, but is still loaded into memory.
 This makes it possible to jump from file to file, without the need to read or
 write the file every time you get another buffer in a window.
-{not available when compiled without the |<a href="various.html#+listcmds">+listcmds</a>| feature}
 
 							<b class="vimtag">*<a name=":buffer-!">:buffer-!</a>*</b>
 If the option 'hidden' ('hid') is set, abandoned buffers are kept for all
@@ -1045,6 +1054,9 @@ list of buffers. |<a href="windows.html#unlisted-buffer">unlisted-buffer</a>|
 		     x   buffers with a read error
 		     %   current buffer
 		     #   alternate buffer
+		     R	 terminal buffers with a running job
+		     F	 terminal buffers with a finished job
+		     ?   terminal buffers without a job: `:terminal NONE`
 		Combining flags means they are "and"ed together, e.g.:
 		     h+   hidden buffers which are modified
 		     a+   active buffers which are modified
@@ -1079,10 +1091,8 @@ list of buffers. |<a href="windows.html#unlisted-buffer">unlisted-buffer</a>|
 
 
 :bdelete[!] <code class="special">{bufname}</code>						<b class="vimtag">*<a name="E93">E93</a>*</b> <b class="vimtag">*<a name="E94">E94</a>*</b>
-		Like ":bdelete[!] [N]", but buffer given by name.  <code class="note">Note</code> that a
-		buffer whose name is a number cannot be referenced by that
-		name; use the buffer number instead.  Insert a backslash
-		before a space in a buffer name.
+		Like ":bdelete[!] [N]", but buffer given by name, see
+		|<a href="windows.html#{bufname}">{bufname}</a>|.
 
 :bdelete[!] N1 N2 ...
 		Do ":bdelete[!]" for buffer N1, N2, etc.  The arguments can be
@@ -1119,10 +1129,8 @@ list of buffers. |<a href="windows.html#unlisted-buffer">unlisted-buffer</a>|
 		into a loaded buffer.
 
 :bunload[!] <code class="special">{bufname}</code>
-		Like ":bunload[!] [N]", but buffer given by name.  <code class="note">Note</code> that a
-		buffer whose name is a number cannot be referenced by that
-		name; use the buffer number instead.  Insert a backslash
-		before a space in a buffer name.
+		Like ":bunload[!] [N]", but buffer given by name.
+		Also see |<a href="windows.html#{bufname}">{bufname}</a>|.
 
 :N,Mbunload[!]	Do ":bunload[!]" for all buffers in the range N to M
 		|<a href="motion.html#inclusive">inclusive</a>|.
@@ -1140,10 +1148,16 @@ list of buffers. |<a href="windows.html#unlisted-buffer">unlisted-buffer</a>|
 		list, without setting the 'buflisted' flag.
 		Also see |<a href="editing.html#+cmd">+cmd</a>|.
 
-:[N]b[uffer][!] [+cmd] <code class="special">{bufname}</code>
-		Edit buffer for <code class="special">{bufname}</code> from the buffer list.  See
-		|<a href="windows.html#:buffer-!">:buffer-!</a>| for [!].  This will also edit a buffer that is not
-		in the buffer list, without setting the 'buflisted' flag.
+:[N]b[uffer][!] [+cmd] <code class="special">{bufname}</code>				<b class="vimtag">*<a name="{bufname}">{bufname}</a>*</b>
+		Edit buffer for <code class="special">{bufname}</code> from the buffer list.  A partial
+		name also works, so long as it is unique in the list of
+		buffers.
+		<code class="note">Note</code> that a buffer whose name is a number cannot be referenced
+		by that name; use the buffer number instead.
+		Insert a backslash before a space in a buffer name.
+		See |<a href="windows.html#:buffer-!">:buffer-!</a>| for [!].
+		This will also edit a buffer that is not in the buffer list,
+		without setting the 'buflisted' flag.
 		Also see |<a href="editing.html#+cmd">+cmd</a>|.
 
 :[N]sb[uffer] [+cmd] [N]				<b class="vimtag">*<a name=":sb">:sb</a>*</b> <b class="vimtag">*<a name=":sbuffer">:sbuffer</a>*</b>
@@ -1155,7 +1169,7 @@ list of buffers. |<a href="windows.html#unlisted-buffer">unlisted-buffer</a>|
 		Also see |<a href="editing.html#+cmd">+cmd</a>|.
 
 :[N]sb[uffer] [+cmd] <code class="special">{bufname}</code>
-		Split window and edit buffer for <code class="special">{bufname}</code> from the buffer
+		Split window and edit buffer for |<a href="windows.html#{bufname}">{bufname}</a>| from the buffer
 		list.  This will also edit a buffer that is not in the buffer
 		list, without setting the 'buflisted' flag.
 		<code class="note">Note:</code> If what you want to do is split the buffer, make a copy
@@ -1304,8 +1318,8 @@ unlisted	The buffer is not in the buffer list.  It is not used for
 <code class="example">			:setlocal nobuflisted</code>
 
 
- vim:tw=78:ts=8:ft=help:norl:
+ vim:tw=78:ts=8:noet:ft=help:norl:
 </pre>
-<p><i>Generated by vim2html on 04 Mar 2018 23:40:43</i></p>
+<p><i>Generated by vim2html on 01 May 2019 13:47:24</i></p>
 </body>
 </html>

@@ -7,7 +7,7 @@
 <body>
 <h2>QUICKFIX</h2>
 <pre>
-<b class="vimtag">*<a name="quickfix.txt">quickfix.txt</a>*</b>  For Vim version 8.0.  Last change: 2017 Dec 13
+<b class="vimtag">*<a name="quickfix.txt">quickfix.txt</a>*</b>  For Vim version 8.1.  Last change: 2019 Jan 13
 
 
 		  VIM REFERENCE MANUAL    by Bram Moolenaar
@@ -54,7 +54,7 @@ compiler (see |<a href="quickfix.html#errorformat">errorformat</a>| below).
 
 							<b class="vimtag">*<a name="quickfix-ID">quickfix-ID</a>*</b>
 Each quickfix list has a unique identifier called the quickfix ID and this
-number will not change within a Vim session. The getqflist() function can be
+number will not change within a Vim session. The |<a href="eval.html#getqflist()">getqflist()</a>| function can be
 used to get the identifier assigned to a list. There is also a quickfix list
 number which may change whenever more than ten lists are added to a quickfix
 stack.
@@ -64,6 +64,7 @@ A location list is a window-local quickfix list. You get one after commands
 like `:lvimgrep`, `:lgrep`, `:lhelpgrep`, `:lmake`, etc., which create a
 location list instead of a quickfix list as the corresponding `:vimgrep`,
 `:grep`, `:helpgrep`, `:make` do.
+						<b class="vimtag">*<a name="location-list-file-window">location-list-file-window</a>*</b>
 A location list is associated with a window and each window can have a
 separate location list.  A location list can be associated with only one
 window.  The location list is independent of the quickfix list.
@@ -76,7 +77,7 @@ the location list is destroyed.
 Every quickfix and location list has a read-only changedtick variable that
 tracks the total number of changes made to the list.  Every time the quickfix
 list is modified, this count is incremented. This can be used to perform an
-action only when the list has changed.  The getqflist() and getloclist()
+action only when the list has changed.  The |<a href="eval.html#getqflist()">getqflist()</a>| and |<a href="eval.html#getloclist()">getloclist()</a>|
 functions can be used to query the current value of changedtick.  You cannot
 change the changedtick variable.
 
@@ -118,14 +119,14 @@ processing a quickfix or location list command, it will be aborted.
 :<code class="special">[count]</code>lne[xt][!]	Same as ":cnext", except the location list for the
 			current window is used instead of the quickfix list.
 
-:<code class="special">[count]</code>cN[ext][!]			<b class="vimtag">*<a name=":cp">:cp</a>*</b> <b class="vimtag">*<a name=":cprevious">:cprevious</a>*</b> <b class="vimtag">*<a name=":cN">:cN</a>*</b> <b class="vimtag">*<a name=":cNext">:cNext</a>*</b>
+:<code class="special">[count]</code>cN[ext][!]		<b class="vimtag">*<a name=":cp">:cp</a>*</b> <b class="vimtag">*<a name=":cprevious">:cprevious</a>*</b>  <b class="vimtag">*<a name=":cprev">:cprev</a>*</b> <b class="vimtag">*<a name=":cN">:cN</a>*</b> <b class="vimtag">*<a name=":cNext">:cNext</a>*</b>
 :<code class="special">[count]</code>cp[revious][!]	Display the <code class="special">[count]</code> previous error in the list that
 			includes a file name.  If there are no file names at
 			all, go to the <code class="special">[count]</code> previous error.  See |<a href="quickfix.html#:cc">:cc</a>| for
 			[!] and 'switchbuf'.
 
 
-:<code class="special">[count]</code>lN[ext][!]			<b class="vimtag">*<a name=":lp">:lp</a>*</b> <b class="vimtag">*<a name=":lprevious">:lprevious</a>*</b> <b class="vimtag">*<a name=":lN">:lN</a>*</b> <b class="vimtag">*<a name=":lNext">:lNext</a>*</b>
+:<code class="special">[count]</code>lN[ext][!]		<b class="vimtag">*<a name=":lp">:lp</a>*</b> <b class="vimtag">*<a name=":lprevious">:lprevious</a>*</b> <b class="vimtag">*<a name=":lprev">:lprev</a>*</b> <b class="vimtag">*<a name=":lN">:lN</a>*</b> <b class="vimtag">*<a name=":lNext">:lNext</a>*</b>
 :<code class="special">[count]</code>lp[revious][!]	Same as ":cNext" and ":cprevious", except the location
 			list for the current window is used instead of the
 			quickfix list.
@@ -306,6 +307,10 @@ processing a quickfix or location list command, it will be aborted.
 			from the last error backwards, -1 being the last error.
 			The 'switchbuf' settings are respected when jumping
 			to a buffer.
+			The |<a href="various.html#:filter">:filter</a>| command can be used to display only the
+			quickfix entries matching a supplied pattern. The
+			pattern is matched against the filename, module name,
+			pattern and text of the entry.
 
 :cl[ist] +<code class="special">{count}</code>	List the current and next <code class="special">{count}</code> valid errors.  This
 			is similar to ":clist from from+count", where "from"
@@ -338,9 +343,9 @@ deleted for some reason, the message "line changed" is shown to warn you that
 the error location may not be correct.  If you quit Vim and start again the
 marks are lost and the error locations may not be correct anymore.
 
-If vim is built with |<a href="various.html#+autocmd">+autocmd</a>| support, two autocommands are available for
-running commands before and after a quickfix command (':make', ':grep' and so
-on) is executed. See |<a href="autocmd.html#QuickFixCmdPre">QuickFixCmdPre</a>| and |<a href="autocmd.html#QuickFixCmdPost">QuickFixCmdPost</a>| for details.
+Two autocommands are available for running commands before and after a
+quickfix command (':make', ':grep' and so on) is executed. See
+|<a href="autocmd.html#QuickFixCmdPre">QuickFixCmdPre</a>| and |<a href="autocmd.html#QuickFixCmdPost">QuickFixCmdPost</a>| for details.
 
 						<b class="vimtag">*<a name="QuickFixCmdPost-example">QuickFixCmdPost-example</a>*</b>
 When 'encoding' differs from the locale, the error messages may have a
@@ -367,6 +372,23 @@ modify the title of a quickfix and location list respectively. Examples:
 <code class="example">	echo getqflist(<code class="special">{'title' : 1}</code>)</code>
 <code class="example">	call setloclist(3, [], 'a', <code class="special">{'title' : 'Cmd output'}</code>)</code>
 <code class="example">	echo getloclist(3, <code class="special">{'title' : 1}</code>)</code>
+
+							<b class="vimtag">*<a name="quickfix-index">quickfix-index</a>*</b>
+When you jump to a quickfix/location list entry using any of the quickfix
+commands (e.g. |<a href="quickfix.html#:cc">:cc</a>|, |<a href="quickfix.html#:cnext">:cnext</a>|, |<a href="quickfix.html#:cprev">:cprev</a>|, etc.), that entry becomes the
+currently selected entry. The index of the currently selected entry in a
+quickfix/location list can be obtained using the getqflist()/getloclist()
+functions. Examples:
+<code class="example">	echo getqflist(<code class="special">{'idx' : 0}</code>).idx</code>
+<code class="example">	echo getqflist(<code class="special">{'id' : qfid, 'idx' : 0}</code>).idx</code>
+<code class="example">	echo getloclist(2, <code class="special">{'idx' : 0}</code>).idx</code>
+
+For a new quickfix list, the first entry is selected and the index is 1.  Any
+entry in any quickfix/location list can be set as the currently selected entry
+using the setqflist() function. Examples:
+<code class="example">	call setqflist([], 'a', <code class="special">{'idx' : 12}</code>)</code>
+<code class="example">	call setqflist([], 'a', <code class="special">{'id' : qfid, 'idx' : 7}</code>)</code>
+<code class="example">	call setloclist(1, [], 'a', <code class="special">{'idx' : 7}</code>)</code>
 
 							<b class="vimtag">*<a name="quickfix-size">quickfix-size</a>*</b>
 You can get the number of entries (size) in a quickfix and a location list
@@ -427,8 +449,7 @@ EXECUTE A COMMAND IN ALL THE BUFFERS IN QUICKFIX OR LOCATION LIST:
 			autocommand event is disabled by adding it to
 			'eventignore'.  This considerably speeds up editing
 			each buffer.
-			<code class="special">{not in Vi}</code> {not available when compiled without the
-			|<a href="various.html#+listcmds">+listcmds</a>| feature}
+			<code class="special">{not in Vi}</code>
 			Also see |<a href="windows.html#:bufdo">:bufdo</a>|, |<a href="tabpage.html#:tabdo">:tabdo</a>|, |<a href="editing.html#:argdo">:argdo</a>|, |<a href="windows.html#:windo">:windo</a>|,
 			|<a href="quickfix.html#:ldo">:ldo</a>|, |<a href="quickfix.html#:cfdo">:cfdo</a>| and |<a href="quickfix.html#:lfdo">:lfdo</a>|.
 
@@ -441,8 +462,7 @@ EXECUTE A COMMAND IN ALL THE BUFFERS IN QUICKFIX OR LOCATION LIST:
 <code class="example">				:<code class="special">{cmd}</code></code>
 <code class="example">				etc.</code>
 			Otherwise it works the same as `:cdo`.
-			<code class="special">{not in Vi}</code> {not available when compiled without the
-			|<a href="various.html#+listcmds">+listcmds</a>| feature}
+			<code class="special">{not in Vi}</code>
 
 							<b class="vimtag">*<a name=":ldo">:ldo</a>*</b>
 :ld[o][!] <code class="special">{cmd}</code>		Execute <code class="special">{cmd}</code> in each valid entry in the location list
@@ -455,8 +475,7 @@ EXECUTE A COMMAND IN ALL THE BUFFERS IN QUICKFIX OR LOCATION LIST:
 <code class="example">				etc.</code>
 			Only valid entries in the location list are used.
 			Otherwise it works the same as `:cdo`.
-			<code class="special">{not in Vi}</code> {not available when compiled without the
-			|<a href="various.html#+listcmds">+listcmds</a>| feature}
+			<code class="special">{not in Vi}</code>
 
 							<b class="vimtag">*<a name=":lfdo">:lfdo</a>*</b>
 :lfdo[!] <code class="special">{cmd}</code>		Execute <code class="special">{cmd}</code> in each file in the location list for
@@ -468,8 +487,7 @@ EXECUTE A COMMAND IN ALL THE BUFFERS IN QUICKFIX OR LOCATION LIST:
 <code class="example">				:<code class="special">{cmd}</code></code>
 <code class="example">				etc.</code>
 			Otherwise it works the same as `:ldo`.
-			<code class="special">{not in Vi}</code> {not available when compiled without the
-			|<a href="various.html#+listcmds">+listcmds</a>| feature}
+			<code class="special">{not in Vi}</code>
 
 </pre><hr><pre>2. The error window					<b class="vimtag">*<a name="quickfix-window">quickfix-window</a>*</b>
 
@@ -485,6 +503,7 @@ EXECUTE A COMMAND IN ALL THE BUFFERS IN QUICKFIX OR LOCATION LIST:
 			second quickfix window.  If [height] is given the
 			existing window will be resized to it.
 
+							<b class="vimtag">*<a name="quickfix-buffer">quickfix-buffer</a>*</b>
 			The window will contain a special buffer, with
 			'buftype' equal to "quickfix".  Don't change this!
 			The window will have the w:quickfix_title variable set
@@ -493,7 +512,11 @@ EXECUTE A COMMAND IN ALL THE BUFFERS IN QUICKFIX OR LOCATION LIST:
 			status line if the value of 'statusline' is adjusted
 			properly. Whenever this buffer is modified by a
 			quickfix command or function, the |<a href="eval.html#b:changedtick">b:changedtick</a>|
-			variable is incremented.
+			variable is incremented.  You can get the number of
+			this buffer using the getqflist() and getloclist()
+			functions by passing the 'qfbufnr' item. For a
+			location list, this buffer is wiped out when the
+			location list is removed.
 
 							<b class="vimtag">*<a name=":lop">:lop</a>*</b> <b class="vimtag">*<a name=":lopen">:lopen</a>*</b>
 :lop[en] [height]	Open a window to show the location list for the
@@ -608,6 +631,122 @@ present).  Examples:
 <code class="example">	echo getqflist(<code class="special">{'winid' : 1}</code>).winid</code>
 <code class="example">	echo getloclist(2, <code class="special">{'winid' : 1}</code>).winid</code>
 
+							<b class="vimtag">*<a name="getqflist-examples">getqflist-examples</a>*</b>
+The |<a href="eval.html#getqflist()">getqflist()</a>| and |<a href="eval.html#getloclist()">getloclist()</a>| functions can be used to get the various
+attributes of a quickfix and location list respectively. Some examples for
+using these functions are below:
+
+<code class="example">    " get the title of the current quickfix list</code>
+<code class="example">    :echo getqflist(<code class="special">{'title' : 0}</code>).title</code>
+<code class="example"></code>
+<code class="example">    " get the identifier of the current quickfix list</code>
+<code class="example">    :let qfid = getqflist(<code class="special">{'id' : 0}</code>).id</code>
+<code class="example"></code>
+<code class="example">    " get the identifier of the fourth quickfix list in the stack</code>
+<code class="example">    :let qfid = getqflist(<code class="special">{'nr' : 4, 'id' : 0}</code>).id</code>
+<code class="example"></code>
+<code class="example">    " check whether a quickfix list with a specific identifier exists</code>
+<code class="example">    :if getqflist(<code class="special">{'id' : qfid}</code>).id == qfid</code>
+<code class="example"></code>
+<code class="example">    " get the index of the current quickfix list in the stack</code>
+<code class="example">    :let qfnum = getqflist(<code class="special">{'nr' : 0}</code>).nr</code>
+<code class="example"></code>
+<code class="example">    " get the items of a quickfix list specified by an identifier</code>
+<code class="example">    :echo getqflist(<code class="special">{'id' : qfid, 'items' : 0}</code>).items</code>
+<code class="example"></code>
+<code class="example">    " get the number of entries in a quickfix list specified by an id</code>
+<code class="example">    :echo getqflist(<code class="special">{'id' : qfid, 'size' : 0}</code>).size</code>
+<code class="example"></code>
+<code class="example">    " get the context of the third quickfix list in the stack</code>
+<code class="example">    :echo getqflist(<code class="special">{'nr' : 3, 'context' : 0}</code>).context</code>
+<code class="example"></code>
+<code class="example">    " get the number of quickfix lists in the stack</code>
+<code class="example">    :echo getqflist(<code class="special">{'nr' : '$'}</code>).nr</code>
+<code class="example"></code>
+<code class="example">    " get the number of times the current quickfix list is changed</code>
+<code class="example">    :echo getqflist(<code class="special">{'changedtick' : 0}</code>).changedtick</code>
+<code class="example"></code>
+<code class="example">    " get the current entry in a quickfix list specified by an identifier</code>
+<code class="example">    :echo getqflist(<code class="special">{'id' : qfid, 'idx' : 0}</code>).idx</code>
+<code class="example"></code>
+<code class="example">    " get all the quickfix list attributes using an identifier</code>
+<code class="example">    :echo getqflist(<code class="special">{'id' : qfid, 'all' : 0}</code>)</code>
+<code class="example"></code>
+<code class="example">    " parse text from a List of lines and return a quickfix list</code>
+<code class="example">    :let myList = ["a.java:10:L10", "b.java:20:L20"]</code>
+<code class="example">    :echo getqflist(<code class="special">{'lines' : myList}</code>).items</code>
+<code class="example"></code>
+<code class="example">    " parse text using a custom 'efm' and return a quickfix list</code>
+<code class="example">    :echo getqflist(<code class="special">{'lines' : ['a.c#10#Line 10'], 'efm':'%f#%l#%m'}</code>).items</code>
+<code class="example"></code>
+<code class="example">    " get the quickfix list window id</code>
+<code class="example">    :echo getqflist(<code class="special">{'winid' : 0}</code>).winid</code>
+<code class="example"></code>
+<code class="example">    " get the quickfix list window buffer number</code>
+<code class="example">    :echo getqflist(<code class="special">{'qfbufnr' : 0}</code>).qfbufnr</code>
+<code class="example"></code>
+<code class="example">    " get the context of the current location list</code>
+<code class="example">    :echo getloclist(0, <code class="special">{'context' : 0}</code>).context</code>
+<code class="example"></code>
+<code class="example">    " get the location list window id of the third window</code>
+<code class="example">    :echo getloclist(3, <code class="special">{'winid' : 0}</code>).winid</code>
+<code class="example"></code>
+<code class="example">    " get the location list window buffer number of the third window</code>
+<code class="example">    :echo getloclist(3, <code class="special">{'qfbufnr' : 0}</code>).qfbufnr</code>
+<code class="example"></code>
+<code class="example">    " get the file window id of a location list window (winnr: 4)</code>
+<code class="example">    :echo getloclist(4, <code class="special">{'filewinid' : 0}</code>).filewinid</code>
+
+							<b class="vimtag">*<a name="setqflist-examples">setqflist-examples</a>*</b>
+The |<a href="eval.html#setqflist()">setqflist()</a>| and |<a href="eval.html#setloclist()">setloclist()</a>| functions can be used to set the various
+attributes of a quickfix and location list respectively. Some examples for
+using these functions are below:
+
+<code class="example">    " create an empty quickfix list with a title and a context</code>
+<code class="example">    :let t = 'Search results'</code>
+<code class="example">    :let c = <code class="special">{'cmd' : 'grep'}</code></code>
+<code class="example">    :call setqflist([], ' ', <code class="special">{'title' : t, 'context' : c}</code>)</code>
+<code class="example"></code>
+<code class="example">    " set the title of the current quickfix list</code>
+<code class="example">    :call setqflist([], 'a', <code class="special">{'title' : 'Mytitle'}</code>)</code>
+<code class="example"></code>
+<code class="example">    " change the current entry in the list specified by an identifier</code>
+<code class="example">    :call setqflist([], 'a', <code class="special">{'id' : qfid, 'idx' : 10}</code>)</code>
+<code class="example"></code>
+<code class="example">    " set the context of a quickfix list specified by an identifier</code>
+<code class="example">    :call setqflist([], 'a', <code class="special">{'id' : qfid, 'context' : {'val' : 100}</code>})</code>
+<code class="example"></code>
+<code class="example">    " create a new quickfix list from a command output</code>
+<code class="example">    :call setqflist([], ' ', <code class="special">{'lines' : systemlist('grep -Hn main *.c')}</code>)</code>
+<code class="example"></code>
+<code class="example">    " parse text using a custom efm and add to a particular quickfix list</code>
+<code class="example">    :call setqflist([], 'a', {'id' : qfid,</code>
+<code class="example">		\ 'lines' : ["a.c#10#L10", "b.c#20#L20"], 'efm':'%f#%l#%m'})</code>
+<code class="example"></code>
+<code class="example">    " add items to the quickfix list specified by an identifier</code>
+<code class="example">    :let newItems = [<code class="special">{'filename' : 'a.txt', 'lnum' : 10, 'text' : "Apple"}</code>,</code>
+<code class="example">		    \ <code class="special">{'filename' : 'b.txt', 'lnum' : 20, 'text' : "Orange"}</code>]</code>
+<code class="example">    :call setqflist([], 'a', <code class="special">{'id' : qfid, 'items' : newItems}</code>)</code>
+<code class="example"></code>
+<code class="example">    " empty a quickfix list specified by an identifier</code>
+<code class="example">    :call setqflist([], 'r', <code class="special">{'id' : qfid, 'items' : []}</code>)</code>
+<code class="example"></code>
+<code class="example">    " free all the quickfix lists in the stack</code>
+<code class="example">    :call setqflist([], 'f')</code>
+<code class="example"></code>
+<code class="example">    " set the title of the fourth quickfix list</code>
+<code class="example">    :call setqflist([], 'a', <code class="special">{'nr' : 4, 'title' : 'SomeTitle'}</code>)</code>
+<code class="example"></code>
+<code class="example">    " create a new quickfix list at the end of the stack</code>
+<code class="example">    :call setqflist([], ' ', {'nr' : '$',</code>
+<code class="example">			\ 'lines' : systemlist('grep -Hn class *.java')})</code>
+<code class="example"></code>
+<code class="example">    " create a new location list from a command output</code>
+<code class="example">    :call setloclist(0, [], ' ', <code class="special">{'lines' : systemlist('grep -Hn main *.c')}</code>)</code>
+<code class="example"></code>
+<code class="example">    " replace the location list entries for the third window</code>
+<code class="example">    :call setloclist(3, [], 'r', <code class="special">{'items' : newItems}</code>)</code>
+
 </pre><hr><pre>3. Using more than one list of errors			<b class="vimtag">*<a name="quickfix-error-lists">quickfix-error-lists</a>*</b>
 
 So far has been assumed that there is only one list of errors.  Actually the
@@ -662,8 +801,8 @@ To get the number of the current list in the stack:
 </pre><hr><pre>4. Using :make						<b class="vimtag">*<a name=":make_makeprg">:make_makeprg</a>*</b>
 
 							<b class="vimtag">*<a name=":mak">:mak</a>*</b> <b class="vimtag">*<a name=":make">:make</a>*</b>
-:mak[e][!] [arguments]	1. If vim was built with |<a href="various.html#+autocmd">+autocmd</a>|, all relevant
-			   |<a href="autocmd.html#QuickFixCmdPre">QuickFixCmdPre</a>| autocommands are executed.
+:mak[e][!] [arguments]	1. All relevant |<a href="autocmd.html#QuickFixCmdPre">QuickFixCmdPre</a>| autocommands are
+			   executed.
 			2. If the 'autowrite' option is on, write any changed
 			   buffers
 			3. An errorfile name is made from 'makeef'.  If
@@ -675,9 +814,8 @@ To get the number of the current list in the stack:
 			   errorfile (for Unix it is also echoed on the
 			   screen).
 			5. The errorfile is read using 'errorformat'.
-			6. If vim was built with |<a href="various.html#+autocmd">+autocmd</a>|, all relevant
-			   |<a href="autocmd.html#QuickFixCmdPost">QuickFixCmdPost</a>| autocommands are executed.
-			   See example below.
+			6. All relevant |<a href="autocmd.html#QuickFixCmdPost">QuickFixCmdPost</a>| autocommands are
+			   executed.  See example below.
 			7. If [!] is not given the first error is jumped to.
 			8. The errorfile is deleted.
 			9. You can now move through the errors with commands
@@ -799,7 +937,7 @@ commands can be combined to create a NewGrep command:
 			'smartcase' is not used.
 			If <code class="special">{pattern}</code> is empty (e.g. // is specified), the last
 			used search pattern is used. |<a href="pattern.html#last-pattern">last-pattern</a>|
-
+:<code class="special">{count}</code>vim[grep] ...
 			When a number is put before the command this is used
 			as the maximum number of matches to find.  Use
 			":1vimgrep pattern file" to find only the first.
@@ -1137,6 +1275,7 @@ you want to match case, add "\C" to the pattern |<a href="pattern.html#%2F\C">/\
 Basic items
 
 	%f		file name (finds a string)
+	%o		module name (finds a string)
 	%l		line number (finds a number)
 	%c		column number (finds a number representing character
 			column of the error, (1 <code class="special">&lt;tab&gt;</code> == 1 character column))
@@ -1173,7 +1312,7 @@ or
 to indicate the column of the error.  This is to be used in a multi-line error
 message.  See |<a href="quickfix.html#errorformat-javac">errorformat-javac</a>| for a  useful example.
 
-The "%s" conversion specifies the text to search for to locate the error line.
+The "%s" conversion specifies the text to search for, to locate the error line.
 The text is used as a literal string.  The anchors "^" and "$" are added to
 the text to locate the error line exactly matching the search text and the
 text is prefixed with the "\V" atom to make it "very nomagic".  The "%s"
@@ -1181,10 +1320,15 @@ conversion can be used to locate lines without a line number in the error
 output.  Like the output of the "grep" shell command.
 When the pattern is present the line number will not be used.
 
+The "%o" conversion specifies the module name in quickfix entry.  If present
+it will be used in quickfix error window instead of the filename.  The module
+name is used only for displaying purposes, the file name is used when jumping
+to the file.
+
 Changing directory
 
 The following uppercase conversion characters specify the type of special
-format strings.  At most one of them may be given as a prefix at the begin
+format strings.  At most one of them may be given as a prefix at the beginning
 of a single comma-separated format pattern.
 Some compilers produce messages that consist of directory names that have to
 be prepended to each file name read by %f (example: GNU make).  The following
@@ -1444,6 +1588,22 @@ The backslashes before the pipe character are required to avoid it to be
 recognized as a command separator.  The backslash before each space is
 required for the set command.
 
+				    <b class="vimtag">*<a name="cfilter-plugin">cfilter-plugin</a>*</b> <b class="vimtag">*<a name=":Cfilter">:Cfilter</a>*</b> <b class="vimtag">*<a name=":Lfilter">:Lfilter</a>*</b>
+If you have too many matching messages, you can use the cfilter plugin to
+reduce the number of entries.  Load the plugin with:
+<code class="example">   packadd cfilter</code>
+<code class="example"></code>
+Then you can use these command:
+<code class="example">   :Cfilter[!] /<code class="special">{pat}</code>/</code>
+<code class="example">   :Lfilter[!] /<code class="special">{pat}</code>/</code>
+<code class="example"></code>
+:Cfilter creates a new quickfix list from entries matching <code class="special">{pat}</code> in the
+current quickfix list. Both the file name and the text of the entries are
+matched against <code class="special">{pat}</code>. If ! is supplied, then entries not matching <code class="special">{pat}</code> are
+used.
+
+:Lfilter does the same as :Cfilter but operates on the current location list.
+
 </pre><hr><pre>8. The directory stack				<b class="vimtag">*<a name="quickfix-directory-stack">quickfix-directory-stack</a>*</b>
 
 Quickfix maintains a stack for saving all used directories parsed from the
@@ -1685,8 +1845,8 @@ start of the file about how to use it.  (This script is deprecated, see
 
 
 
- vim:tw=78:ts=8:ft=help:norl:
+ vim:tw=78:ts=8:noet:ft=help:norl:
 </pre>
-<p><i>Generated by vim2html on 04 Mar 2018 23:40:43</i></p>
+<p><i>Generated by vim2html on 01 May 2019 13:47:24</i></p>
 </body>
 </html>

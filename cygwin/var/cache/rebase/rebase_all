@@ -62,6 +62,7 @@
 /usr/bin/cygnettle-6.dll
 /usr/bin/cygnghttp2-14.dll
 /usr/bin/cygonig-4.dll
+/usr/bin/cygonig-5.dll
 /usr/bin/cygp11-kit-0.dll
 /usr/bin/cygpanelw-10.dll
 /usr/bin/cygpcre-1.dll
@@ -79,6 +80,7 @@
 /usr/bin/cygsmartcols-1.dll
 /usr/bin/cygsodium-18.dll
 /usr/bin/cygsqlite3-0.dll
+/usr/bin/cygssh-4.dll
 /usr/bin/cygssh2-1.dll
 /usr/bin/cygssl-1.0.0.dll
 /usr/bin/cygssl-1.1.dll
@@ -147,6 +149,12 @@
 /usr/lib/gawk/revtwoway.dll
 /usr/lib/gawk/rwarray.dll
 /usr/lib/gawk/time.dll
+/usr/lib/mariadb/plugin/auth_gssapi_client.dll
+/usr/lib/mariadb/plugin/caching_sha2_password.dll
+/usr/lib/mariadb/plugin/dialog.dll
+/usr/lib/mariadb/plugin/mysql_clear_password.dll
+/usr/lib/mariadb/plugin/remote_io.dll
+/usr/lib/mariadb/plugin/sha256_password.dll
 /usr/lib/p11-kit-proxy.so
 /usr/lib/p7zip/7z.so
 /usr/lib/perl5/5.26/i686-cygwin-threads-64int/CORE/cygperl5_26.dll

@@ -7,7 +7,7 @@
 <body>
 <h2>TERM</h2>
 <pre>
-<b class="vimtag">*<a name="term.txt">term.txt</a>*</b>      For Vim version 8.0.  Last change: 2017 Oct 14
+<b class="vimtag">*<a name="term.txt">term.txt</a>*</b>      For Vim version 8.1.  Last change: 2019 Apr 11
 
 
 		  VIM REFERENCE MANUAL    by Bram Moolenaar
@@ -118,6 +118,16 @@ have a problem with this, disable bracketed paste by putting this in your
 <code class="example">	set t_BE=</code>
 If this is done while Vim is running the 't_BD' will be sent to the terminal
 to disable bracketed paste.
+
+If your terminal supports bracketed paste, but the options are not set
+automatically, you can try using something like this:
+<code class="example"></code>
+<code class="example">	if &amp;term =~ "screen"</code>
+<code class="example">	  let &amp;t_BE = "\e[?2004h"</code>
+<code class="example">	  let &amp;t_BD = "\e[?2004l"</code>
+<code class="example">	  exec "set t_PS=\e[200~"</code>
+<code class="example">	  exec "set t_PE=\e[201~"</code>
+<code class="example">	endif</code>
 
 							<b class="vimtag">*<a name="cs7-problem">cs7-problem</a>*</b>
 <code class="note">Note:</code> If the terminal settings are changed after running Vim, you might have
@@ -331,11 +341,15 @@ Added by Vim (there are no standard codes for these):
 	t_EI	end insert or replace mode (block cursor shape)	<b class="vimtag">*<a name="t_EI">t_EI</a>*</b> <b class="vimtag">*<a name="'t_EI'">'t_EI'</a>*</b>
 		|<a href="term.html#termcap-cursor-shape">termcap-cursor-shape</a>|
 	t_RV	request terminal version string (for xterm)	<b class="vimtag">*<a name="t_RV">t_RV</a>*</b> <b class="vimtag">*<a name="'t_RV'">'t_RV'</a>*</b>
-		|<a href="term.html#xterm-8bit">xterm-8bit</a>| |<a href="eval.html#v:termresponse">v:termresponse</a>| |<a href="options.html#'ttymouse'">'ttymouse'</a>| |<a href="term.html#xterm-codes">xterm-codes</a>|
+		The response is stored in |<a href="eval.html#v:termresponse">v:termresponse</a>|
+		|<a href="term.html#xterm-8bit">xterm-8bit</a>| |<a href="options.html#'ttymouse'">'ttymouse'</a>| |<a href="term.html#xterm-codes">xterm-codes</a>|
 	t_u7	request cursor position (for xterm)		<b class="vimtag">*<a name="t_u7">t_u7</a>*</b> <b class="vimtag">*<a name="'t_u7'">'t_u7'</a>*</b>
 		see |<a href="options.html#'ambiwidth'">'ambiwidth'</a>|
+		The response is stored in |<a href="eval.html#v:termu7resp">v:termu7resp</a>|
 	t_RF	request terminal foreground color		<b class="vimtag">*<a name="t_RF">t_RF</a>*</b> <b class="vimtag">*<a name="'t_RF'">'t_RF'</a>*</b>
+		The response is stored in |<a href="eval.html#v:termrfgresp">v:termrfgresp</a>|
 	t_RB	request terminal background color		<b class="vimtag">*<a name="t_RB">t_RB</a>*</b> <b class="vimtag">*<a name="'t_RB'">'t_RB'</a>*</b>
+		The response is stored in |<a href="eval.html#v:termrbgresp">v:termrbgresp</a>|
 	t_8f	set foreground color (R, G, B)			<b class="vimtag">*<a name="t_8f">t_8f</a>*</b> <b class="vimtag">*<a name="'t_8f'">'t_8f'</a>*</b>
 		|<a href="term.html#xterm-true-color">xterm-true-color</a>|
 	t_8b	set background color (R, G, B)			<b class="vimtag">*<a name="t_8b">t_8b</a>*</b> <b class="vimtag">*<a name="'t_8b'">'t_8b'</a>*</b>
@@ -348,7 +362,13 @@ Added by Vim (there are no standard codes for these):
 	t_EC	set cursor color end				<b class="vimtag">*<a name="t_EC">t_EC</a>*</b> <b class="vimtag">*<a name="'t_EC'">'t_EC'</a>*</b>
 	t_SH	set cursor shape				<b class="vimtag">*<a name="t_SH">t_SH</a>*</b> <b class="vimtag">*<a name="'t_SH'">'t_SH'</a>*</b>
 	t_RC	request terminal cursor blinking		<b class="vimtag">*<a name="t_RC">t_RC</a>*</b> <b class="vimtag">*<a name="'t_RC'">'t_RC'</a>*</b>
+		The response is stored in |<a href="eval.html#v:termblinkresp">v:termblinkresp</a>|
 	t_RS	request terminal cursor style			<b class="vimtag">*<a name="t_RS">t_RS</a>*</b> <b class="vimtag">*<a name="'t_RS'">'t_RS'</a>*</b>
+		The response is stored in |<a href="eval.html#v:termstyleresp">v:termstyleresp</a>|
+	t_ST	save window title to stack			<b class="vimtag">*<a name="t_ST">t_ST</a>*</b> <b class="vimtag">*<a name="'t_ST'">'t_ST'</a>*</b>
+	t_RT	restore window title from stack			<b class="vimtag">*<a name="t_RT">t_RT</a>*</b> <b class="vimtag">*<a name="'t_RT'">'t_RT'</a>*</b>
+	t_Si	save icon text to stack				<b class="vimtag">*<a name="t_Si">t_Si</a>*</b> <b class="vimtag">*<a name="'t_Si'">'t_Si'</a>*</b>
+	t_Ri	restore icon text from stack			<b class="vimtag">*<a name="t_Ri">t_Ri</a>*</b> <b class="vimtag">*<a name="'t_Ri'">'t_Ri'</a>*</b>
 
 Some codes have a start, middle and end part.  The start and end are defined
 by the termcap option, the middle part is text.
@@ -526,7 +546,7 @@ there should be a tick at allow-window-ops.
 <code class="note">Note</code> about colors: The 't_Co' option tells Vim the number of colors available.
 When it is non-zero, the 't_AB' and 't_AF' options are used to set the color.
 If one of these is not available, 't_Sb' and 't_Sf' are used.  't_me' is used
-to reset to the default colors.
+to reset to the default colors.  Also see 'termguicolors'.
 
 				<b class="vimtag">*<a name="termcap-cursor-shape">termcap-cursor-shape</a>*</b> <b class="vimtag">*<a name="termcap-cursor-color">termcap-cursor-color</a>*</b>
 When Vim enters Insert mode the 't_SI' escape sequence is sent.  When Vim
@@ -971,8 +991,8 @@ To swap the meaning of the left and right mouse buttons:
 <code class="example">	:noremap!	<code class="special">&lt;RightDrag&gt;</code>	<code class="special">&lt;LeftDrag&gt;</code></code>
 <code class="example">	:noremap!	<code class="special">&lt;RightRelease&gt;</code>	<code class="special">&lt;LeftRelease&gt;</code></code>
 
- vim:tw=78:ts=8:ft=help:norl:
+ vim:tw=78:ts=8:noet:ft=help:norl:
 </pre>
-<p><i>Generated by vim2html on 04 Mar 2018 23:40:43</i></p>
+<p><i>Generated by vim2html on 01 May 2019 13:47:24</i></p>
 </body>
 </html>

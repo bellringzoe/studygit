@@ -7,7 +7,7 @@
 <body>
 <h2>CMDLINE</h2>
 <pre>
-<b class="vimtag">*<a name="cmdline.txt">cmdline.txt</a>*</b>   For Vim version 8.0.  Last change: 2017 Oct 19
+<b class="vimtag">*<a name="cmdline.txt">cmdline.txt</a>*</b>   For Vim version 8.1.  Last change: 2018 May 14
 
 
 		  VIM REFERENCE MANUAL    by Bram Moolenaar
@@ -183,12 +183,14 @@ There is an automatic completion of names on the command-line; see
 <code class="keystroke">CTRL-R</code> <code class="keystroke">CTRL-P</code>				<b class="vimtag">*<a name="c_CTRL-R_CTRL-P">c_CTRL-R_CTRL-P</a>*</b> <b class="vimtag">*<a name="c_%3CC-R%3E_%3CC-P%3E">c_&lt;C-R&gt;_&lt;C-P&gt;</a>*</b>
 <code class="keystroke">CTRL-R</code> <code class="keystroke">CTRL-W</code>				<b class="vimtag">*<a name="c_CTRL-R_CTRL-W">c_CTRL-R_CTRL-W</a>*</b> <b class="vimtag">*<a name="c_%3CC-R%3E_%3CC-W%3E">c_&lt;C-R&gt;_&lt;C-W&gt;</a>*</b>
 <code class="keystroke">CTRL-R</code> <code class="keystroke">CTRL-A</code>				<b class="vimtag">*<a name="c_CTRL-R_CTRL-A">c_CTRL-R_CTRL-A</a>*</b> <b class="vimtag">*<a name="c_%3CC-R%3E_%3CC-A%3E">c_&lt;C-R&gt;_&lt;C-A&gt;</a>*</b>
+<code class="keystroke">CTRL-R</code> <code class="keystroke">CTRL-L</code>				<b class="vimtag">*<a name="c_CTRL-R_CTRL-L">c_CTRL-R_CTRL-L</a>*</b> <b class="vimtag">*<a name="c_%3CC-R%3E_%3CC-L%3E">c_&lt;C-R&gt;_&lt;C-L&gt;</a>*</b>
 		Insert the object under the cursor:
 			<code class="keystroke">CTRL-F</code>	the Filename under the cursor
 			<code class="keystroke">CTRL-P</code>	the Filename under the cursor, expanded with
 				'path' as in |<a href="editing.html#gf">gf</a>|
 			<code class="keystroke">CTRL-W</code>	the Word under the cursor
 			<code class="keystroke">CTRL-A</code>	the WORD under the cursor; see |<a href="motion.html#WORD">WORD</a>|
+			<code class="keystroke">CTRL-L</code>	the line under the cursor
 
 		When 'incsearch' is set the cursor position at the end of the
 		currently displayed match is used.  With <code class="keystroke">CTRL-W</code> the part of
@@ -200,8 +202,8 @@ There is an automatic completion of names on the command-line; see
 
 					<b class="vimtag">*<a name="c_CTRL-R_CTRL-R">c_CTRL-R_CTRL-R</a>*</b> <b class="vimtag">*<a name="c_%3CC-R%3E_%3CC-R%3E">c_&lt;C-R&gt;_&lt;C-R&gt;</a>*</b>
 					<b class="vimtag">*<a name="c_CTRL-R_CTRL-O">c_CTRL-R_CTRL-O</a>*</b> <b class="vimtag">*<a name="c_%3CC-R%3E_%3CC-O%3E">c_&lt;C-R&gt;_&lt;C-O&gt;</a>*</b>
-<code class="keystroke">CTRL-R</code> <code class="keystroke">CTRL-R</code> <code class="special">{0-9a-z"%#:-=. <code class="keystroke">CTRL-F</code> <code class="keystroke">CTRL-P</code> <code class="keystroke">CTRL-W</code> <code class="keystroke">CTRL-A</code>}</code>
-<code class="keystroke">CTRL-R</code> <code class="keystroke">CTRL-O</code> <code class="special">{0-9a-z"%#:-=. <code class="keystroke">CTRL-F</code> <code class="keystroke">CTRL-P</code> <code class="keystroke">CTRL-W</code> <code class="keystroke">CTRL-A</code>}</code>
+<code class="keystroke">CTRL-R</code> <code class="keystroke">CTRL-R</code> <code class="special">{0-9a-z"%#:-=. <code class="keystroke">CTRL-F</code> <code class="keystroke">CTRL-P</code> <code class="keystroke">CTRL-W</code> <code class="keystroke">CTRL-A</code> <code class="keystroke">CTRL-L</code>}</code>
+<code class="keystroke">CTRL-R</code> <code class="keystroke">CTRL-O</code> <code class="special">{0-9a-z"%#:-=. <code class="keystroke">CTRL-F</code> <code class="keystroke">CTRL-P</code> <code class="keystroke">CTRL-W</code> <code class="keystroke">CTRL-A</code> <code class="keystroke">CTRL-L</code>}</code>
 		Insert register or object under the cursor.  Works like
 		|<a href="cmdline.html#c_CTRL-R">c_CTRL-R</a>| but inserts the text literally.  For example, if
 		register a contains "xy^Hz" (where ^H is a backspace),
@@ -417,14 +419,17 @@ These are the commands that can be used:
 		match is inserted.  After the last match, the first is used
 		again (wrap around).
 		The behavior can be changed with the 'wildmode' option.
+							<b class="vimtag">*<a name="c_%3CS-Tab%3E">c_&lt;S-Tab&gt;</a>*</b>
+<code class="special">&lt;S-Tab&gt;</code>		Like 'wildchar' or <code class="special">&lt;Tab&gt;</code>, but begin with the last match and
+		then go to the previous match.
+		<code class="special">&lt;S-Tab&gt;</code> does not work everywhere.
 							<b class="vimtag">*<a name="c_CTRL-N">c_CTRL-N</a>*</b>
 <code class="keystroke">CTRL-N</code>		After using 'wildchar' which got multiple matches, go to next
 		match.  Otherwise recall more recent command-line from history.
-<code class="special">&lt;S-Tab&gt;</code>							<b class="vimtag">*<a name="c_CTRL-P">c_CTRL-P</a>*</b> <b class="vimtag">*<a name="c_%3CS-Tab%3E">c_&lt;S-Tab&gt;</a>*</b>
+							<b class="vimtag">*<a name="c_CTRL-P">c_CTRL-P</a>*</b>
 <code class="keystroke">CTRL-P</code>		After using 'wildchar' which got multiple matches, go to
 		previous match.  Otherwise recall older command-line from
-		history.  <code class="special">&lt;S-Tab&gt;</code> only works with the GUI, on the Amiga and
-		with MS-DOS.
+		history.
 							<b class="vimtag">*<a name="c_CTRL-A">c_CTRL-A</a>*</b>
 <code class="keystroke">CTRL-A</code>		All names that match the pattern in front of the cursor are
 		inserted.
@@ -459,6 +464,10 @@ The 'wildchar' option defaults to <code class="special">&lt;Tab&gt;</code> (<cod
 a previous version <code class="special">&lt;Esc&gt;</code> was used).  In the pattern standard wildcards '*' and
 '?' are accepted when matching file names.  '*' matches any string, '?'
 matches exactly one character.
+
+When repeating 'wildchar' or <code class="keystroke">CTRL-N</code> you cycle through the matches, eventually
+ending up back to what was typed.  If the first match is not what you wanted,
+you can use <code class="special">&lt;S-Tab&gt;</code> or <code class="keystroke">CTRL-P</code> to go straight back to what you typed.
 
 The 'wildignorecase' option can be set to ignore case in filenames.
 
@@ -531,8 +540,45 @@ after a command causes the rest of the line to be ignored.  This can be used
 to add comments.  Example:
 <code class="example">	:set ai		"set 'autoindent' option</code>
 It is not possible to add a comment to a shell command ":!cmd" or to the
-":map" command and a few others, because they see the '"' as part of their
-argument.  This is mentioned where the command is explained.
+":map" command and a few others (mainly commands that expect expressions)
+that see the '"' as part of their argument:
+
+    :argdo
+    :autocmd
+    :bufdo
+    :cexpr (and the like)
+    :cdo (and the like)
+    :command
+    :cscope (and the like)
+    :debug
+    :display
+    :echo (and the like)
+    :elseif
+    :execute
+    :folddoopen
+    :folddoclosed
+    :for
+    :grep (and the like)
+    :help (and the like)
+    :if
+    :let
+    :make
+    :map (and the like including :abbrev commands)
+    :menu (and the like)
+    :mkspell
+    :normal
+    :ownsyntax
+    :popup
+    :promptfind (and the like)
+    :registers
+    :return
+    :sort
+    :syntax
+    :tabdo
+    :tearoff
+    :vimgrep (and the like)
+    :while
+    :windo
 
 							<b class="vimtag">*<a name=":bar">:bar</a>*</b> <b class="vimtag">*<a name=":\bar">:\bar</a>*</b>
 '|' can be used to separate commands, so you can give multiple commands in one
@@ -826,11 +872,12 @@ it, no matter how many backslashes.
 	   \\#			\#
 Also see |<a href="editing.html#`%20">`=</a>|.
 
-			       <b class="vimtag">*<a name=":%3Ccword%3E">:&lt;cword&gt;</a>*</b> <b class="vimtag">*<a name=":%3CcWORD%3E">:&lt;cWORD&gt;</a>*</b> <b class="vimtag">*<a name=":%3Ccfile%3E">:&lt;cfile&gt;</a>*</b> <b class="vimtag">*<a name="%3Ccfile%3E">&lt;cfile&gt;</a>*</b>
-			       <b class="vimtag">*<a name=":%3Csfile%3E">:&lt;sfile&gt;</a>*</b> <b class="vimtag">*<a name="%3Csfile%3E">&lt;sfile&gt;</a>*</b> <b class="vimtag">*<a name=":%3Cafile%3E">:&lt;afile&gt;</a>*</b> <b class="vimtag">*<a name="%3Cafile%3E">&lt;afile&gt;</a>*</b>
-			       <b class="vimtag">*<a name=":%3Cabuf%3E">:&lt;abuf&gt;</a>*</b> <b class="vimtag">*<a name="%3Cabuf%3E">&lt;abuf&gt;</a>*</b> <b class="vimtag">*<a name=":%3Camatch%3E">:&lt;amatch&gt;</a>*</b> <b class="vimtag">*<a name="%3Camatch%3E">&lt;amatch&gt;</a>*</b>
-			       <b class="vimtag">*<a name=":%3Ccexpr%3E">:&lt;cexpr&gt;</a>*</b> <b class="vimtag">*<a name="%3Ccexpr%3E">&lt;cexpr&gt;</a>*</b>
-			       <b class="vimtag">*<a name="%3Cslnum%3E">&lt;slnum&gt;</a>*</b> <b class="vimtag">*<a name="E495">E495</a>*</b> <b class="vimtag">*<a name="E496">E496</a>*</b> <b class="vimtag">*<a name="E497">E497</a>*</b> <b class="vimtag">*<a name="E499">E499</a>*</b> <b class="vimtag">*<a name="E500">E500</a>*</b>
+			       <b class="vimtag">*<a name=":%3Ccword%3E">:&lt;cword&gt;</a>*</b> <b class="vimtag">*<a name="%3Ccword%3E">&lt;cword&gt;</a>*</b> <b class="vimtag">*<a name=":%3CcWORD%3E">:&lt;cWORD&gt;</a>*</b> <b class="vimtag">*<a name="%3CcWORD%3E">&lt;cWORD&gt;</a>*</b>
+			       <b class="vimtag">*<a name=":%3Ccexpr%3E">:&lt;cexpr&gt;</a>*</b> <b class="vimtag">*<a name="%3Ccexpr%3E">&lt;cexpr&gt;</a>*</b> <b class="vimtag">*<a name=":%3Ccfile%3E">:&lt;cfile&gt;</a>*</b> <b class="vimtag">*<a name="%3Ccfile%3E">&lt;cfile&gt;</a>*</b>
+			       <b class="vimtag">*<a name=":%3Cafile%3E">:&lt;afile&gt;</a>*</b> <b class="vimtag">*<a name="%3Cafile%3E">&lt;afile&gt;</a>*</b> <b class="vimtag">*<a name=":%3Cabuf%3E">:&lt;abuf&gt;</a>*</b> <b class="vimtag">*<a name="%3Cabuf%3E">&lt;abuf&gt;</a>*</b>
+			       <b class="vimtag">*<a name=":%3Camatch%3E">:&lt;amatch&gt;</a>*</b> <b class="vimtag">*<a name="%3Camatch%3E">&lt;amatch&gt;</a>*</b>
+			       <b class="vimtag">*<a name=":%3Csfile%3E">:&lt;sfile&gt;</a>*</b> <b class="vimtag">*<a name="%3Csfile%3E">&lt;sfile&gt;</a>*</b> <b class="vimtag">*<a name=":%3Cslnum%3E">:&lt;slnum&gt;</a>*</b> <b class="vimtag">*<a name="%3Cslnum%3E">&lt;slnum&gt;</a>*</b>
+			       <b class="vimtag">*<a name=":%3Csflnum%3E">:&lt;sflnum&gt;</a>*</b> <b class="vimtag">*<a name="%3Csflnum%3E">&lt;sflnum&gt;</a>*</b> <b class="vimtag">*<a name="E499">E499</a>*</b> <b class="vimtag">*<a name="E500">E500</a>*</b>
 <code class="note">Note:</code> these are typed literally, they are not special keys!
 	<code class="special">&lt;cword&gt;</code>    is replaced with the word under the cursor (like |<a href="pattern.html#star">star</a>|)
 	<code class="special">&lt;cWORD&gt;</code>    is replaced with the WORD under the cursor (see |<a href="motion.html#WORD">WORD</a>|)
@@ -843,15 +890,16 @@ Also see |<a href="editing.html#`%20">`=</a>|.
 		   |<a href="editing.html#gf">gf</a>| uses)
 	<code class="special">&lt;afile&gt;</code>    When executing autocommands, is replaced with the file name
 		   of the buffer being manipulated, or the file for a read or
-		   write.
+		   write.  <b class="vimtag">*<a name="E495">E495</a>*</b>
 	<code class="special">&lt;abuf&gt;</code>     When executing autocommands, is replaced with the currently
 		   effective buffer number (for ":r file" and ":so file" it is
 		   the current buffer, the file being read/sourced is not in a
-		   buffer).
+		   buffer).  <b class="vimtag">*<a name="E496">E496</a>*</b>
 	<code class="special">&lt;amatch&gt;</code>   When executing autocommands, is replaced with the match for
-		   which this autocommand was executed.  It differs from
-		   <code class="special">&lt;afile&gt;</code> only when the file name isn't used to match with
-		   (for FileType, Syntax and SpellFileMissing events).
+		   which this autocommand was executed.  <b class="vimtag">*<a name="E497">E497</a>*</b>
+		   It differs from <code class="special">&lt;afile&gt;</code> only when the file name isn't used
+		   to match with (for FileType, Syntax and SpellFileMissing
+		   events).
 	<code class="special">&lt;sfile&gt;</code>    When executing a ":source" command, is replaced with the
 		   file name of the sourced file.  <b class="vimtag">*<a name="E498">E498</a>*</b>
 		   When executing a function, is replaced with:
@@ -861,9 +909,12 @@ Also see |<a href="editing.html#`%20">`=</a>|.
 		   <code class="note">Note</code> that filename-modifiers are useless when <code class="special">&lt;sfile&gt;</code> is
 		   used inside a function.
 	<code class="special">&lt;slnum&gt;</code>	   When executing a ":source" command, is replaced with the
-	           line number.  <b class="vimtag">*<a name="E842">E842</a>*</b>
+		   line number.  <b class="vimtag">*<a name="E842">E842</a>*</b>
 		   When executing a function it's the line number relative to
 		   the start of the function.
+	<code class="special">&lt;sflnum&gt;</code>   When executing a script, is replaced with the line number.
+		   It differs from <code class="special">&lt;slnum&gt;</code> in that <code class="special">&lt;sflnum&gt;</code> is replaced with
+		   the script line number in any situation.  <b class="vimtag">*<a name="E961">E961</a>*</b>
 
 							 <b class="vimtag">*<a name="filename-modifiers">filename-modifiers</a>*</b>
 <b class="vimtag">*<a name=":_%:">:_%:</a>*</b> <b class="vimtag">*<a name="::8">::8</a>*</b> <b class="vimtag">*<a name="::p">::p</a>*</b> <b class="vimtag">*<a name="::.">::.</a>*</b> <b class="vimtag">*<a name="::%7E">::~</a>*</b> <b class="vimtag">*<a name="::h">::h</a>*</b> <b class="vimtag">*<a name="::t">::t</a>*</b> <b class="vimtag">*<a name="::r">::r</a>*</b> <b class="vimtag">*<a name="::e">::e</a>*</b> <b class="vimtag">*<a name="::s">::s</a>*</b> <b class="vimtag">*<a name="::gs">::gs</a>*</b> <b class="vimtag">*<a name="::S">::S</a>*</b>
@@ -888,7 +939,8 @@ These modifiers can be given, in this order:
 		directory.
 	:.	Reduce file name to be relative to current directory, if
 		possible.  File name is unmodified if it is not below the
-		current directory.
+		current directory, but on MS-Windows the drive is removed if
+		it is the current drive.
 		For maximum shortness, use ":~:.".
 	:h	Head of the file name (the last component and any separators
 		removed).  Cannot be used with :e, :r or :t.
@@ -1156,8 +1208,8 @@ The character used for the pattern indicates the type of command-line:
 	@	string for |<a href="eval.html#input()">input()</a>|
 	-	text for |<a href="insert.html#:insert">:insert</a>| or |<a href="insert.html#:append">:append</a>|
 
- vim:tw=78:ts=8:ft=help:norl:
+ vim:tw=78:ts=8:noet:ft=help:norl:
 </pre>
-<p><i>Generated by vim2html on 04 Mar 2018 23:40:43</i></p>
+<p><i>Generated by vim2html on 01 May 2019 13:47:24</i></p>
 </body>
 </html>

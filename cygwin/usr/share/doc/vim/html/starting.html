@@ -7,7 +7,7 @@
 <body>
 <h2>STARTING</h2>
 <pre>
-<b class="vimtag">*<a name="starting.txt">starting.txt</a>*</b>  For Vim version 8.0.  Last change: 2018 Feb 10
+<b class="vimtag">*<a name="starting.txt">starting.txt</a>*</b>  For Vim version 8.1.  Last change: 2019 Feb 16
 
 
 		  VIM REFERENCE MANUAL    by Bram Moolenaar
@@ -135,7 +135,8 @@ argument.
 On VMS all option arguments are assumed to be lowercase, unless preceded with
 a slash.  Thus "-R" means recovery and "-/R" readonly.
 
---help							<b class="vimtag">*<a name="-h">-h</a>*</b> <b class="vimtag">*<a name="--help">--help</a>*</b>
+--help							<b class="vimtag">*<a name="-h">-h</a>*</b> <b class="vimtag">*<a name="--help">--help</a>*</b> <b class="vimtag">*<a name="-?">-?</a>*</b>
+-?
 -h		Give usage (help) message and exit.  <code class="special">{not in Vi}</code>
 		See |<a href="starting.html#info-message">info-message</a>| about capturing the text.
 
@@ -255,12 +256,18 @@ a slash.  Thus "-R" means recovery and "-/R" readonly.
 		changes and writing.
 		<code class="special">{not in Vi}</code>
 
-						<b class="vimtag">*<a name="-Z">-Z</a>*</b> <b class="vimtag">*<a name="restricted-mode">restricted-mode</a>*</b> <b class="vimtag">*<a name="E145">E145</a>*</b>
+					<b class="vimtag">*<a name="-Z">-Z</a>*</b> <b class="vimtag">*<a name="restricted-mode">restricted-mode</a>*</b> <b class="vimtag">*<a name="E145">E145</a>*</b> <b class="vimtag">*<a name="E981">E981</a>*</b>
 -Z		Restricted mode.  All commands that make use of an external
 		shell are disabled.  This includes suspending with <code class="keystroke">CTRL-Z</code>,
-		":sh", filtering, the system() function, backtick expansion,
-		delete(), rename(), mkdir(), writefile(), libcall(),
-		job_start(), etc.
+		":sh", filtering, the system() function, backtick expansion
+		and libcall().
+		Also disallowed are delete(), rename(), mkdir(), job_start(),
+		etc.
+		Interfaces, such as Python, Ruby and Lua, are also disabled,
+		since they could be used to execute shell commands.  Perl uses
+		the Safe module.
+		<code class="note">Note</code> that the user may still find a loophole to execute a
+		shell command, it has only been made difficult.
 		<code class="special">{not in Vi}</code>
 
 							<b class="vimtag">*<a name="-g">-g</a>*</b>
@@ -322,9 +329,8 @@ a slash.  Thus "-R" means recovery and "-/R" readonly.
 		and exits.)  <code class="special">{not in Vi}</code>
 
 							<b class="vimtag">*<a name="-F">-F</a>*</b>
--F		Farsi mode.  Sets the 'fkmap' and 'rightleft' options on.
-		(Only when compiled with |<a href="various.html#+rightleft">+rightleft</a>| and |<a href="various.html#+farsi">+farsi</a>| features,
-		otherwise Vim gives an error message and exits.)  <code class="special">{not in Vi}</code>
+-F		This was used for Farsi mode, which has been removed.
+		See |<a href="farsi.html#farsi.txt">farsi</a>|.
 
 							<b class="vimtag">*<a name="-H">-H</a>*</b>
 -H		Hebrew mode.  Sets the 'hkmap' and 'rightleft' options on.
@@ -494,7 +500,8 @@ a slash.  Thus "-R" means recovery and "-/R" readonly.
 
 		When <code class="special">{vimrc}</code> is equal to "DEFAULTS" (all uppercase), this has
 		the same effect as "NONE", but the |<a href="starting.html#defaults.vim">defaults.vim</a>| script is
-		loaded, which will also set 'nocompatible'.
+		loaded, which will also set 'nocompatible'.  Also see
+		|<a href="starting.html#--clean">--clean</a>|.
 
 		Using the "-u" argument with another argument than DEFAULTS
 		has the side effect that the 'compatible' option will be on by
@@ -518,13 +525,16 @@ a slash.  Thus "-R" means recovery and "-/R" readonly.
 		<code class="special">{not in Vi}</code>
 
 							<b class="vimtag">*<a name="--clean">--clean</a>*</b>
---clean		Equal to "-u DEFAULTS -i NONE":
+--clean		Similar to "-u DEFAULTS -U NONE -i NONE":
 		- initializations from files and environment variables is
 		  skipped
+		- 'runtimepath' and 'packpath' are set to exclude home
+		  directory entries (does not happen with -u DEFAULTS).
 		- the |<a href="starting.html#defaults.vim">defaults.vim</a>| script is loaded, which implies
 		  'nocompatible': use Vim defaults
+		- no |<a href="gui.html#gvimrc">gvimrc</a>| script is loaded
 		- no viminfo file is read or written
-		- the home directory is excluded from 'runtimepath'
+
 							<b class="vimtag">*<a name="-x">-x</a>*</b>
 -x		Use encryption to read/write files.  Will prompt for a key,
 		which is then stored in the 'key' option.  All writes will
@@ -1589,6 +1599,8 @@ VIMINFO FILE NAME					<b class="vimtag">*<a name="viminfo-file-name">viminfo-fil
 - The "-i" Vim argument can be used to set another file name, |<a href="starting.html#-i">-i</a>|.  When the
   file name given is "NONE" (all uppercase), no viminfo file is ever read or
   written.  Also not for the commands below!
+- The 'viminfofile' option can be used like the "-i" argument.  In fact, the
+  value form the "-i" argument is stored in the 'viminfofile' option.
 - For the commands below, another file name can be given, overriding the
   default and the name given with 'viminfo' or "-i" (unless it's NONE).
 
@@ -1678,8 +1690,8 @@ most of the information will be restored).
 			Use ! to abandon a modified buffer. |<a href="editing.html#abandon">abandon</a>|
 			<code class="special">{not when compiled with tiny or small features}</code>
 
- vim:tw=78:ts=8:ft=help:norl:
+ vim:tw=78:ts=8:noet:ft=help:norl:
 </pre>
-<p><i>Generated by vim2html on 04 Mar 2018 23:40:43</i></p>
+<p><i>Generated by vim2html on 01 May 2019 13:47:24</i></p>
 </body>
 </html>
