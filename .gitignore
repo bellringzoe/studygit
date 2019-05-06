@@ -8,8 +8,8 @@ package/symlink_file
 */tftpd32/tftproot/*
 */filezilla/ftp_root/*
 wind/
-cygwin/var/run/*
-cygwin/var/tmp/*
-cygwin/var/lib/tftpboot/
+cygwin/
 maintain/symlink_file
 cygwin/opt/bin/dhcpd/hosts.csv
+tmp/
+maintain/install/http*

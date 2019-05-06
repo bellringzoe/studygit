@@ -52,10 +52,17 @@ function check_cyglinks {
 	cat "$WORKDIR/symlink_file" | xargs tar cf "$SRC_DIR/cygwin/etc/skel/symlink.tar"  -C "$SRC_DIR/cygwin" 
 	popd
 }
-
+#don't pack cygwin,install it from internet
 function create_temp_7z {
 	TMP="tmp$(date +"%Y-%m-%d_%H_%M_%S")"
-	7z a "$SRC_DIR/export_installer/$TMP.7z" $SRC_DIR '-xr!*http*' '-xr!*log*' '-xr!*export_installer*' '-xr!home' '-xr!.git'
+	7z a "$SRC_DIR/export_installer/$TMP.7z" $SRC_DIR '-xr!*http*' '-xr!*log*' '-xr!*export_installer*' '-xr!home' '-xr!.git' '-xr!cygwin'
+#packaged,remove it to prevent some unwanted actions
+	rm -rf /etc/skel/.links
+}
+#local installer include *http* directory
+function create_local_installer_7z {
+	TMP="tmp$(date +"%Y-%m-%d_%H_%M_%S")"
+	7z a "$SRC_DIR/export_installer/$TMP.7z" $SRC_DIR '-xr!*log*' '-xr!*export_installer*' '-xr!home' '-xr!.git' '-xr!cygwin'
 #packaged,remove it to prevent some unwanted actions
 	rm -rf /etc/skel/.links
 }
