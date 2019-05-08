@@ -1,0 +1,76 @@
+#!/bin/bash
+
+function usage {
+    echo "debugcore path/to/full/package.squ boardname"
+}
+
+function env_init {
+	#how to get this script path
+	pushd $(dirname ${BASH_SOURCE[0]}); 
+	TOOLDIR="$(pwd)"
+	popd
+	CACHEDIR=$(pwd)
+	ELFDIR="$(pwd)/elf"
+	SOPATH="$(pwd)/sopath"
+	mkdir -vp $ELFDIR
+	mkdir -vp $SOPATH
+	BOARD="$1"
+}
+
+#unsquashfs any pkg to dest directory 
+function extract_pkg {
+	$TOOLDIR/unsquashfs -f -d "$2" $1 
+}
+
+#find match boardname,unsquash it
+function extract_board_pkg {
+	rm -rf $1
+	mkdir -vp $1
+	extract_pkg $(find "$CACHEDIR/full" -name "*$1*") "$CACHEDIR/$1" 
+}
+
+function extract_full {
+	extract_pkg $1 "$CACHEDIR/full"
+}
+function extract_elf {
+	for BIN in $(find $CACHEDIR/$BOARD -name *.bin);
+	do
+#		tail -c +257 $BIN > "$ELFDIR/$(basename $BIN).tar.bz2"
+		bin_name=$(basename $BIN)
+		bin_name=${bin_name%.bin}
+		tail -c +257 $BIN > "$ELFDIR/$bin_name.tar.bz2"
+	done
+
+	$TOOLDIR/fcCmd.exe -r $(find  $CACHEDIR/$BOARD -name *.zt) "$ELFDIR/fos_dev.tar"
+
+	cd $ELFDIR
+	for TAR in $(ls -1 *.tar*);
+	do
+		tar xf $TAR
+	done
+#	tail -c +257 core.bin > core.tar.bz2
+#	tail -c +257 user.bin > user.tar.bz2
+}
+
+function ln_sopath {
+	cd $SOPATH
+	for so in $(find $ELFDIR -name "*.so") ; do ln -sf $so . ; done	
+}
+
+if [ -z "$2" ];then
+	usage
+	exit
+fi
+
+env_init $2
+extract_full $1
+extract_board_pkg $BOARD 
+extract_elf
+ln_sopath
+
+
+
+
+
+
+
