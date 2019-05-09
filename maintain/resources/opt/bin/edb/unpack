@@ -5,16 +5,26 @@ function usage {
 }
 
 function env_init {
+	BOARD="$2"
 	#how to get this script path
 	pushd $(dirname ${BASH_SOURCE[0]}); 
 	TOOLDIR="$(pwd)"
 	popd
-	CACHEDIR=$(pwd)
-	ELFDIR="$(pwd)/elf"
-	SOPATH="$(pwd)/sopath"
+	pushd $(dirname $1); 
+	CACHEDIR="$(pwd)"
+	popd
+	#might need  file validation process
+
+	ELFDIR="$CACHEDIR/$BOARD/elf"
+	BPKGDIR="$CACHEDIR/$BOARD/pkg"
+	SOPATH="$CACHEDIR/$BOARD/sopath"
+	rm -rf $BPKGDIR	
+	rm -rf $SOPATH
+	rm -rf $ELFDIR
+
 	mkdir -vp $ELFDIR
+	mkdir -vp $BPKGDIR
 	mkdir -vp $SOPATH
-	BOARD="$1"
 }
 
 #unsquashfs any pkg to dest directory 
@@ -24,8 +34,6 @@ function extract_pkg {
 
 #find match boardname,unsquash it
 function extract_board_pkg {
-	rm -rf $1
-	mkdir -vp $1
 	extract_pkg $(find "$CACHEDIR/full" -name "*$1*") "$CACHEDIR/$1" 
 }
 
@@ -41,15 +49,13 @@ function extract_elf {
 		tail -c +257 $BIN > "$ELFDIR/$bin_name.tar.bz2"
 	done
 
-	$TOOLDIR/fcCmd.exe -r $(find  $CACHEDIR/$BOARD -name *.zt) "$ELFDIR/fos_dev.tar"
+	$TOOLDIR/fcCmd -r $(find  $CACHEDIR/$BOARD -name *.zt) "$ELFDIR/fos_dev.tar"
 
 	cd $ELFDIR
 	for TAR in $(ls -1 *.tar*);
 	do
 		tar xf $TAR
 	done
-#	tail -c +257 core.bin > core.tar.bz2
-#	tail -c +257 user.bin > user.tar.bz2
 }
 
 function ln_sopath {
@@ -62,7 +68,7 @@ if [ -z "$2" ];then
 	exit
 fi
 
-env_init $2
+env_init $1 $2
 extract_full $1
 extract_board_pkg $BOARD 
 extract_elf
