@@ -1,0 +1,97 @@
+{
+  "cbbinfo": [
+    {
+      "name": "cbb1名称",
+      "description": "cbb内容，功能简介",
+      "release": [
+        {
+          "tags": "svn:path/to/source/tag/@r1234",
+          "info": "本次更新的信息",
+          "checked": "是否已有项目验证,yes/no",
+          "dep": [
+		  	{
+				"name": "依赖的pub名称1",
+				"release": [
+					{
+						"tags":"svn:path/to/source/tag@r3456"
+					}
+				]
+		  	},
+			{
+				"name": "依赖的pub名称2",
+				"release": [
+					{
+						"tags":"svn:path/to/source/tag@r3456"
+					}
+				]
+		  	}
+		  ],
+          "binary": [
+            {
+              "toolchain": "ppc-release-1",
+              "path": "ftp:path/to/binary",
+		      "install":""
+            },
+            {
+              "toolchain": "ppc64-release-1",
+              "path": "ftp:path/to/binary",
+		      "install":""
+            },
+            {
+              "toolchain": "aarch64-release-1",
+              "path": "ftp:path/to/binary",
+		      "install":""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cbb2名称",
+      "description": "cbb内容，功能简介",
+      "release": [
+        {
+          "tags": "svn:path/to/source/tag@r1111",
+          "info": "本次更新的信息",
+          "checked": "是否已有项目验证,yes/no",
+          "dep": [
+		  	{
+				"name": "依赖的pub名称2",
+				"release": [
+					{
+						"tags":"svn:path/to/source/tag@r3456"
+					}
+				]
+		  	},
+			{
+				"name": "依赖的pub名称3",
+				"release": [
+					{
+						"tags":"svn:path/to/source/tag@r3456"
+					}
+				]
+		  	}
+		  ],
+          "binary": [
+            {
+              "toolchain": "ppc-release-1",
+              "path": "svn:path/to/binary",
+		      "install":""
+            },
+            {
+              "toolchain": "ppc64-release-1",
+              "path": "svn:path/to/binary",
+		      "install":""
+            },
+            {
+              "toolchain": "aarch64-release-1",
+              "path": "svn:path/to/binary",
+		      "install":""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+

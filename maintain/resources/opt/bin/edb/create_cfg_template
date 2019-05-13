@@ -6,11 +6,39 @@ declare -a cfg_item=(\
 "ip" \
 "port" \
 "package" \
+"board" \
 "coredump" \
 "process" \
 "gate" \
 "port_forward" \
 )
+
+declare -a arch_enum=(\
+"ppc" \
+"ppc64" \
+"arm" \
+"AARCH64" \
+"i686" \
+"X86_64"
+)
+declare -a port_range=(\
+1000 \
+5000
+)
+
+declare -a cfg_detail=(\
+"配置名称，字符不要超出以下范围a-z,A-Z,0-9,_（不支持中文名称）" \
+"目标设备的架构，请输入下面字符：ppc,ppc64,arm,AARCH64,i686,X86_64，此参数必须填写" \
+"目标设备ip，无论什么设备，给出该设备的ip地址。不可直连设备的桥设备ip可单独询问，此参数不是必须参数，留空则在进入gdb前会询问" \
+"目标设备上打开的gdbserver使用的端口，此参数默认为1234" \
+"所需要调试设备的调试信息包，整机包，此参数不是必须参数，留空则进入gdb前会询问" \
+"所需要调试设备的调试信息包，单盘名，此参数不是必须参数，留空则进入gdb前会询问" \
+"所需调试的coredump文件路径，如果此参数不留空，自动进入调试coredump文件，否则进入下面环节" \
+"所需调试设备的进程号，这个参数如果不输入，在进入gdb调试前会询问" \
+"如果你无法直接访问设备，请给出网关设备ip（即主控盘的ip）,这个参数不是必须的" \
+"如果你无法直接访问设备，请给出网关端口偏移,这个参数默认20000" \
+)
+declare -a arguments_block;
 ##参数合法性检查
 function check_ip {
 #    echo "checkip"
@@ -33,7 +61,7 @@ function check_string {
 #    echo "check string"
     if [[ $1 =~ ^[a-zA-Z0-9_]+$ ]];then
         echo 1;
-    else 
+    else
         echo 0;
     fi
 }
@@ -43,7 +71,7 @@ function check_enum {
     echo 1
 }
 function check_int {
-#    echo "check \$int is a valid integer" 
+#    echo "check \$int is a valid integer"
 #    echo "check \$int range is between \$array[],if \array was provided"
     echo 1
 }
@@ -51,7 +79,6 @@ function check_file {
 #    echo "check \$file existence"
     echo 1
 }
-
 function arg_check_name {
     check_string $1
 }
@@ -74,10 +101,13 @@ function arg_check_ip {
     fi
 }
 function arg_check_port {
-    check_int $1 $port_range 
+    check_int $1 $port_range
 }
 function arg_check_package {
     check_file $1
+}
+function arg_check_board {
+    check_string $1
 }
 function arg_check_process {
     check_int $1
@@ -89,36 +119,6 @@ function arg_check_port_forward {
     check_int $1
 }
 
-#"arg_check_${cfg_item[0]}"
-
-declare -a arch_enum=(\
-"ppc" \
-"ppc64" \
-"arm" \
-"AARCH64" \
-"i686" \
-"X86_64"
-)
-declare -a port_range=(\
-1000 \
-5000
-)
-
-declare -a cfg_detail=(\
-"配置名称，字符不要超出以下范围a-z,A-Z,0-9,_（不支持中文名称）" \
-"目标设备的架构，请输入下面字符：ppc,ppc64,arm,AARCH64,i686,X86_64，此参数必须填写" \
-"目标设备ip，无论什么设备，给出该设备的ip地址。不可直连设备的桥设备ip可单独询问，此参数不是必须参数，留空则在进入gdb前会询问" \
-"目标设备上打开的gdbserver使用的端口，此参数默认为1234" \
-"所需要调试设备的调试信息包，此参数不是必须参数，留空则进入gdb前会询问" \
-"所需调试的coredump文件路径，如果此参数不留空，自动进入调试coredump文件，否则进入下面环节" \
-"所需调试设备的进程号，这个参数如果不输入，在进入gdb调试前会询问" \
-"如果你无法直接访问设备，请给出网关设备ip（即主控盘的ip）,这个参数不是必须的" \
-"如果你无法直接访问设备，请给出网关端口偏移,这个参数默认20000" \
-)
-declare -a arguments_block;
-
-#function globle_data_init {
-#}
 
 
 #环境初始化，用户目录
@@ -131,45 +131,10 @@ function env_init {
         mkdir -vp gdb_cfg; 
     else 
         echo "找到用户配置目录"; 
-        select_cfg_from_list 
-#        create_new_dbg_cfg
-#        create_gdb_init
     fi
 }
 
-#读取用户目录下的配置文件目录，列出可选配置条目；
-function select_cfg_from_list {
-    declare -a cfg_list=($(ls -1 ~/gdb_cfg))
-    if [ -z "$cfg_list" ]; then
-        echo "无任何配置，请根据提示创建配置";
-        create_new_dbg_cfg
-    else
-        echo "选择配置或新建配置";
-        for index in ${!cfg_list[*]};
-        do
-            echo "$(( $index + 1 )):${cfg_list[$index]}";
-        done
-        while read -p "请选择配置，输入0则新建配置：" integer ;do
-#            [[ "$integer" =~ [[:digit:]]+ ]] && break
-#            echo "必须是整形数: $integer" >&2
-            if [[ "$integer" =~ [[:digit:]]+ ]];then
-                if [ $integer = 0 ];then
-                    create_new_dbg_cfg
-                    break;
-                else
-                    if [ $integer -le ${#cfg_list[*]} ];then
-                        echo "选定配置$integer:${cfg_list[ $(( $integer - 1 )) ]}";
-                        create_gdb_init ${cfg_list[ $(( $integer - 1 )) ]}
-                        break;
-                    else
-                        echo "请输入有效的配置序号"
-                    fi
-                fi
-            fi
-        done
 
-    fi
-}
 function end_of_arg {
     comma_sign=$(( $1 - $2 ))
 #    echo $comma_sign
@@ -177,6 +142,7 @@ function end_of_arg {
         echo "," 
     fi
 }
+
 function fill_argument {
     max_item=${#cfg_item[*]}
 
@@ -200,7 +166,7 @@ function fill_argument {
 function ask_para {
 
     while read -p "请输入$1,$2:" a_value; do
-        result=$(arg_check_$1 $a_value) 
+		result=$(arg_check_$1 $a_value)
         if (( result == 1 )) ; then
             break;
         fi
@@ -210,16 +176,7 @@ function ask_para {
 #允许新建配置项目
 function create_new_dbg_cfg {
 #data for test ,will be deleted later
-cfg_name="connect_rcu_process"
-architecture="powerpc64"
-ip="10.41.95.12"
-req_gate="dynamic"
-port="3456"
-package="hsada04.squ"
-req_process="dynamic"
 
-type="coredump"
-dbg_cfg_name="template";
 mkdir -p /tmp
 pushd /tmp
 cat <<_TEMPLATE_EOF >template.json
@@ -236,22 +193,6 @@ _TEMPLATE_EOF
 
 popd
 jq . /tmp/template.json > ~/gdb_cfg/$dbg_cfg_name.json
-}
-
-#每个配置可对应一块或一种单盘，如主控，名字允许随意选取
-#如果用户目录下不存在任何一个有效配置文件，则提示创建一个
-#选择了配置文件后，根据配置文件生成gdb_init
-function create_gdb_init {
-    ARGS_FILE="$HOME/gdb_cfg/$1"
-    for index in ${!cfg_item[*]};
-    do
-        resule=$(arg_check_${cfg_item[$index]})
-        
-    done
-
-
-    echo "生成gdb_init"
-    gdb -x gdb_init
 }
 
 #如果配置文件有参数为连接远程进程，则提示输入pid，启动gdb连接之
@@ -278,7 +219,7 @@ function get_config_args_length {
 }
 
 env_init
-
+create_new_dbg_cfg
 
 
 #使用conemu集成时，下面能保证gdb执行完后，窗口不退出

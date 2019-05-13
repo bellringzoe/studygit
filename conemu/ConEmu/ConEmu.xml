@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <key name="Software">
 	<key name="ConEmu">
-		<key name=".Vanilla" modified="2019-05-07 16:32:27" build="190331">
+		<key name=".Vanilla" modified="2019-05-10 08:56:06" build="190331">
 			<value name="StartType" type="hex" data="02"/>
 			<value name="CmdLine" type="string" data=""/>
 			<value name="StartTasksFile" type="string" data=""/>
@@ -635,15 +635,15 @@
 					<value name="Count" type="long" data="1"/>
 					<value name="Cmd1" type="string" data='set CHERE_INVOKING=1 &amp; set "PATH=%ConEmuBaseDirShort%\..\..\cygwin\bin;%ConEmuBaseDirShort%\..\..\cygwin\opt\bin;%ConEmuBaseDirShort%\..\..\cygwin\usr\sbin;%PATH%" &amp; %ConEmuBaseDirShort%\..\..\cygwin\bin\mintty.exe -e "ssh" "qiyin2000@10.90.6.171"'/>
 				</key>
-				<key name="Task5" modified="2019-04-29 14:17:01" build="190331">
+				<key name="Task5" modified="2019-05-09 09:16:51" build="190331">
 					<value name="Name" type="string" data="{基础软件部::操作系统更新}"/>
 					<value name="Flags" type="dword" data="00000004"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Active" type="long" data="0"/>
 					<value name="Count" type="long" data="3"/>
-					<value name="Cmd1" type="string" data="-new_console:d:%ConEmuBaseDirShort%\..\..\cygwin\opt\bin\tftpd32\tftproot\ %ConEmuBaseDirShort%\..\..\cygwin\opt\bin\tftpd32\tftpd32.exe"/>
-					<value name="Cmd2" type="string" data='"%ConEmuBaseDirShort%\..\..\cygwin\opt\bin\filezilla\FileZilla Server Interface.exe" '/>
+					<value name="Cmd1" type="string" data="-new_console:d:%ConEmuBaseDirShort%\..\..\maintain\resources\opt\bin\tftpd32\tftproot\ %ConEmuBaseDirShort%\..\..\maintain\resources\opt\bin\tftpd32\tftpd32.exe"/>
+					<value name="Cmd2" type="string" data='"%ConEmuBaseDirShort%\..\..\maintain\resources\opt\bin\filezilla\FileZilla Server Interface.exe" '/>
 					<value name="Cmd3" type="string" data='set LANG=zh_CN.GBK &amp; set CHERE_INVOKING=1 &amp; set "PATH=%ConEmuBaseDirShort%\..\..\cygwin\bin;%ConEmuBaseDirShort%\..\..\cygwin\opt\bin;%ConEmuBaseDirShort%\..\..\usr\sbin;%PATH%" &amp;  %ConEmuDir%\..\cygwin\bin\mintty.exe -e /opt/bin/service_start  -new_console:a'/>
 				</key>
 				<key name="Task6" modified="2019-04-29 17:15:49" build="190331">
@@ -700,9 +700,9 @@
 			</key>
 			<value name="CmdLineHistory" type="multi">
 				<line data="{连接服务器::10.90.6.171}"/>
+				<line data="{基础软件部::操作系统更新}"/>
 				<line data="{维护工具::cygwin更新}"/>
 				<line data="{维护工具::工具打包}"/>
-				<line data="{基础软件部::操作系统更新}"/>
 			</value>
 		</key>
 	</key>
