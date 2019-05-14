@@ -2,6 +2,8 @@
 
 #prepare envirments
 #prepare network
+#this function need to set windows env LANG to zh_CN.GBK to show chinese charactor
+#won't need this anymore if we can use tftpd32
 function service_nc_select {
 	local index=0;
 #	netsh interface show interface | sed '/Enable/ !d' | sed -e 's/^\([a-zA-Z]\+\s\+\)\{3\}//g' > /tmp/interfaces	
@@ -29,14 +31,14 @@ function service_nc_select {
 }
 
 
-service_nc_select
 #function start_services {
 #startup the server @backgroud,will be shutdown when the main process were shutdown
 /opt/bin/filezilla/FileZilla\ Server.exe /compat /start & 
 
 #startup the dhcpd server
-cd /opt/bin/dhcpd/
-/opt/bin/dhcpd/dhcpd </dev/null 1>/dev/null &
+#service_nc_select
+#cd /opt/bin/dhcpd/
+#/opt/bin/dhcpd/dhcpd </dev/null 1>/dev/null &
 
 bash -i
 #}

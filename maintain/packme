@@ -83,7 +83,7 @@ function create_installer {
 env_init
 if [ -z "$1" ]; then
 	check_cyglinks
-	create_temp_7z
+	create_local_installer_7z
 	create_installer
 else
 	case $1 in
