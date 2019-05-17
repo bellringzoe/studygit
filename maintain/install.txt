@@ -1,0 +1,19 @@
+;!@Install@!UTF-8!
+Title="nbudbg envirment installation"
+BeginPrompt="nbudbg stands for Network Business Unit Debug \n
+本安装包基于预配置的cygwin环境打包\n
+提供Windows环境下，类似于linux系统的集成调试环境\n
+当前安装包自身展开后不超过1G空间\n
+建议安装到纯英文路径下，如D:\\nbudbg\\ \n
+若为首次安装，安装完成后将自动运行并展开readme.md
+"
+CancelPrompt="你要取消吗？"
+ExtractDialogText="请等待..."
+ExtractPathText="请提供安装路径："
+ExtractTitle="正在安装..."
+GUIFlags="8+32+64+256+4096"
+GUIMode="1"
+InstallPath="C:\\nbudbg\\"
+RunProgram="maintain\\install\\mini.bat"
+Shortcut="Du,{%%T\\conemu\\conemu.exe},{},{},{进入windbg环境},{},{},{conemu\\ConEmu\\watching_you.ico},{0}"
+;!@InstallEnd@!

@@ -62,7 +62,7 @@ function create_temp_7z {
 #local installer include *http* directory
 function create_local_installer_7z {
 	TMP="tmp$(date +"%Y-%m-%d_%H_%M_%S")"
-	7z a "$SRC_DIR/export_installer/$TMP.7z" $SRC_DIR '-xr!*log*' '-xr!*export_installer*' '-xr!home' '-xr!.git' '-xr!cygwin'
+	7z a "$SRC_DIR/export_installer/$TMP.7z" $SRC_DIR/conemu $SRC_DIR/maintain $SRC_DIR/nbudbg.lnk  
 #packaged,remove it to prevent some unwanted actions
 	rm -rf /etc/skel/.links
 }
@@ -79,15 +79,27 @@ function create_installer {
 	mv "$EXPORT_ROOT/export_installer/$TMP.exe" "$EXPORT_ROOT/export_installer/$EXPORT.exe"
 }
 
+function create_local_installer {
+# exported file name shall be add a version,later
+	cat "$WORKDIR/pack.sfx" "$WORKDIR/install.txt" "$SRC_DIR/export_installer/$TMP.7z" > "$SRC_DIR/export_installer/$TMP.exe"
+	if [ -f "$SRC_DIR/export_installer/$TMP.exe" ];then
+		rm "$SRC_DIR/export_installer/$TMP.7z"
+	fi
+# tag the export file with time
+	EXPORT="$EXPORT_NAME$(stat -L "$EXPORT_ROOT/export_installer/$TMP.exe" | awk -F "[ |.|:]" {'if ($1 == "Change") {print $3"_"$4"_"$5"_"$6 }'})"
+	echo "creating $EXPORT.exe"
+	mv "$EXPORT_ROOT/export_installer/$TMP.exe" "$EXPORT_ROOT/export_installer/$EXPORT.exe"
+}
 #check_old_package_existence
 env_init
 if [ -z "$1" ]; then
-	check_cyglinks
+#	check_cyglinks
 	create_local_installer_7z
-	create_installer
+	create_local_installer
 else
 	case $1 in
 	1)	
+#does not need it anymore
 	check_cyglinks
 	;;
 	2)

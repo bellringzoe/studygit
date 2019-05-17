@@ -65,6 +65,15 @@ if [ -z "${PROFILEREAD+true}" ] ; then
   #  (files normally created with mode 777 become 755; files created with
   #  mode 666 become 644)
   umask 022
+# prepare pre-configured files for user
+if [ -d "/opt/bin" ];then
+	:
+else
+	cp -rf $(cygpath -u $ConEmuDir)/../maintain/resources/bin/ /
+	cp -rf $(cygpath -u $ConEmuDir)/../maintain/resources/Cygwin.bat /
+	cp -rf $(cygpath -u $ConEmuDir)/../maintain/resources/etc/ /
+	ln -sf $(cygpath -u $ConEmuDir)/../maintain/resources/opt/ /opt
+fi
 
   # Here is how HOME is set, in order of priority, when starting from Windows
   #  1) From existing HOME in the Windows environment, translated to a Posix path
@@ -154,12 +163,11 @@ fi
 
 # export PROFILEREAD PATH ORIGINAL_PATH MANPATH INFOPATH USER TMP TEMP PRINTER HOSTNAME PS1 SHELL tmp temp
 export PROFILEREAD PATH ORIGINAL_PATH INFOPATH USER TMP TEMP PRINTER HOSTNAME PS1 SHELL
-
 if [ -z $NEW_USER ];then
     echo "all done,read readme.md please,it's located in /,you can read it later."
 
 #	cat /readme.md
-	cat $(cygpath -u $ConEmuDir)/../doc/readme.md
+	cat $(cygpath -u $ConEmuDir)/../maintain/doc/readme.md
 #	if [ -f /bin/gdb ]; then
 #		echo -e "gdb configured to \033[31m$(readlink /bin/gdb)\033[0m,you can run it by input \033[31mgdb\033[0m directly"
 #	else

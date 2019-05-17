@@ -1,7 +1,7 @@
 setup-x86.exe ^
---root c:\\nbudbg\\cygwin ^
+--root %CD%/../../ ^
 -s https://mirrors.163.com/cygwin/ ^
--L -l c:\\nbudbg\\cygwin\\install ^
+-L -l %CD%\..\install ^
 --no-shortcuts ^
 --quiet-mode ^
 --disable-buggy-antivirus ^
