@@ -16,5 +16,19 @@ set LANG=zh_CN.GBK & set CHERE_INVOKING=1 & set "PATH=%ConEmuBaseDirShort%\..\..
 -new_console:a
 
 ```
+在非conemu的环境下如果希望获得管理员权限，可以参考install/中的adminrun.bat脚本
 
- 
+# ssh免密登陆
+cygwin环境中自带ssh-copy-id脚本，将本地（默认）的id_rsa.pub文件拷贝到服务器/目标设备上。
+首次执行这个脚本需要输入密码。
+
+# 快捷菜单设置
+每个快捷菜单都是一个task，有几个基本要素
+* task名称，提供[一级下级菜单的能力](./img/submenu.png)
+* 在配置界面中，用“::”隔开字符串形成[二级菜单](./img/submenucfg.png)
+* “::”前一级菜单重复的task，其二级菜单在目录中将[合并显示](./img/submenuview.png)
+
+# 安装问题
+由于cygwin较为庞大，当前策略是缓存了一个本地目录，并根据实际需求定制了安装脚本。
+安装脚本在maintain/install目录下，目前有效安装脚本mini.bat。
+安装文件本地缓存未纳入git归档，相关目录内容如何维护有待进一步考虑。

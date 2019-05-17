@@ -1,15 +1,10 @@
-cygwin/home/*
-cygwin/install/
-cygwin/log/
-cygwin/tmp/*
+cygwin/*
 export_installer/
 log/
 package/symlink_file
 */tftpd32/tftproot/*
 */filezilla/ftp_root/*
 wind/
-cygwin/
-maintain/symlink_file
 cygwin/opt/bin/dhcpd/hosts.csv
 tmp/
 maintain/install/http*
