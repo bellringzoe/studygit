@@ -32,3 +32,13 @@ cygwin环境中自带ssh-copy-id脚本，将本地（默认）的id_rsa.pub文�
 由于cygwin较为庞大，当前策略是缓存了一个本地目录，并根据实际需求定制了安装脚本。
 安装脚本在maintain/install目录下，目前有效安装脚本mini.bat。
 安装文件本地缓存未纳入git归档，相关目录内容如何维护有待进一步考虑。
+* windows下用mingw的git出现过获取下来的文件行尾出问题等奇怪情况（暂不明原因）
+* 使用本工具的git repo，用以下步骤
+  下载repo而不是clone
+  进入到maintain/install，执行mini.bat，手动安装cygwin
+  进入到cygwin，使用cygwin中自带的git，clone整个工程
+  将安装好的cygwin移动到工程目录下即可。
+* （可能）因为windows权限管理问题，git拉下来的文件权限被改变，建议在repo中忽略文件属性
+```bash
+	git config core.fileMode false	
+```
