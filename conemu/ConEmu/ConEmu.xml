@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <key name="Software">
 	<key name="ConEmu">
-		<key name=".Vanilla" modified="2019-05-20 08:33:01" build="190331">
+		<key name=".Vanilla" modified="2019-05-20 14:43:36" build="190331">
 			<value name="StartType" type="hex" data="02"/>
 			<value name="CmdLine" type="string" data=""/>
 			<value name="StartTasksFile" type="string" data=""/>
@@ -338,12 +338,12 @@
 			<value name="AutoSaveSizePos" type="hex" data="01"/>
 			<value name="Cascaded" type="hex" data="00"/>
 			<value name="IntegralSize" type="hex" data="01"/>
-			<value name="WindowMode" type="dword" data="00000520"/>
-			<value name="ConWnd X" type="long" data="11"/>
-			<value name="ConWnd Y" type="long" data="0"/>
-			<value name="LastMonitor" type="string" data="0,0,2736,1764"/>
-			<value name="ConWnd Width" type="dword" data="00000058"/>
-			<value name="ConWnd Height" type="dword" data="00000030"/>
+			<value name="WindowMode" type="dword" data="0000051f"/>
+			<value name="ConWnd X" type="long" data="330"/>
+			<value name="ConWnd Y" type="long" data="237"/>
+			<value name="LastMonitor" type="string" data="0,0,1920,1040"/>
+			<value name="ConWnd Width" type="dword" data="0000008e"/>
+			<value name="ConWnd Height" type="dword" data="00000027"/>
 			<value name="16bit Height" type="ulong" data="0"/>
 			<value name="Restore2ActiveMon" type="hex" data="01"/>
 			<value name="RestoreInactive" type="hex" data="00"/>
@@ -597,8 +597,8 @@
 			<value name="Update.DownloadPath" type="string" data="%TEMP%\ConEmu"/>
 			<value name="Update.LeavePackages" type="hex" data="00"/>
 			<value name="Update.PostUpdateCmd" type="string" data="echo Last successful update&gt;ConEmuUpdate.info &amp;&amp; date /t&gt;&gt;ConEmuUpdate.info &amp;&amp; time /t&gt;&gt;ConEmuUpdate.info"/>
-			<key name="Tasks" modified="2019-04-29 11:11:40" build="190331">
-				<value name="Count" type="long" data="10"/>
+			<key name="Tasks" modified="2019-05-17 15:54:36" build="190331">
+				<value name="Count" type="long" data="11"/>
 				<key name="Task1" modified="2019-04-29 08:28:11" build="190331">
 					<value name="Name" type="string" data="{控制台::默认}"/>
 					<value name="Flags" type="dword" data="00000004"/>
@@ -691,6 +691,15 @@
 					<value name="Count" type="long" data="1"/>
 					<value name="Cmd1" type="string" data='*cmd.exe /k Title Chocolatey &amp; "%ConEmuBaseDir%\Addons\ChocolateyAbout.cmd"'/>
 				</key>
+				<key name="Task11" modified="2019-05-20 14:45:02" build="190331">
+					<value name="Name" type="string" data="{进程状态检测}"/>
+					<value name="Flags" type="dword" data="00000004"/>
+					<value name="Hotkey" type="dword" data="00000000"/>
+					<value name="GuiArgs" type="string" data=""/>
+					<value name="Active" type="long" data="0"/>
+					<value name="Count" type="long" data="1"/>
+					<value name="Cmd1" type="string" data='set CHERE_INVOKING=1 &amp; set "PATH=%ConEmuBaseDirShort%\..\..\cygwin\bin;%ConEmuBaseDirShort%\..\..\cygwin\opt\bin;%ConEmuBaseDirShort%\..\..\maintain\resources\opt\bin;%ConEmuBaseDirShort%\..\..\usr\sbin;%PATH%" &amp;  %ConEmuDir%\..\cygwin\bin\mintty.exe -e maintain\resources\opt\bin\process_status\landing.sh'/>
+				</key>
 			</key>
 			<key name="Apps" modified="2019-04-13 13:43:07" build="190331">
 				<value name="Count" type="long" data="0"/>
@@ -699,6 +708,7 @@
 				<value name="Count" type="long" data="0"/>
 			</key>
 			<value name="CmdLineHistory" type="multi">
+				<line data="{进程状态检测}"/>
 				<line data="{连接服务器::10.90.6.171}"/>
 				<line data="{控制台::cmd (Admin)}"/>
 				<line data="{基础软件部::操作系统更新}"/>
