@@ -126,15 +126,15 @@ class DelayWorker(object):
             if not self.queue.empty():
                 p = self.queue.get()
                 t, func, args, kw = p
-                now = time.time_ns()
+                now = time.time()
                 if now < t:
-                    time.sleep(0.01)
-                    self.queue.put(p)
+#                    time.sleep(0.1)
+                    self.queue.put((now + (t-now - 0.1),func,args,kw))
                 else:
                     func(*args, **kw)
 
     def do_after(self, seconds, func, args = (), kw = {}):
-        self.queue.put((time.time_ns() + seconds, func, args, kw))
+        self.queue.put((time.time() + seconds, func, args, kw))
 
     def close(self):
         self.closed = True

@@ -73,6 +73,7 @@ else
 	cp -rf $(cygpath -u $ConEmuDir)/../maintain/resources/Cygwin.bat /
 	cp -rf $(cygpath -u $ConEmuDir)/../maintain/resources/etc/ /
 	ln -sf $(cygpath -u $ConEmuDir)/../maintain/resources/opt/ /opt
+	ln -sf /bin/python3.7 /bin/python3 
 fi
 
   # Here is how HOME is set, in order of priority, when starting from Windows
