@@ -7,3 +7,5 @@ package/symlink_file
 wind/
 cygwin/opt/bin/dhcpd/hosts.csv
 tmp/
+*__pycache__*
+hosts.csv
